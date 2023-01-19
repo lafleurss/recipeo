@@ -20,9 +20,11 @@ A list of business requirements written in a user story format - you must have a
 
 
 A list of “stretch goals”/features
-1. As a user I want to be able to use JustTheRecipe api in this app to extract a recipe from any URL.
-2. Ability to invite friends, add friends and share recipes within the app
-3. Create grocery lists within the app
+1. Sort recipes by A-Z, Total Time etc.
+2. As a user I want to be able to use JustTheRecipe api in this app to extract a recipe from any URL
+2. Ability to store and display a picture for every recipe
+3. Ability to invite friends, add friends and share recipes within the app
+4. Create grocery lists within the app
 
 
 # UML class diagram
@@ -32,22 +34,35 @@ A list of “stretch goals”/features
 # DynamoDB 
 List of Tables and global secondary indexes:
 ### User
-* userId:String
-* emailId:String
+- userId:String
+- emailId:String
 
 ### Recipe
-* recipeId:String (partition key)
-* userId:String (sort key)
-* 
+- userId:String (partition key)
+- recipeId:String (sort key)
+- recipeId:String
+- recipeName:String
+- servings:Integer
+- prepTime:Integer
+- cookTime:Integer
+- totalTime:Integer
+- ingredients:List<String>
+- instructions:List<String>
+- categories:List<String>
+- tags:Set<String>
+- lastAccessed:String
+- isFavourite:Boolean
 
 ### Category
-* categoryId:String
-* 
+- userId:String (partition key)
+- categoryId:String (sort key)
+- categoryName:String
 
+### RecentlyUsed (GSI)
+- lastAccessed:String (partition key)
+- userId:String (sort key)
+- recipeId:String
 
-### 
-Each item must include the partition and sort key (if applicable) and all other attributes
-When listing attributes, you must include its name and DynamoDB type
 
 # API Endpoints
 A description of each API endpoint that includes:
@@ -64,7 +79,7 @@ A description of any errors the endpoint might return
 A UML sequence diagram of the process of at least one endpoint
 
 # Mockups
-Mockups (aka “wireframes”) of the front-end web application
+[Mockups](images) (aka “wireframes”) of the front-end web application
 
 # AWS Services
 * CloudFormation
