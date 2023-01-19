@@ -102,6 +102,7 @@ class Recipe {
 - totalTime:Integer
 - ingredients:List<String>
 - instructions:List<String>
+- categoryName
 - tags:Set<String>
 - lastAccessed:ZonedDateTime
 - isFavourite:Boolean
@@ -111,7 +112,6 @@ class Category {
 - userId:String
 - categoryId:String
 - categoryName:String
-- recipeList:List<Recipe>
 }
 
 
