@@ -15,12 +15,12 @@ A list of business requirements written in a user story format - you must have a
 6. As a user I want to be able to see top 25 recipes in my Recently Used Category
 7. As a user I want to be able to see all recipes in my Favorites Category
 8. As a user I want to be able to create my own custom Category (POST API)
-9. As a user I want to be able to selectively add/remove recipes to my custom Category
+9. As a user I want to be able to sort my recipes by recipe name A-Z, Z-A
 10. As a user I want to be able to delete my custom Category without deleting the recipes in it
 
 
 A list of “stretch goals”/features
-1. Sort recipes by A-Z, Total Time etc.
+1. As a user I want to be able to selectively add/remove recipes to my custom Category
 2. As a user I want to be able to use JustTheRecipe api in this app to extract a recipe from any URL
 2. Ability to store and display a picture for every recipe
 3. Ability to invite friends, add friends and share recipes within the app
