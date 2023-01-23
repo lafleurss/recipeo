@@ -58,8 +58,8 @@ List of Tables and global secondary indexes:
 - categoryName:String
 
 ### RecentlyUsed (GSI)
-- lastAccessed:String (partition key)
-- userId:String (sort key)
+- userId:String (partition key)
+- lastAccessed:String (sort key)
 - recipeId:String
 
 
@@ -86,40 +86,69 @@ List of Tables and global secondary indexes:
 
 ## Create Recipe Endpoint
 * Accepts POST requests to `/recipes`
-* Accepts data to create a new recipe with a provided recipe name, a given  userId, servings , prepTime, cookTime, totalTime, List of ingredients, List of instructions, Optional list of tags, Optional isFavourite (default to false). Optional category (default to Uncategorized). Returns the new recipe with the lastAccessed timestamp set to time of POST, including a unique recipe ID assigned by the Recipeo service.
+* Accepts input to create a new recipe:
+``{"recipeName":"name", "userId":"id", "servings":4, "prepTime":1200000000, "cookTime": 1200000000, "totalTime":2400000000, "ingredients": [
+  {
+  "name": "1 cup chickpeas (dry)"
+  },
+  {
+  "name": "1  large onion (finely chopped)"
+  },    
+  {
+  "name": "Cilantro for garnish (optional)"
+  }
+  ], "instructions": [
+  {
+  "name": "do x"
+  },
+  {
+  "name": "prep y"
+  },    
+  {
+  "name": "another step"
+  }
+  ], "tags": [
+        "tag1",
+        "tag2",
+        "tag3"
+      ],
+  "isFavorite" : false,
+  "category": "Uncategorized" } ``
+* Optional: list of tags (default: no tags), (default: false), category (default: Uncategorized). Returns the new recipe with the lastAccessed timestamp set to time of POST, including a unique recipe ID assigned by the Recipeo service.
+
   * For security concerns, we will validate the provided recipe name does not contain any invalid characters: " ' \`
   * If the recipe name contains any of the invalid characters, will throw an InvalidAttributeValueException.
 
 ## Create Category Endpoint
 * Accepts POST requests to `/categories`
-* Accepts data to create a new category with a provided category name and a given  userId. Returns the new category, including a unique category ID assigned by the Recipeo service.
+* Accepts input to create a new category: `{"categoryName" : "name"}`. Returns the new category, including a unique category ID assigned by the Recipeo service.
   * For security concerns, we will validate the provided recipe name does not contain any invalid characters: " ' \`
   * If the recipe name contains any of the invalid characters, will throw an InvalidAttributeValueException.
 
 ## Update Recipe Endpoint
 * Accepts PUT requests to `/recipes/:recipeId`
-* Accepts data to update a recipe including a given userId, servings , prepTime, cookTime, totalTime, List of ingredients, List of instructions, Optional list of tags, Optional isFavourite (default to false). Optional category (default to Uncategorized). . Returns the updated playlist.
+* Accepts input to update a recipe `{"recipeName":"name",  "servings":4, "prepTime":1200000000, "cookTime": 1200000000, "totalTime":2400000000, "ingredients": [ { "name": "1 cup chickpeas (dry)" }, { "name": "1 large onion (finely chopped)" }, { "name": "Cilantro for garnish (optional)" } ], "instructions": [ { "name": "do x" }, { "name": "prep y" }, { "name": "another step" } ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : false, "category": "Uncategorized" }`. Returns the updated recipe.
   * If the recipe ID is not found, will throw a RecipeNotFoundException
   * For security concerns, we will validate the provided recipe name does not contain invalid characters: " ' \`
   * If the recipe name contains invalid characters, will throw an InvalidAttributeValueException
 
 ## Update Category Endpoint
 * Accepts PUT requests to `/categories/:categoryId`
-* Accepts data to update a category including a given category name, a given userId  Returns the updated CategoryModel.
+* Accepts input to update a category `{"categoryName" : "name"}`.  Returns the updated CategoryModel.
   * If the category ID is not found, will throw a CategoryNotFoundException
   * For security concerns, we will validate the provided recipe name does not contain invalid characters: " ' \`
   * If the recipe name contains invalid characters, will throw an InvalidAttributeValueException
 
 ## Search Recipes Endpoint
 * Accepts GET requests to `/recipes/search`
-* Accepts data to search for recipes  using recipe names or tags. Returns a list of RecipeModel.
+* Accepts parameters `recipeName` or `tags` to search for recipes  using recipe names or tags. Returns a list of RecipeModel.
   * If the recipe ID is not found, will throw a RecipeNotFoundException
   * For security concerns, we will validate the provided recipe name does not contain invalid characters: " ' \`
   * If the recipe name contains invalid characters, will throw an InvalidAttributeValueException
 
 
 # UML Sequence Diagram
-A UML sequence diagram of the process of at least one endpoint
+[Create Recipe](images/CreateRecipe.png)
 
 
 # Mockups
