@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Client #pink
+participant "Homepage Create Recipe Button"
+participant "Create Recipe Page"
+participant "Create Recipe Activity"
+database "recipe"
+
+Client --> "Homepage Create Recipe Button" :Click + on home page
+"Homepage Create Recipe Button" --> "Create Recipe Page" : redirect to add recipe page
+"Create Recipe Page" --> "Create Recipe Activity": Send CreateRecipeRequest
+"Create Recipe Activity" --> "recipe" : Save recipe in database
+
+
+@enduml

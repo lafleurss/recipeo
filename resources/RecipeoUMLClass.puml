@@ -1,20 +1,14 @@
 @startuml
 'https://plantuml.com/class-diagram
-RecipeDao o-- GetRecipeActivity
+RecipeDao o---- GetRecipeActivity
 RecipeDao o-- UpdateRecipeActivity
-RecipeDao o-- SearchRecipeActivity
-RecipeDao o-- CreateRecipeActivity
+RecipeDao o--- SearchRecipeActivity
+RecipeDao o---- CreateRecipeActivity
 
 
 CategoryDao o--- GetCategoryActivity
 CategoryDao o-- UpdateCategoryActivity
 CategoryDao o--- CreateCategoryActivity
-
-CategoryDao o-- AddRecipeToCategoryActivity
-RecipeDao o-- AddRecipeToCategoryActivity
-
-CategoryDao o-- RemoveRecipeFromCategoryActivity
-RecipeDao o-- RemoveRecipeFromCategoryActivity
 
 Recipe o-- User
 Category o-- Recipe
@@ -62,19 +56,6 @@ class CreateCategoryActivity{
 + handleRequest(CreateCategoryRequest) : CreateCategoryResult
 }
 
-class AddRecipeToCategoryActivity{
-- categoryDao:CategoryDao
-- recipeDao:RecipeDao
---
-+ handleRequest(AddRecipeToCategoryRequest) : AddRecipeToCategoryActivityResult
-}
-
-class RemoveRecipeFromCategoryActivity{
-- categoryDao:CategoryDao
-- recipeDao:RecipeDao
---
-+ handleRequest(RemoveRecipeFromCategoryRequest) : RemoveRecipeFromCategoryResult
-}
 
 class RecipeDao{
 + getRecipe()
@@ -102,6 +83,7 @@ class Recipe {
 - totalTime:Integer
 - ingredients:List<String>
 - instructions:List<String>
+- categoryName
 - tags:Set<String>
 - lastAccessed:ZonedDateTime
 - isFavourite:Boolean
@@ -111,7 +93,6 @@ class Category {
 - userId:String
 - categoryId:String
 - categoryName:String
-- recipeList:List<Recipe>
 }
 
 
