@@ -153,9 +153,17 @@ List of Tables and global secondary indexes:
 
 # Mockups
 Mockups (aka “wireframes”) of the front-end web application
-* [Home](images/home.png)
-* [Recipe](images/recipe.png)
-* [Category](images/category.png)
+#### [Home](images/home.png)
+
+![Home](images/home.png)
+
+#### [Recipe](images/recipe.png)
+
+![Recipe](images/recipe.png)
+
+#### [Category](images/category.png)
+
+![Category](images/category.png)
 
 
 # AWS Services
