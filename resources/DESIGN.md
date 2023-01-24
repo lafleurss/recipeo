@@ -33,14 +33,11 @@ A list of “stretch goals”/features
 
 # DynamoDB 
 List of Tables and global secondary indexes:
-### User
-- userId:String
-- emailId:String
 
 ### Recipe
-- userId:String (partition key)
-- recipeId:String (sort key)
-- recipeName:String
+- recipeId:String (partition key)
+- recipeName:String (sort key)
+- userId:String 
 - servings:Integer
 - prepTime:Integer
 - cookTime:Integer
@@ -53,14 +50,17 @@ List of Tables and global secondary indexes:
 - isFavourite:Boolean
 
 ### Category
-- userId:String (partition key)
-- categoryId:String (sort key)
+- categoryId:String (partition key)
 - categoryName:String
-
-### RecentlyUsed (GSI)
 - userId:String (partition key)
-- lastAccessed:String (sort key)
+
+### UserRecipe (GSI)
+- userId:String (partition key)
 - recipeId:String
+
+### UserCategory (GSI)
+- userId:String (partition key)
+- categoryId:String
 
 
 # API Endpoints
