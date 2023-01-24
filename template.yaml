@@ -338,6 +338,8 @@ Resources:
           AttributeType: "S"
         - AttributeName: "recipeName"
           AttributeType: "S"
+        - AttributeName: "userId"
+          AttributeType: "S"
       KeySchema:
         - AttributeName: "recipeId"
           KeyType: "HASH"
@@ -362,6 +364,8 @@ Resources:
         - AttributeName: "categoryId"
           AttributeType: "S"
         - AttributeName: "categoryName"
+          AttributeType: "S"
+        - AttributeName: "userId"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "categoryId"
