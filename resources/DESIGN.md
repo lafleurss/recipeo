@@ -7,7 +7,7 @@ You can also organize your recipes by categories like Recently Used, Favorites, 
 
 ## User Stories
 1. As a user I want to be able to login to the app using Amazon Cognito
-2. As a user I want to Create a Recipe card so that I can save it
+2. As a user I want to Create a Recipe so that I can save it
 3. As a user I want to optionally Assign a Category to a Recipe when Creating a Recipe
 4. As a user I want to Edit a Recipe card so that I can note my recipe adjustments
 5. As a user I want to Delete a Recipe card because I don't need it anymore
