@@ -9,11 +9,9 @@ import static recipeo.utils.CollectionUtils.copyToList;
 
 
 public class RecipeModel {
-    private final ZonedDateTimeConverter converter;
     private final String recipeId;
     private final String recipeName;
     private final String userId;
-    private final String userName;
     private final int servings;
     private final int prepTime;
     private final int cookTime;
@@ -25,28 +23,22 @@ public class RecipeModel {
     private final String lastAccessed;
     private final boolean isFavorite;
 
-    /**
-     * A recipe model that can easily be converted to JSON.
-     *
-     * @param recipe the employee to be converted.
-     */
-    public RecipeModel(Recipe recipe, String userName, String userId) {
-        converter = new ZonedDateTimeConverter();
-        this.recipeId = recipe.getRecipeId();
-        this.recipeName = recipe.getRecipeName();
+    private RecipeModel(String recipeId, String recipeName, String userId, int servings, int prepTime, int cookTime, int totalTime, List<String> ingredients, List<String> instructions, String categoryName, List<String> tags, String lastAccessed, boolean isFavorite) {
+        this.recipeId = recipeId;
+        this.recipeName = recipeName;
         this.userId = userId;
-        this.userName = userName;
-        this.servings = recipe.getServings();
-        this.prepTime = recipe.getPrepTime();
-        this.cookTime = recipe.getCookTime();
-        this.totalTime = recipe.getTotalTime();
-        this.ingredients = recipe.getIngredients();
-        this.instructions = recipe.getInstructions();
-        this.tags = copyToList(recipe.getTags());
-        this.categoryName = recipe.getCategoryName();
-        this.lastAccessed = converter.convert(recipe.getLastAccessed());
-        this.isFavorite = recipe.getIsFavorite();
+        this.servings = servings;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.totalTime = totalTime;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+        this.categoryName = categoryName;
+        this.tags = tags;
+        this.lastAccessed = lastAccessed;
+        this.isFavorite = isFavorite;
     }
+
 
     public String getRecipeId() {
         return recipeId;
@@ -58,10 +50,6 @@ public class RecipeModel {
 
     public String getUserId() {
         return userId;
-    }
-
-    public String getUsrName() {
-        return userName;
     }
 
     public int getServings() {
@@ -108,12 +96,8 @@ public class RecipeModel {
         return new Builder();
     }
 
-    public String getUserName() {
-        return userName;
-    }
 
-
-    private static class Builder {
+    public static class Builder {
         private String recipeId;
         private String recipeName;
         private String userId;
@@ -136,11 +120,6 @@ public class RecipeModel {
 
         public Builder withRecipeName(String recipeName){
             this.recipeName = recipeName;
-            return this;
-        }
-
-        public Builder withUserName(String userName){
-            this.userName = userName;
             return this;
         }
 
@@ -174,13 +153,18 @@ public class RecipeModel {
             return this;
         }
 
-        public Builder withInstructions(List<String> ingredients){
-            this.ingredients = copyToList(ingredients);
+        public Builder withInstructions(List<String> instructions){
+            this.instructions = copyToList(instructions);
             return this;
         }
 
         public Builder withCategoryName(String categoryName){
             this.categoryName = categoryName;
+            return this;
+        }
+
+        public Builder withTags(List<String> tags){
+            this.tags = tags;
             return this;
         }
 
@@ -192,6 +176,9 @@ public class RecipeModel {
         public Builder withIsFavorite(boolean isFavorite){
             this.isFavorite = isFavorite;
             return this;
+        }
+        public RecipeModel build() {
+            return new RecipeModel(recipeId, recipeName, userId, servings, prepTime, cookTime, totalTime, ingredients, instructions, categoryName, tags, lastAccessed, isFavorite );
         }
     }
 }
