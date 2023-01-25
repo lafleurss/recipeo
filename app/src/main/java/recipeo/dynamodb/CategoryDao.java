@@ -53,7 +53,7 @@ public class CategoryDao {
      * @param category The Category to save
      * @return The Category object that was saved
      */
-    public Category savePlaylist(Category category) {
+    public Category saveCategory(Category category) {
         this.dynamoDbMapper.save(category);
         return category;
     }

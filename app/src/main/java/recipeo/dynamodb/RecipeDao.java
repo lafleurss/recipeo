@@ -58,7 +58,7 @@ public class RecipeDao {
      * @param recipe The Recipe to save
      * @return The Recipe object that was saved
      */
-    public Recipe savePlaylist(Recipe recipe) {
+    public Recipe saveRecipe(Recipe recipe) {
         this.dynamoDbMapper.save(recipe);
         return recipe;
     }

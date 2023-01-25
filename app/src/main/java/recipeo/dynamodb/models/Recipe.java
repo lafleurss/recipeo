@@ -148,11 +148,11 @@ public class Recipe {
     }
 
     @DynamoDBAttribute(attributeName = "isFavorite")
-    public Boolean getFavorite() {
+    public Boolean getIsFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(Boolean favorite) {
+    public void setIsFavorite(Boolean favorite) {
         isFavorite = favorite;
     }
 
@@ -167,6 +167,26 @@ public class Recipe {
     @Override
     public int hashCode() {
         return Objects.hash(recipeId, recipeName, userId);
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "recipeId='" + recipeId + '\'' +
+                ", recipeName='" + recipeName + '\'' +
+                ", userId='" + userId + '\'' +
+                ", servings=" + servings +
+                ", prepTime=" + prepTime +
+                ", cookTime=" + cookTime +
+                ", totalTime=" + totalTime +
+                ", ingredients=" + ingredients +
+                ", instructions=" + instructions +
+                ", categoryId='" + categoryId + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", tags=" + tags +
+                ", lastAccessed=" + lastAccessed +
+                ", isFavorite=" + isFavorite +
+                '}';
     }
 }
 

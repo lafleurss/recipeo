@@ -52,4 +52,13 @@ public class Category {
     public int hashCode() {
         return Objects.hash(userId, categoryId, categoryName);
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "userId='" + userId + '\'' +
+                ", categoryId='" + categoryId + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                '}';
+    }
 }
