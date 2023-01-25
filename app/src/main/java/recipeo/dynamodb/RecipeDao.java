@@ -23,7 +23,7 @@ public class RecipeDao {
     private final MetricsPublisher metricsPublisher;
 
     /**
-     * Instantiates a PlaylistDao object.
+     * Instantiates a RecipeDao object.
      *
      * @param dynamoDbMapper   the {@link DynamoDBMapper} used to interact with the recipe table
      * @param metricsPublisher the {@link MetricsPublisher} used to record metrics.
