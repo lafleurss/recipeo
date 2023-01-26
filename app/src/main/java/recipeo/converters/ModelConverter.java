@@ -1,6 +1,5 @@
 package recipeo.converters;
 
-import com.google.gson.JsonArray;
 import recipeo.dynamodb.models.Recipe;
 import recipeo.models.RecipeModel;
 
