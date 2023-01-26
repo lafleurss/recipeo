@@ -1,0 +1,64 @@
+{
+  "recipe": [
+    {
+      "PutRequest": {
+        "Item": {
+          "userId": {
+            "S": "shilpa.sathya+test@gmail.com"
+          },
+          "recipeName": {
+            "S": "Test Recipe"
+          },
+          "recipeId": {
+            "S": "01"
+          },
+          "servings": {
+            "N": "2"
+          },
+          "prepTime": {
+            "N": "20"
+          },
+          "cookTime": {
+            "N": "20"
+          },
+          "totalTime": {
+            "N": "40"
+          },
+          "category": {
+            "S": "Uncategorized"
+          },
+          "isFavorite": {
+            "S": "true"
+          },
+          "ingredients": {
+            "L": [
+              {
+                "S": "x"
+              },
+              {
+                "S": "y"
+              }
+            ]
+          },
+          "instructions": {
+            "L": [
+              {
+                "S": "Step1"
+              },
+              {
+                "S": "Step2"
+              }
+            ]
+          },
+          "tags": {
+            "SS": [
+              "tag1",
+              "tag2",
+              "tag3"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

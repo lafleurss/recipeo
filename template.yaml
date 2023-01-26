@@ -339,7 +339,7 @@ Resources:
         - AttributeName: "recipeId"
           AttributeType: "S"
         - AttributeName: "isFavorite"
-          AttributeType: "B"
+          AttributeType: "S"
         - AttributeName: "lastAccessed"
           AttributeType: "S"
         - AttributeName: "categoryId"
