@@ -1,5 +1,6 @@
 package recipeo.converters;
 
+import com.google.gson.JsonArray;
 import recipeo.dynamodb.models.Recipe;
 import recipeo.models.RecipeModel;
 
@@ -22,6 +23,20 @@ public class ModelConverter {
         if (recipe.getTags() != null) {
             tags = new ArrayList<>(recipe.getTags());
         }
+        List<String> ingredients = null;
+        if (recipe.getIngredients() != null) {
+            ingredients = new ArrayList<>(recipe.getIngredients());
+        }
+
+        List<String> instructions = null;
+        if (recipe.getInstructions() != null) {
+            instructions = new ArrayList<>(recipe.getInstructions());
+        }
+
+        String isFavorite = "false";
+        if (recipe.getIsFavorite() != null) {
+            isFavorite = recipe.getIsFavorite();
+        }
 
         return RecipeModel.builder()
                 .withUserId(recipe.getUserId())
@@ -29,14 +44,14 @@ public class ModelConverter {
                 .withRecipeName(recipe.getRecipeName())
                 .withServings(recipe.getServings())
                 .withTags(tags)
-        //        .withPrepTime(recipe.getPrepTime())
-        //        .withCookTime(recipe.getCookTime())
-        //        .withTotalTime(recipe.getTotalTime())
-        //        .withCategoryName(recipe.getCategoryName())
-                .withIngredients(recipe.getIngredients())
-                .withInstructions(recipe.getInstructions())
-        //        .withIsFavorite(recipe.getIsFavorite())
-        //        .withLastAccessed(converter.convert(recipe.getLastAccessed()))
+                .withPrepTime(recipe.getPrepTime())
+                .withCookTime(recipe.getCookTime())
+                .withTotalTime(recipe.getTotalTime())
+                .withCategoryName(recipe.getCategoryName())
+                .withIngredients(ingredients)
+                .withInstructions(instructions)
+                .withIsFavorite(isFavorite)
+                .withLastAccessed(converter.convert(recipe.getLastAccessed()))
                 .build();
     }
 

@@ -16,8 +16,8 @@ public class GetRecipeResult {
 
     @Override
     public String toString() {
-        return "GetPlaylistResult{" +
-                "playlist=" + recipe +
+        return "GetRecipeResult{" +
+                "recipe=" + recipe +
                 '}';
     }
 

@@ -44,6 +44,9 @@ public class GetRecipeActivityTest {
         recipe.setRecipeName(expectedRecipeName);
         recipe.setUserId(expectedUserId);
         recipe.setServings(expectedServings);
+        recipe.setPrepTime(20);
+        recipe.setCookTime(20);
+        recipe.setTotalTime(40);
         recipe.setTags(Sets.newHashSet(expectedTags));
         recipe.setIngredients(expectedIngredients);
         recipe.setInstructions(expectedInstructions);

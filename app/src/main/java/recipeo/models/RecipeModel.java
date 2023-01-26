@@ -21,9 +21,9 @@ public class RecipeModel {
     private final String categoryName;
     private final List<String> tags;
     private final String lastAccessed;
-    private final boolean isFavorite;
+    private final String isFavorite;
 
-    private RecipeModel(String recipeId, String recipeName, String userId, int servings, int prepTime, int cookTime, int totalTime, List<String> ingredients, List<String> instructions, String categoryName, List<String> tags, String lastAccessed, boolean isFavorite) {
+    private RecipeModel(String recipeId, String recipeName, String userId, int servings, int prepTime, int cookTime, int totalTime, List<String> ingredients, List<String> instructions, String categoryName, List<String> tags, String lastAccessed, String isFavorite) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.userId = userId;
@@ -88,7 +88,7 @@ public class RecipeModel {
         return lastAccessed;
     }
 
-    public boolean isFavorite() {
+    public String getIsFavorite() {
         return isFavorite;
     }
 
@@ -111,7 +111,7 @@ public class RecipeModel {
         private String categoryName;
         private List<String> tags;
         private String lastAccessed;
-        private boolean isFavorite;
+        private String isFavorite;
 
         public Builder withRecipeId(String recipeId){
             this.recipeId = recipeId;
@@ -173,7 +173,7 @@ public class RecipeModel {
             return this;
         }
 
-        public Builder withIsFavorite(boolean isFavorite){
+        public Builder withIsFavorite(String isFavorite){
             this.isFavorite = isFavorite;
             return this;
         }

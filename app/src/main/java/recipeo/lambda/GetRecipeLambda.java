@@ -24,6 +24,7 @@ implements RequestHandler<LambdaRequest<GetRecipeRequest>, LambdaResponse> {
                 () -> input.fromPath(path ->
                         GetRecipeRequest.builder()
                                 .withRecipeId(path.get("recipeId"))
+                                .withUserId("shilpa.sathya+test1@gmail.com")
                                 .build()),
                 (request, serviceComponent) ->
                         serviceComponent.provideGetRecipeActivity().handleRequest(request)

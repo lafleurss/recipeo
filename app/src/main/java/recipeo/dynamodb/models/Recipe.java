@@ -27,7 +27,7 @@ public class Recipe {
     private String categoryName;
     private Set<String> tags;
     private ZonedDateTime lastAccessed;
-    private Boolean isFavorite;
+    private String isFavorite;
 
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
@@ -148,11 +148,11 @@ public class Recipe {
     }
 
     @DynamoDBAttribute(attributeName = "isFavorite")
-    public Boolean getIsFavorite() {
+    public String getIsFavorite() {
         return isFavorite;
     }
 
-    public void setIsFavorite(Boolean favorite) {
+    public void setIsFavorite(String favorite) {
         isFavorite = favorite;
     }
 
