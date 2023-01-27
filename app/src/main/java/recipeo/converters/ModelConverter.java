@@ -17,7 +17,7 @@ public class ModelConverter {
      * @return the converted recipemodel
      */
     public RecipeModel toRecipeModel(Recipe recipe) {
-        ZonedDateTimeConverter converter = new ZonedDateTimeConverter();
+        LocalDateTimeConverter converter = new LocalDateTimeConverter();
         List<String> tags = null;
         if (recipe.getTags() != null) {
             tags = new ArrayList<>(recipe.getTags());

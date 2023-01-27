@@ -1,33 +1,35 @@
 package recipeo.converters;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
+import org.joda.time.format.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ZonedDateTimeConverter implements DynamoDBTypeConverter<String, ZonedDateTime> {
+public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, LocalDateTime> {
 
     /**
      * @param object to be converted to String
      * @return String value of the
      */
     @Override
-    public String convert(ZonedDateTime object) {
+    public String convert(LocalDateTime object) {
         if (object == null){
             return null;
         }
-        return object.format(DateTimeFormatter.ISO_DATE_TIME);
+        return object.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
     }
 
     /**
      * @param object to be converted to ZoneDateTime
-     * @return
+     * @return ZonedDateTime value of object
      */
     @Override
-    public ZonedDateTime unconvert(String object) {
+    public LocalDateTime unconvert(String object) {
         if (object == null){
             return null;
         }
-        return ZonedDateTime.parse(object,  DateTimeFormatter.ISO_DATE_TIME);
+        return LocalDateTime.parse(object, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
     }
 }

@@ -1,9 +1,7 @@
 package recipeo.models;
 
-import recipeo.converters.ZonedDateTimeConverter;
-import recipeo.dynamodb.models.Recipe;
-
 import java.util.List;
+import java.util.Objects;
 
 import static recipeo.utils.CollectionUtils.copyToList;
 
@@ -90,6 +88,38 @@ public class RecipeModel {
 
     public String getIsFavorite() {
         return isFavorite;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecipeModel that = (RecipeModel) o;
+        return servings == that.servings && prepTime == that.prepTime && cookTime == that.cookTime && totalTime == that.totalTime && recipeId.equals(that.recipeId) && recipeName.equals(that.recipeName) && userId.equals(that.userId) && Objects.equals(ingredients, that.ingredients) && Objects.equals(instructions, that.instructions) && Objects.equals(categoryName, that.categoryName) && Objects.equals(tags, that.tags) && Objects.equals(lastAccessed, that.lastAccessed) && Objects.equals(isFavorite, that.isFavorite);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(recipeId, recipeName, userId, servings, prepTime, cookTime, totalTime, ingredients, instructions, categoryName, tags, lastAccessed, isFavorite);
+    }
+
+    @Override
+    public String toString() {
+        return "RecipeModel{" +
+                "recipeId='" + recipeId + '\'' +
+                ", recipeName='" + recipeName + '\'' +
+                ", userId='" + userId + '\'' +
+                ", servings=" + servings +
+                ", prepTime=" + prepTime +
+                ", cookTime=" + cookTime +
+                ", totalTime=" + totalTime +
+                ", ingredients=" + ingredients +
+                ", instructions=" + instructions +
+                ", categoryName='" + categoryName + '\'' +
+                ", tags=" + tags +
+                ", lastAccessed='" + lastAccessed + '\'' +
+                ", isFavorite='" + isFavorite + '\'' +
+                '}';
     }
 
     public static Builder builder() {

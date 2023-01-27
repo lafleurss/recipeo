@@ -17,6 +17,7 @@ import javax.inject.Inject;
  * This API allows the customer to get one of their saved recipes.
  */
 public class GetRecipeActivity {
+
     private final Logger log = LogManager.getLogger();
     private final RecipeDao recipeDao;
 

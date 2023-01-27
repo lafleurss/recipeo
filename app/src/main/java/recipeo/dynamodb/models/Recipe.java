@@ -1,9 +1,9 @@
 package recipeo.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import recipeo.converters.ZonedDateTimeConverter;
+import recipeo.converters.LocalDateTimeConverter;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -26,7 +26,7 @@ public class Recipe {
     private String categoryId;
     private String categoryName;
     private Set<String> tags;
-    private ZonedDateTime lastAccessed;
+    private LocalDateTime lastAccessed;
     private String isFavorite;
 
     @DynamoDBHashKey(attributeName = "userId")
@@ -138,12 +138,12 @@ public class Recipe {
     }
 
     @DynamoDBAttribute(attributeName = "lastAccessed")
-    @DynamoDBTypeConverted(converter = ZonedDateTimeConverter.class)
-    public ZonedDateTime getLastAccessed() {
+    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    public LocalDateTime  getLastAccessed() {
         return lastAccessed;
     }
 
-    public void setLastAccessed(ZonedDateTime lastAccessed) {
+    public void setLastAccessed(LocalDateTime  lastAccessed) {
         this.lastAccessed = lastAccessed;
     }
 
