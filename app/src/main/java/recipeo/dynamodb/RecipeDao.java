@@ -1,6 +1,7 @@
 package recipeo.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import recipeo.dynamodb.models.Recipe;
@@ -19,6 +20,7 @@ import java.util.Map;
  */
 @Singleton
 public class RecipeDao {
+    private static final int PAGE_SIZE = 20;
     private final DynamoDBMapper dynamoDbMapper;
     private final MetricsPublisher metricsPublisher;
 
@@ -50,6 +52,31 @@ public class RecipeDao {
         }
         metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 0);
         return recipe;
+    }
+
+    /**
+     * Returns the {@link List<Recipe>} corresponding to the specified user id.
+     *
+     * @param userId the User ID
+     * @return the stored list of Recipes, or null if none was found.
+     */
+    public List<Recipe> getRecipesForUser(String userId) {
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":userId" , new AttributeValue().withS(userId));
+
+        DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                .withKeyConditionExpression("userId = :userId")
+                .withExpressionAttributeValues(valueMap)
+                .withLimit(PAGE_SIZE);
+
+        List<Recipe> recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+
+        if (recipeList == null) {
+            metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);
+            throw new RecipeNotFoundException("Could not find recipes with for user with id" + userId);
+        }
+        metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 0);
+        return recipeList;
     }
 
     /**
@@ -110,5 +137,6 @@ public class RecipeDao {
                 .append(valueMapNamePrefix).append(position)
                 .append(") ");
     }
+
 
 }

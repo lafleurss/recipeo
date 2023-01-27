@@ -4,6 +4,7 @@ import dagger.Component;
 import dagger.Provides;
 import recipeo.activity.GetCategoryActivity;
 import recipeo.activity.GetRecipeActivity;
+import recipeo.activity.GetRecipesForUserActivity;
 
 import javax.inject.Singleton;
 
@@ -19,6 +20,12 @@ public interface ServiceComponent {
      * @return GetRecipeActivity
      */
     GetRecipeActivity provideGetRecipeActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return GetRecipesForUserActivity
+     */
+    GetRecipesForUserActivity provideGetRecipesForUserActivity();
 
     /**
      * Provides the relevant activity.
