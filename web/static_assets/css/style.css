@@ -1,16 +1,16 @@
 :root {
     /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
-    --primary-color: #5D5E5E;
+    --primary-color: #f0bab9;
     --secondary-color: #ffffff;
-    --tertiary-color: #F5881F;
+    --tertiary-color: #de5f5c;
     --error-color: #EE3A23;
 }
 
 .background {
-    background-color: #8A8C8F;
+    background-color: #ffffff;
     margin: 0;
     counter-reset: section;
-    font-family: "Helvetica Neue",Helvetica,sans-serif;
+    font-family: "Abril Fatface";
 }
 
 .header {
@@ -21,6 +21,7 @@
     background-color: var(--primary-color);
     color: var(--secondary-color);
     padding: 4px 20px;
+    
 }
 
 .button {
@@ -29,7 +30,6 @@
   color: var(--secondary-color);
   padding: 6px 8px 4px 8px;
   text-align: center;
-  font-weight: bold;
   text-decoration: none;
   cursor: pointer;
 }
@@ -89,6 +89,16 @@
     color: var(--secondary-color);
     position: relative;
     border-radius: 16px;
+}
+
+div.banner {
+   height: 900px;
+   width: 70%;
+   background-image:url('/banner.png');
+   margin-left: auto;
+   margin-right: auto;
+   display: flex;
+   justify-content: center;
 }
 
 .song {
