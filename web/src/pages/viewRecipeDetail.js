@@ -54,6 +54,16 @@ class ViewRecipeDetail extends BindingClass {
         if (recipe.totalTime){
             document.getElementById('totaltime').innerHTML = recipe.totalTime;
         }
+
+        if (recipe.isFavorite){
+            if (recipe.isFavorite == "true"){
+                document.getElementById('favorite').className = "fa fa-heart";
+            }
+        }
+
+        if (recipe.category){
+            document.getElementById('category').innerHTML = recipe.category;
+        }
         if (recipe.ingredients){
             var list = document.getElementById('ingredients')
             var counter = 0;

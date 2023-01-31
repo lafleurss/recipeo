@@ -5,6 +5,7 @@
     <title>Recipeo</title>
     <script type="text/javascript" src="assets/viewRecipeDetail.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -14,11 +15,14 @@
   <div> <span> </span></div>
   <div> <span> </span></div>
   <div class="sidenav">
+    <a href="/viewRecipes.html">All Recipes</a>
     <a href="#">Recently Used</a>
     <a href="#">Favorites</a>
     <a href="#">Uncategorized</a>
     <a href="#">CategoryA</a>
     <a href="#">CategoryB</a>
+    <a href="#"><button id="add" name="add"> Add Category</button></a>
+
   </div>
     <div  class="recipetitle">
         <h2 id= "recipetitle">Recipe Name Goes Here</h2>
@@ -29,7 +33,15 @@
             <div class ="div-1">  Servings:  </div>
             <div class ="div-2" id="servings"></div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class = "div-1">  PrepT ime:  </div>
+            <div class="div-1">  Category:  </div>
+            <select  id="category">
+                <!--                <option value="Uncategorized">Uncategorized</option>-->
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <i id="favorite" class="fa fa-heart-o"></i>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br> <br>
+            <div class = "div-1">  Prep Time:  </div>
             <div class = "div-2" id="preptime" ></div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="div-1">  Cook Time:  </div>
@@ -38,11 +50,12 @@
             <div class="div-1">  Total Time:  </div>
             <div class = "div-2" id="totaltime" ></div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
         </div>
     </div>
 
-    <div> <span> </span></div>
-    <div> <span> </span></div>
+    <br><br>
 
     <div class="row">
         <div class="columnleft">

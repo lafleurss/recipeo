@@ -57,78 +57,42 @@ class ViewRecipes extends BindingClass {
         }
  }
 
-    async genCard(recipes){
-    const container = document.getElementById('accordion');
-
-    recipes.forEach((result, idx) => {
-      // Create card element
-      const card = document.createElement('div');
-      card.classList = 'card-body';
-
-      // Construct card content
-      const content = `
-        <div class="card">
-        <div class="card-header" id="heading-${idx}">
-          <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-${idx}" aria-expanded="true" aria-controls="collapse-${idx}">
-
-                    </button>
-          </h5>
-        </div>
-
-        <div id="collapse-${idx}" class="collapse show" aria-labelledby="heading-${idx}" data-parent="#accordion">
-          <div class="card-body">
-
-            <h5>${result.title}</h5>
-            <p>${result.description}</p>
-            <p>${result.output}</p>
-            ...
-          </div>
-        </div>
-      </div>
-      `;
-
-      // Append newly created card element to the container
-      container.innerHTML += content;
-    })
-    }
-
      async generateTable(table, data) {
-           if (data.length != 0) {
-               for (let element of data) {
-                 let row = table.insertRow();
+        if (data.length != 0) {
+           for (let element of data) {
+             let row = table.insertRow();
 
-                 row.addEventListener('click', async evt => {
-                             window.location.href = `/viewRecipeDetail.html?id=${element.recipeId}`;
-                           });
+             row.addEventListener('click', async evt => {
+                         window.location.href = `/viewRecipeDetail.html?id=${element.recipeId}`;
+                       });
 
-                 let cell = row.insertCell();
-                 let text = document.createTextNode(element.recipeName);
-                 cell.appendChild(text);
+             let cell = row.insertCell();
+             let text = document.createTextNode(element.recipeName);
+             cell.appendChild(text);
 
-                 cell = row.insertCell();
-                 text = document.createTextNode(element.category);
-                 cell.appendChild(text);
+             cell = row.insertCell();
+             text = document.createTextNode(element.categoryName);
+             cell.appendChild(text);
 
-                 cell = row.insertCell();
-                 text = document.createTextNode(element.servings);
-                 cell.appendChild(text);
+             cell = row.insertCell();
+             text = document.createTextNode(element.servings);
+             cell.appendChild(text);
 
-                 cell = row.insertCell();
-                 text = document.createTextNode(element.prepTime);
-                 cell.appendChild(text);
+             cell = row.insertCell();
+             text = document.createTextNode(element.prepTime);
+             cell.appendChild(text);
 
-                cell = row.insertCell();
-                text = document.createTextNode(element.cookTime);
-                cell.appendChild(text);
+            cell = row.insertCell();
+            text = document.createTextNode(element.cookTime);
+            cell.appendChild(text);
 
-                cell = row.insertCell();
-                text = document.createTextNode(element.totalTime);
-                cell.appendChild(text);
+            cell = row.insertCell();
+            text = document.createTextNode(element.totalTime);
+            cell.appendChild(text);
 
-               }
            }
-         }
+       }
+     }
 
 
     /**
