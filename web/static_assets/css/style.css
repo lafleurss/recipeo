@@ -18,20 +18,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--primary-color);
+    background-color: var(--tertiary-color);
     color: var(--secondary-color);
     padding: 4px 20px;
-    
+
+
+
 }
 
 .button {
-  background-color: var(--tertiary-color);
+  background-color: var(--primary-color);
   border: none;
   color: var(--secondary-color);
   padding: 6px 8px 4px 8px;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  font-weight: 300;
+
 }
 
 .button-group {
@@ -47,11 +51,78 @@
     color: var(--secondary-color);
 }
 
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 20;
+  left: 0;
+  background-color: var(--secondary-color);
+  overflow-x: hidden;
+  padding-top: 20px;
+  }
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+
+/* Recipe Title */
+.recipetitle {
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  background: white;
+}
+
+.columnleft {
+  float: left;
+  width: 35%;
+}
+
+.columnright {
+  float: right;
+  width: 65%;
+}
+
+.recipemetadata {
+  float: left;
+  width: 33.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+
 .card {
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
-    margin: 20px;
-    padding: 10px 20px;
+padding: 1rem;
+border: 1px solid grey;
+margin: 1px;
 }
 
 .error {
@@ -91,14 +162,14 @@
     border-radius: 16px;
 }
 
-div.banner {
-   height: 900px;
+div.splash {
    width: 70%;
-   background-image:url('/banner.png');
    margin-left: auto;
    margin-right: auto;
    display: flex;
    justify-content: center;
+   display: grid;
+   height: 100%;
 }
 
 .song {
@@ -132,13 +203,16 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CS
 
 /* table styles */
 
-th, td {
-    padding: 15px;
-    text-align: left;
+td {
+    color: #818181;
+    padding: 20px;
 }
 
 th {
+    padding: 20px;
+    text-align: left;
     border-bottom: 1px solid var(--primary-color);
+    color: #818181;
 }
 
 a {

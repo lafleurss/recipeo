@@ -15,7 +15,7 @@ export default class RecipeoClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getRecipe'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getRecipe', 'getRecipesForUser'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -81,6 +81,21 @@ export default class RecipeoClient extends BindingClass {
         try {
             const response = await this.axiosClient.get(`recipes/${id}`);
             return response.data.recipe;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Gets the recipe for the given User ID.
+     * @param id Unique identifier for a user which is the emailid
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The recipe's metadata.
+     */
+    async getRecipesForUser(id, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`recipes/user/${id}`);
+            return response.data.recipes;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
