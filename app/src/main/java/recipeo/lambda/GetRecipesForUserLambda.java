@@ -4,10 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import recipeo.activity.requests.GetCategoriesForUserRequest;
-import recipeo.activity.requests.GetRecipeRequest;
 import recipeo.activity.requests.GetRecipesForUserRequest;
-import recipeo.activity.results.GetRecipeResult;
 import recipeo.activity.results.GetRecipesForUserResult;
 
 public class GetRecipesForUserLambda extends LambdaActivityRunner<GetRecipesForUserRequest, GetRecipesForUserResult>

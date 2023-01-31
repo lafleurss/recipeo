@@ -27,6 +27,7 @@ class ViewRecipes extends BindingClass {
         //this.dataStore.set('veryFirstEmpId', employees[0].lastNameEmployeeId);
         //this.dataStore.set('firstEmpId', employees[0].lastNameEmployeeId);
         await this.displayRecipesOnPage();
+
     }
 
 /**
@@ -103,6 +104,7 @@ class ViewRecipes extends BindingClass {
 
         this.client = new RecipeoClient();
         await this.clientLoaded();
+
     }
 }
 

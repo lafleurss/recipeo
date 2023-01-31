@@ -2,6 +2,7 @@ package recipeo.activity.dependency;
 
 import dagger.Component;
 import dagger.Provides;
+import recipeo.activity.GetCategoriesForUserActivity;
 import recipeo.activity.GetCategoryActivity;
 import recipeo.activity.GetRecipeActivity;
 import recipeo.activity.GetRecipesForUserActivity;
@@ -33,6 +34,10 @@ public interface ServiceComponent {
      */
     GetCategoryActivity provideGetCategoryActivity();
 
-
+    /**
+     * Provides the relevant activity.
+     * @return GetCategoresForUserActivity
+     */
+    GetCategoriesForUserActivity provideGetCategoriesForUserActivity();
 
 }

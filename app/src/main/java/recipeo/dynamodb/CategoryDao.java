@@ -1,13 +1,19 @@
 package recipeo.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import recipeo.dynamodb.models.Category;
+import recipeo.dynamodb.models.Recipe;
 import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.metrics.MetricsConstants;
 import recipeo.metrics.MetricsPublisher;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Accesses data for a category using {@link Category} to represent the model in DynamoDB.
@@ -16,6 +22,7 @@ import javax.inject.Singleton;
 public class CategoryDao {
     private final DynamoDBMapper dynamoDbMapper;
     private final MetricsPublisher metricsPublisher;
+    private static final int PAGE_SIZE = 20;
 
     /**
      * Instantiates a CategoryDao object.
@@ -58,4 +65,22 @@ public class CategoryDao {
         return category;
     }
 
+    public List<Category> getCategoriesForUser(String userId) {
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":userId" , new AttributeValue().withS(userId));
+
+        DynamoDBQueryExpression<Category> queryExpression = new DynamoDBQueryExpression<Category>()
+                .withKeyConditionExpression("userId = :userId")
+                .withExpressionAttributeValues(valueMap)
+                .withLimit(PAGE_SIZE);
+
+        List<Category> categoryList = dynamoDbMapper.queryPage(Category.class, queryExpression).getResults();
+
+        if (categoryList == null) {
+            metricsPublisher.addCount(MetricsConstants.GETCATEGORIESFORUSER_CATEGORYNOTFOUND_COUNT, 1);
+            throw new RecipeNotFoundException("Could not find recipes with for user with id" + userId);
+        }
+        metricsPublisher.addCount(MetricsConstants.GETCATEGORIESFORUSER_CATEGORYNOTFOUND_COUNT, 0);
+        return categoryList;
+    }
 }
