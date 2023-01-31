@@ -61,9 +61,14 @@ class ViewRecipeDetail extends BindingClass {
             }
         }
 
-        if (recipe.category){
-            document.getElementById('category').innerHTML = recipe.category;
+        if (recipe.categoryName){
+            var select = document.getElementById('category');
+            var opt = document.createElement('option');
+            opt.value = recipe.categoryName;
+            opt.innerHTML = recipe.categoryName;
+            select.appendChild(opt);
         }
+        
         if (recipe.ingredients){
             var list = document.getElementById('ingredients')
             var counter = 0;
