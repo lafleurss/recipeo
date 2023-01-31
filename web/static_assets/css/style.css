@@ -98,6 +98,11 @@
   width: 65%;
 }
 
+.column {
+  float: left;
+  width: 50%;
+}
+
 .recipemetadata {
   float: left;
   width: 33.33%;
@@ -118,6 +123,16 @@
   }
 }
 
+.div-1{
+  font-weight:bold;
+  display: inline-block;
+  color: #ff7f50;
+}
+
+.div-2{
+  font-weight:bold;
+  display: inline-block;
+}
 
 .card {
 padding: 1rem;

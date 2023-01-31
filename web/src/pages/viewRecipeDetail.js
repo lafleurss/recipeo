@@ -34,6 +34,46 @@ class ViewRecipeDetail extends BindingClass {
      */
     async displayRecipeOnPage() {
         const recipe = this.dataStore.get('recipe');
+
+        if (!recipe) {
+            return;
+        }
+
+        if (recipe.recipeName){
+            document.getElementById('recipetitle').innerHTML = recipe.recipeName;
+        }
+        if (recipe.servings){
+            document.getElementById('servings').innerHTML = recipe.servings;
+        }
+        if (recipe.prepTime){
+            document.getElementById('preptime').innerHTML = recipe.prepTime;
+        }
+        if (recipe.cookTime){
+            document.getElementById('cooktime').innerHTML = recipe.cookTime;
+        }
+        if (recipe.totalTime){
+            document.getElementById('totaltime').innerHTML = recipe.totalTime;
+        }
+        if (recipe.ingredients){
+            var list = document.getElementById('ingredients')
+            var counter = 0;
+            for (var i in recipe.ingredients) {
+              var elem = document.createElement("li");
+              elem.innerText =  recipe.ingredients[i];
+              list.appendChild(elem);
+            }
+        }
+
+        if (recipe.instructions){
+            var list = document.getElementById('instructions')
+            var counter = 0;
+            for (var i in recipe.instructions) {
+              var elem = document.createElement("li");
+              elem.innerText =  recipe.instructions[i];
+              list.appendChild(elem);
+            }
+        }
+
  }
 
 
