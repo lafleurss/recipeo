@@ -238,8 +238,6 @@ Resources:
           Properties:
             Path: /recipes/{recipeId}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   GetRecipesForUserLambda:
     Type: AWS::Serverless::Function
@@ -260,8 +258,6 @@ Resources:
           Properties:
             Path: /recipes/user/{userId}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   SearchRecipesLambda:
     Type: AWS::Serverless::Function
@@ -282,8 +278,7 @@ Resources:
           Properties:
             Path: /recipes/search
             Method: get
-            Auth:
-              Authorizer: 'NONE'
+
 
   GetCategoryLambda:
     Type: AWS::Serverless::Function
@@ -302,10 +297,9 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /category/{categoryId}
+            Path: /category/{categoryName}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
+
 
   GetCategoriesForUserLambda:
     Type: AWS::Serverless::Function
@@ -326,8 +320,6 @@ Resources:
           Properties:
             Path: /category/user/{userId}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   CreateRecipeLambda:
     Type: AWS::Serverless::Function
