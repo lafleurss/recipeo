@@ -24,7 +24,7 @@ public class GetCategoriesForUserLambda extends LambdaActivityRunner<GetCategori
         return super.runActivity(
                 () -> input.fromUserClaims(claims  ->
                         GetCategoriesForUserRequest.builder()
-                                .withUserId(claims.get("userId"))
+                                .withUserId(claims.get("email"))
                                 .build()),
                 (request, serviceComponent) ->
                         serviceComponent.provideGetCategoriesForUserActivity().handleRequest(request)

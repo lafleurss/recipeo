@@ -1,5 +1,8 @@
 package recipeo.activity.requests;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(builder = CreateCategoryRequest.Builder.class)
 public class CreateCategoryRequest {
 
     private String userId;
