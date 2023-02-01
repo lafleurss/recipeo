@@ -43,4 +43,11 @@ public interface ServiceComponent {
      */
     CreateCategoryActivity provideCreateCategoryActivity();
 
+
+    /**
+     * Provides the relevant activity.
+     * @return UpdateCategoryActivity
+     */
+    UpdateCategoryActivity provideUpdateCategoryActivity();
+
 }

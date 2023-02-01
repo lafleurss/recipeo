@@ -7,6 +7,7 @@ import recipeo.activity.results.GetRecipeResult;
 import recipeo.converters.ModelConverter;
 import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Recipe;
+import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.models.RecipeModel;
 
 import javax.inject.Inject;
@@ -31,11 +32,27 @@ public class GetRecipeActivity {
         this.recipeDao = recipeDao;
     }
 
+
+    /**
+     * This method handles the incoming request by retrieving the recipe from the database.
+     * <p>
+     * It then returns the recipe.
+     * <p>
+     * If the recipe does not exist, this should throw a RecipeNotFoundException.
+     *
+     * @param getRecipeRequest request object containing the recipe ID
+     * @return GetRecipeResult object containing the API defined {@link RecipeModel}
+     */
     public GetRecipeResult handleRequest(GetRecipeRequest getRecipeRequest){
         log.info("Received GetRecipeRequest {}", getRecipeRequest);
         String recipeId = getRecipeRequest.getRecipeId();
         String userId = getRecipeRequest.getUserId();
         Recipe recipe = recipeDao.getRecipe(userId,recipeId);
+
+        if (recipe == null){
+            throw new RecipeNotFoundException("The recipe with id: " + recipeId + " cannot be found for user id: " + userId);
+        }
+
         RecipeModel recipeModel = new ModelConverter().toRecipeModel(recipe);
 
         return GetRecipeResult.builder()

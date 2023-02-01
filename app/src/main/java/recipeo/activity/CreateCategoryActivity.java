@@ -6,6 +6,8 @@ import recipeo.activity.requests.CreateCategoryRequest;
 import recipeo.activity.results.CreateCategoryResult;
 import recipeo.dynamodb.CategoryDao;
 import recipeo.dynamodb.models.Category;
+import recipeo.exceptions.InvalidAttributeValueException;
+import recipeo.utils.RecipeoServiceUtils;
 
 import javax.inject.Inject;
 
@@ -21,6 +23,22 @@ public class CreateCategoryActivity {
 
     public CreateCategoryResult handleRequest(CreateCategoryRequest createCategoryRequest) {
         log.info("Received CreateCategoryRequest {}", createCategoryRequest);
+
+        //Check for illegal characters
+        if (!RecipeoServiceUtils.isValidString(createCategoryRequest.getCategoryName())) {
+            throw new InvalidAttributeValueException("Category name [" + createCategoryRequest.getCategoryName() +
+                    "] contains illegal characters");
+        }
+
+        if (!RecipeoServiceUtils.isValidString(createCategoryRequest.getUserId())) {
+            throw new InvalidAttributeValueException("Category user ID [" + createCategoryRequest.getUserId() +
+                    "] contains illegal characters");
+        }
+
+        if (!RecipeoServiceUtils.isValidString(createCategoryRequest.getCategoryDescription())) {
+            throw new InvalidAttributeValueException("Category description [" + createCategoryRequest.getCategoryDescription() +
+                    "] contains illegal characters");
+        }
 
         String userId = createCategoryRequest.getUserId();
         String categoryName = createCategoryRequest.getCategoryName();

@@ -40,15 +40,15 @@ public class CategoryDao {
      * Returns the {@link Category} corresponding to the specified category id.
      *
      * @param userId the User ID
-     * @param categoryId the Category ID
+     * @param categoryName the Category Name
      * @return the stored Category, or null if none was found.
      */
-    public Category getCategory(String userId, String categoryId) {
-        Category category = this.dynamoDbMapper.load(Category.class, userId, categoryId);
+    public Category getCategory(String userId, String categoryName) {
+        Category category = this.dynamoDbMapper.load(Category.class, userId, categoryName);
 
         if (category == null) {
             metricsPublisher.addCount(MetricsConstants.GETCATEGORY_CATEGORYNOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find category with id: " + categoryId + " for user with id: " + userId);
+            throw new RecipeNotFoundException("Could not find category name : " + categoryName + " for user with id: " + userId);
         }
         metricsPublisher.addCount(MetricsConstants.GETCATEGORY_CATEGORYNOTFOUND_COUNT, 0);
         return category;

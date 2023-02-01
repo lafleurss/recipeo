@@ -7,6 +7,9 @@ import recipeo.activity.results.GetCategoriesForUserResult;
 import recipeo.activity.results.GetCategoryResult;
 import recipeo.dynamodb.CategoryDao;
 import recipeo.dynamodb.models.Category;
+import recipeo.exceptions.CategoryNotFoundException;
+import recipeo.exceptions.RecipeNotFoundException;
+import recipeo.models.RecipeModel;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -20,11 +23,25 @@ public class GetCategoryActivity {
         this.categoryDao = categoryDao;
     }
 
+    /**
+     * This method handles the incoming request by retrieving the category from the database.
+     * <p>
+     * It then returns the category.
+     * <p>
+     * If the category does not exist, this should throw a CategoryNotFoundException.
+     *
+     * @param getCategoryRequest request object containing the category ID
+     * @return GetCategoryResult object containing the API defined {@link Category}
+     */
     public GetCategoryResult handleRequest(GetCategoryRequest getCategoryRequest) {
         log.info("Received GetCategoryRequest {}", getCategoryRequest);
         String userId = getCategoryRequest.getUserId();
         String categoryName = getCategoryRequest.getCategoryName();
         Category category = categoryDao.getCategory(userId,categoryName);
+
+        if (category == null){
+            throw new CategoryNotFoundException("The category name: " + categoryName + " cannot be found for user id: " + userId);
+        }
 
         return GetCategoryResult.builder()
                 .withCategory(category)
