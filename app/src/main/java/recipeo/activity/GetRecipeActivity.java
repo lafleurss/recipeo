@@ -43,11 +43,11 @@ public class GetRecipeActivity {
      * @param getRecipeRequest request object containing the recipe ID
      * @return GetRecipeResult object containing the API defined {@link RecipeModel}
      */
-    public GetRecipeResult handleRequest(GetRecipeRequest getRecipeRequest){
+    public GetRecipeResult handleRequest(GetRecipeRequest getRecipeRequest) {
         log.info("Received GetRecipeRequest {}", getRecipeRequest);
         String recipeId = getRecipeRequest.getRecipeId();
         String userId = getRecipeRequest.getUserId();
-        Recipe recipe = recipeDao.getRecipe(userId,recipeId);
+        Recipe recipe = recipeDao.getRecipe(userId, recipeId);
 
         if (recipe == null){
             throw new RecipeNotFoundException("The recipe with id: " + recipeId + " cannot be found for user id: " + userId);

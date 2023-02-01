@@ -3,16 +3,12 @@ package recipeo.activity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import recipeo.activity.requests.GetCategoryRequest;
-import recipeo.activity.results.GetCategoriesForUserResult;
 import recipeo.activity.results.GetCategoryResult;
 import recipeo.dynamodb.CategoryDao;
 import recipeo.dynamodb.models.Category;
 import recipeo.exceptions.CategoryNotFoundException;
-import recipeo.exceptions.RecipeNotFoundException;
-import recipeo.models.RecipeModel;
 
 import javax.inject.Inject;
-import java.util.List;
 
 public class GetCategoryActivity {
     private final Logger log = LogManager.getLogger();
@@ -37,7 +33,7 @@ public class GetCategoryActivity {
         log.info("Received GetCategoryRequest {}", getCategoryRequest);
         String userId = getCategoryRequest.getUserId();
         String categoryName = getCategoryRequest.getCategoryName();
-        Category category = categoryDao.getCategory(userId,categoryName);
+        Category category = categoryDao.getCategory(userId, categoryName);
 
         if (category == null){
             throw new CategoryNotFoundException("The category name: " + categoryName + " cannot be found for user id: " + userId);

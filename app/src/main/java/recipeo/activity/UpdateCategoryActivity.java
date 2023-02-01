@@ -3,7 +3,6 @@ package recipeo.activity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import recipeo.activity.requests.UpdateCategoryRequest;
-import recipeo.activity.results.CreateCategoryResult;
 import recipeo.activity.results.UpdateCategoryResult;
 import recipeo.dynamodb.CategoryDao;
 import recipeo.dynamodb.models.Category;
