@@ -1,6 +1,7 @@
 package recipeo.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = CreateCategoryRequest.Builder.class)
 public class CreateCategoryRequest {
@@ -27,11 +28,12 @@ public class CreateCategoryRequest {
         return categoryDescription;
     }
 
+
     @Override
     public String toString() {
         return "CreateCategoryRequest{" +
-                ", userId='" + userId + '\'' +
-                "categoryName='" + categoryName + '\'' +
+                "userId='" + userId + '\'' +
+                ", categoryName='" + categoryName + '\'' +
                 ", categoryDescription='" + categoryDescription + '\'' +
                 '}';
     }
@@ -40,6 +42,7 @@ public class CreateCategoryRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder
     public static class Builder {
         private String categoryName;
         private String userId;

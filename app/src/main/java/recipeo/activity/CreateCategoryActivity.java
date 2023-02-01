@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import recipeo.activity.requests.CreateCategoryRequest;
 import recipeo.activity.results.CreateCategoryResult;
-import recipeo.activity.results.GetCategoryResult;
 import recipeo.dynamodb.CategoryDao;
 import recipeo.dynamodb.models.Category;
 
@@ -32,10 +31,10 @@ public class CreateCategoryActivity {
         categoryToBeSaved.setCategoryDescription(categoryDescription);
         categoryToBeSaved.setUserId(userId);
 
-        Category category = categoryDao.saveCategory(categoryToBeSaved);
+        categoryDao.saveCategory(categoryToBeSaved);
 
         return CreateCategoryResult.builder()
-                .withCategory(category)
+                .withCategory(categoryToBeSaved)
                 .build();
 
     }
