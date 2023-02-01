@@ -68,7 +68,7 @@ class ViewRecipeDetail extends BindingClass {
             opt.innerHTML = recipe.categoryName;
             select.appendChild(opt);
         }
-        
+
         if (recipe.ingredients){
             var list = document.getElementById('ingredients')
             var counter = 0;
