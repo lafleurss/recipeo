@@ -26,20 +26,20 @@ public class GetCategoryRequest {
     }
 
     //CHECKSTYLE:OFF:Builder
-    public static GetCategoryRequest.Builder builder() {
-        return new GetCategoryRequest.Builder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static class Builder {
         private String categoryName;
         private String userId;
 
-        public GetCategoryRequest.Builder withCategoryName(String categoryName) {
+        public Builder withCategoryName(String categoryName) {
             this.categoryName = categoryName;
             return this;
         }
 
-        public GetCategoryRequest.Builder withUserId(String userId) {
+        public Builder withUserId(String userId) {
             this.userId = userId;
             return this;
         }

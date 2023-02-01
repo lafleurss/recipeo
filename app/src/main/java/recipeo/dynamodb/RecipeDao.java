@@ -48,7 +48,7 @@ public class RecipeDao {
 
         if (recipe == null) {
             metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipe with id " + recipeId + " for user with id" + userId);
+            throw new RecipeNotFoundException("Could not find recipe with id: " + recipeId + " for user with id: " + userId);
         }
         metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 0);
         return recipe;
@@ -73,7 +73,7 @@ public class RecipeDao {
 
         if (recipeList == null) {
             metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipes with for user with id" + userId);
+            throw new RecipeNotFoundException("Could not find recipes for user with id: " + userId);
         }
         metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 0);
         return recipeList;

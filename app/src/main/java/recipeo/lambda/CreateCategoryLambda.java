@@ -4,11 +4,11 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import recipeo.activity.requests.GetCategoryRequest;
-import recipeo.activity.results.GetCategoryResult;
+import recipeo.activity.requests.CreateCategoryRequest;
+import recipeo.activity.results.CreateCategoryResult;
 
-public class GetCategoryLambda extends LambdaActivityRunner<GetCategoryRequest, GetCategoryResult>
-        implements RequestHandler<AuthenticatedLambdaRequest<GetCategoryRequest>, LambdaResponse> {
+public class CreateCategoryLambda extends LambdaActivityRunner<CreateCategoryRequest, CreateCategoryResult>
+        implements RequestHandler<AuthenticatedLambdaRequest<CreateCategoryRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
 
     /**
@@ -17,23 +17,20 @@ public class GetCategoryLambda extends LambdaActivityRunner<GetCategoryRequest, 
      * @return a LambdaResponse
      */
     @Override
-    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetCategoryRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<CreateCategoryRequest> input, Context context) {
         log.info("handleRequest");
 
-        GetCategoryRequest unauthenticatedRequest = input.fromPath(i ->
-                GetCategoryRequest.builder()
-                        .withCategoryName(i.get("categoryName"))
-                        .build());
-
+        CreateCategoryRequest unauthenticatedRequest = input.fromBody(CreateCategoryRequest.class);
 
         return super.runActivity(
                 () -> input.fromUserClaims(claims ->
-                        GetCategoryRequest.builder()
+                        CreateCategoryRequest.builder()
                                 .withCategoryName(unauthenticatedRequest.getCategoryName())
+                                .withCategoryDescription(unauthenticatedRequest.getCategoryDescription())
                                 .withUserId(claims.get("email"))
                                 .build()),
                 (request, serviceComponent) ->
-                        serviceComponent.provideGetCategoryActivity().handleRequest(request)
+                        serviceComponent.provideCreateCategoryActivity().handleRequest(request)
         );
     }
 }

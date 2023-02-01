@@ -2,10 +2,7 @@ package recipeo.activity.dependency;
 
 import dagger.Component;
 import dagger.Provides;
-import recipeo.activity.GetCategoriesForUserActivity;
-import recipeo.activity.GetCategoryActivity;
-import recipeo.activity.GetRecipeActivity;
-import recipeo.activity.GetRecipesForUserActivity;
+import recipeo.activity.*;
 
 import javax.inject.Singleton;
 
@@ -39,5 +36,11 @@ public interface ServiceComponent {
      * @return GetCategoresForUserActivity
      */
     GetCategoriesForUserActivity provideGetCategoriesForUserActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return CreateCategoryActivity
+     */
+    CreateCategoryActivity provideCreateCategoryActivity();
 
 }

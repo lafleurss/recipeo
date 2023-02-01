@@ -48,7 +48,7 @@ public class CategoryDao {
 
         if (category == null) {
             metricsPublisher.addCount(MetricsConstants.GETCATEGORY_CATEGORYNOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find category with id " + categoryId + " for user with id" + userId);
+            throw new RecipeNotFoundException("Could not find category with id: " + categoryId + " for user with id: " + userId);
         }
         metricsPublisher.addCount(MetricsConstants.GETCATEGORY_CATEGORYNOTFOUND_COUNT, 0);
         return category;
