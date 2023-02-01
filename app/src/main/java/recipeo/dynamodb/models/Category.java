@@ -10,8 +10,9 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "category")
 public class Category {
     private String userId;
-    private String categoryId;
     private String categoryName;
+
+    private String categoryDescription;
 
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
@@ -22,16 +23,7 @@ public class Category {
         this.userId = userId;
     }
 
-    @DynamoDBRangeKey(attributeName = "categoryId")
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    @DynamoDBAttribute(attributeName = "categoryName")
+    @DynamoDBRangeKey(attributeName = "categoryName")
     public String getCategoryName() {
         return categoryName;
     }
@@ -40,25 +32,34 @@ public class Category {
         this.categoryName = categoryName;
     }
 
+    @DynamoDBAttribute(attributeName = "categoryDescription")
+    public String getCategoryDescription() {
+        return categoryDescription;
+    }
+
+    public void setCategoryDescription(String categoryDescription) {
+        this.categoryDescription = categoryDescription;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(userId, category.userId) && Objects.equals(categoryId, category.categoryId) && Objects.equals(categoryName, category.categoryName);
+        return Objects.equals(userId, category.userId)  && Objects.equals(categoryName, category.categoryName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, categoryId, categoryName);
+        return Objects.hash(userId, categoryName);
     }
 
     @Override
     public String toString() {
         return "Category{" +
                 "userId='" + userId + '\'' +
-                ", categoryId='" + categoryId + '\'' +
                 ", categoryName='" + categoryName + '\'' +
+                ", categoryDescription='" + categoryDescription + '\'' +
                 '}';
     }
 }

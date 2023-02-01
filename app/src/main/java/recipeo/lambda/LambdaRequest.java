@@ -50,7 +50,7 @@ public class LambdaRequest<T> extends APIGatewayProxyRequestEvent {
 
     /**
      * Use the given converter to create an instance of T from the request's path parameters.
-     * @param converter Contains the conversion code
+     *
      * @return A instance of T that contains data from the request's path parameters
      */
     public T fromPath(Function<Map<String, String>, T> converter) {

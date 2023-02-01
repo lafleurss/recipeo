@@ -233,13 +233,11 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        RecipeoService:
           Type: Api
           Properties:
             Path: /recipes/{recipeId}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   GetRecipesForUserLambda:
     Type: AWS::Serverless::Function
@@ -255,13 +253,11 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        RecipeoService:
           Type: Api
           Properties:
             Path: /recipes/user/{userId}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   SearchRecipesLambda:
     Type: AWS::Serverless::Function
@@ -277,13 +273,12 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        RecipeoService:
           Type: Api
           Properties:
             Path: /recipes/search
             Method: get
-            Auth:
-              Authorizer: 'NONE'
+
 
   GetCategoryLambda:
     Type: AWS::Serverless::Function
@@ -299,13 +294,32 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        RecipeoService:
           Type: Api
           Properties:
-            Path: /category/{categoryId}
+            Path: /category/{categoryName}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
+
+
+  GetCategoriesForUserLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: recipeo.lambda.GetCategoriesForUserLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        RecipeoService:
+          Type: Api
+          Properties:
+            Path: /category/user/{userId}
+            Method: get
 
   CreateRecipeLambda:
     Type: AWS::Serverless::Function
@@ -321,10 +335,30 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        RecipeoService:
           Type: Api
           Properties:
             Path: /recipes
+            Method: post
+
+  CreateCategoryLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: recipeo.lambda.CreateCategoryLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        RecipeoService:
+          Type: Api
+          Properties:
+            Path: /category
             Method: post
 
   UpdateRecipeLambda:
@@ -341,7 +375,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        RecipeoService:
           Type: Api
           Properties:
             Path: /recipes/{recipeId}
@@ -364,7 +398,7 @@ Resources:
           AttributeType: "S"
         - AttributeName: "lastAccessed"
           AttributeType: "S"
-        - AttributeName: "categoryId"
+        - AttributeName: "categoryName"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "userId"
@@ -376,9 +410,9 @@ Resources:
       GlobalSecondaryIndexes:
         - IndexName: "FavoriteRecipes"
           KeySchema:
-            - AttributeName: "isFavorite"
-              KeyType: "HASH"
             - AttributeName: "userId"
+              KeyType: "HASH"
+            - AttributeName: "isFavorite"
               KeyType: "RANGE"
           Projection:
             ProjectionType: "ALL"
@@ -394,7 +428,7 @@ Resources:
           KeySchema:
             - AttributeName: "userId"
               KeyType: "HASH"
-            - AttributeName: "categoryId"
+            - AttributeName: "categoryName"
               KeyType: "RANGE"
           Projection:
             ProjectionType: "ALL"
@@ -405,12 +439,12 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "userId"
           AttributeType: "S"
-        - AttributeName: "categoryId"
+        - AttributeName: "categoryName"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "userId"
           KeyType: "HASH"
-        - AttributeName: "categoryId"
+        - AttributeName: "categoryName"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "category"
