@@ -8,7 +8,7 @@ import recipeo.activity.requests.GetRecipeRequest;
 import recipeo.activity.results.GetRecipeResult;
 
 public class GetRecipeLambda extends LambdaActivityRunner<GetRecipeRequest, GetRecipeResult>
-implements RequestHandler<LambdaRequest<GetRecipeRequest>, LambdaResponse> {
+implements RequestHandler<AuthenticatedLambdaRequest<GetRecipeRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
 
     /**
@@ -17,14 +17,20 @@ implements RequestHandler<LambdaRequest<GetRecipeRequest>, LambdaResponse> {
      * @return a LambdaResponse
      */
     @Override
-    public LambdaResponse handleRequest(LambdaRequest<GetRecipeRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetRecipeRequest> input, Context context) {
         log.info("handleRequest");
 
+        GetRecipeRequest unauthenticatedRequest = input.fromPath(i ->
+                GetRecipeRequest.builder()
+                        .withRecipeId(i.get("recipeId"))
+                        .build());
+
+
         return super.runActivity(
-                () -> input.fromPath(path ->
+                () -> input.fromUserClaims(claims ->
                         GetRecipeRequest.builder()
-                                .withRecipeId(path.get("recipeId"))
-                                .withUserId("shilpa.sathya+test1@gmail.com")
+                                .withRecipeId(unauthenticatedRequest.getRecipeId())
+                                .withUserId(claims.get("email"))
                                 .build()),
                 (request, serviceComponent) ->
                         serviceComponent.provideGetRecipeActivity().handleRequest(request)
