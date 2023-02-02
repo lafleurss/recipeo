@@ -4,11 +4,15 @@ package recipeo.metrics;
  * Constant values for use with metrics.
  */
 public class MetricsConstants {
-    public static final String GETRECIPE_RECIPENOTFOUND_COUNT = "GetRecipe.RecipeNotFoundException.Count";
+    public static final String GETRECIPE_RECIPENOTFOUND_COUNT =
+            "GetRecipe.RecipeNotFoundException.Count";
 
-    public static final String GETRECIPESFORUSER_RECIPENOTFOUND_COUNT = "GetRecipesForUser.RecipeNotFoundException.Count";
-    public static final String GETCATEGORY_CATEGORYNOTFOUND_COUNT = "GetCategory.CategoryNotFoundException.Count";
-    public static final String GETCATEGORIESFORUSER_CATEGORYNOTFOUND_COUNT = "GetCategoriesForUser.CategoryNotFoundException.Count";
+    public static final String GETRECIPESFORUSER_RECIPENOTFOUND_COUNT =
+            "GetRecipesForUser.RecipeNotFoundException.Count";
+    public static final String GETCATEGORY_CATEGORYNOTFOUND_COUNT =
+            "GetCategory.CategoryNotFoundException.Count";
+    public static final String GETCATEGORIESFORUSER_CATEGORYNOTFOUND_COUNT =
+            "GetCategoriesForUser.CategoryNotFoundException.Count";
     
     public static final String UPDATERECIPE_INVALIDATTRIBUTEVALUE_COUNT =
             "UpdateRecipe.InvalidAttributeValueException.Count";

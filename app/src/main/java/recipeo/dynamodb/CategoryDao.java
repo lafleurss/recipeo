@@ -3,26 +3,27 @@ package recipeo.dynamodb;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+
 import recipeo.dynamodb.models.Category;
-import recipeo.dynamodb.models.Recipe;
 import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.metrics.MetricsConstants;
 import recipeo.metrics.MetricsPublisher;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 /**
  * Accesses data for a category using {@link Category} to represent the model in DynamoDB.
  */
 @Singleton
 public class CategoryDao {
+    private static final int PAGE_SIZE = 20;
     private final DynamoDBMapper dynamoDbMapper;
     private final MetricsPublisher metricsPublisher;
-    private static final int PAGE_SIZE = 20;
+
 
     /**
      * Instantiates a CategoryDao object.
@@ -41,14 +42,15 @@ public class CategoryDao {
      *
      * @param userId the User ID
      * @param categoryName the Category Name
-     * @return the stored Category, or null if none was found.
+     * @return the stored Category, or throws a RecipeNotFoundException  if none was found.
      */
     public Category getCategory(String userId, String categoryName) {
         Category category = this.dynamoDbMapper.load(Category.class, userId, categoryName);
 
         if (category == null) {
             metricsPublisher.addCount(MetricsConstants.GETCATEGORY_CATEGORYNOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find category name : " + categoryName + " for user with id: " + userId);
+            throw new RecipeNotFoundException("Could not find category name : " +
+                    categoryName + " for user with id: " + userId);
         }
         metricsPublisher.addCount(MetricsConstants.GETCATEGORY_CATEGORYNOTFOUND_COUNT, 0);
         return category;
@@ -64,6 +66,13 @@ public class CategoryDao {
         this.dynamoDbMapper.save(category);
         return category;
     }
+
+    /**
+     * Returns a {@link List} of {@link Category} corresponding to the specified user id.
+     *
+     * @param userId the User ID
+     * @return A list of stored Category, or throws an CategoryNotFoundException if none was found.
+     */
 
     public List<Category> getCategoriesForUser(String userId) {
         Map<String, AttributeValue> valueMap = new HashMap<>();

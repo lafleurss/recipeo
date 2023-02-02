@@ -9,11 +9,12 @@ import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.metrics.MetricsConstants;
 import recipeo.metrics.MetricsPublisher;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Accesses data for a recipe using {@link Recipe} to represent the model in DynamoDB.
@@ -48,14 +49,15 @@ public class RecipeDao {
 
         if (recipe == null) {
             metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipe with id: " + recipeId + " for user with id: " + userId);
+            throw new RecipeNotFoundException("Could not find recipe with id: " + recipeId +
+                    " for user with id: " + userId);
         }
         metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 0);
         return recipe;
     }
 
     /**
-     * Returns the {@link List<Recipe>} corresponding to the specified user id.
+     * Returns the {@link List} of {@link Recipe} corresponding to the specified user id.
      *
      * @param userId the User ID
      * @return the stored list of Recipes, or null if none was found.

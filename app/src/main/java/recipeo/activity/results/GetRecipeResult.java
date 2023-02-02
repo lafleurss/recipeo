@@ -1,6 +1,5 @@
 package recipeo.activity.results;
 
-import recipeo.dynamodb.models.Recipe;
 import recipeo.models.RecipeModel;
 
 public class GetRecipeResult {

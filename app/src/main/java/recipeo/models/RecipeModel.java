@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import static recipeo.utils.CollectionUtils.copyToList;
 
+/**
+ * RecipeModel that is the public API model for RecipeoService.
+ */
 
 public class RecipeModel {
     private final String recipeId;
@@ -21,7 +24,10 @@ public class RecipeModel {
     private final String lastAccessed;
     private final String isFavorite;
 
-    private RecipeModel(String recipeId, String recipeName, String userId, int servings, int prepTime, int cookTime, int totalTime, List<String> ingredients, List<String> instructions, String categoryName, List<String> tags, String lastAccessed, String isFavorite) {
+    private RecipeModel(String recipeId, String recipeName, String userId, int servings,
+                        int prepTime, int cookTime, int totalTime, List<String> ingredients,
+                        List<String> instructions, String categoryName, List<String> tags,
+                        String lastAccessed, String isFavorite) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.userId = userId;
@@ -92,15 +98,28 @@ public class RecipeModel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         RecipeModel that = (RecipeModel) o;
-        return servings == that.servings && prepTime == that.prepTime && cookTime == that.cookTime && totalTime == that.totalTime && recipeId.equals(that.recipeId) && recipeName.equals(that.recipeName) && userId.equals(that.userId) && Objects.equals(ingredients, that.ingredients) && Objects.equals(instructions, that.instructions) && Objects.equals(categoryName, that.categoryName) && Objects.equals(tags, that.tags) && Objects.equals(lastAccessed, that.lastAccessed) && Objects.equals(isFavorite, that.isFavorite);
+        return servings == that.servings && prepTime == that.prepTime &&
+                cookTime == that.cookTime && totalTime == that.totalTime &&
+                recipeId.equals(that.recipeId) && recipeName.equals(that.recipeName) &&
+                userId.equals(that.userId) && Objects.equals(ingredients, that.ingredients) &&
+                Objects.equals(instructions, that.instructions) &&
+                Objects.equals(categoryName, that.categoryName) &&
+                Objects.equals(tags, that.tags) && Objects.equals(lastAccessed, that.lastAccessed) &&
+                Objects.equals(isFavorite, that.isFavorite);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(recipeId, recipeName, userId, servings, prepTime, cookTime, totalTime, ingredients, instructions, categoryName, tags, lastAccessed, isFavorite);
+        return Objects.hash(recipeId, recipeName, userId, servings, prepTime,
+                cookTime, totalTime, ingredients, instructions, categoryName,
+                tags, lastAccessed, isFavorite);
     }
 
     @Override
@@ -122,9 +141,11 @@ public class RecipeModel {
                 '}';
     }
 
+    //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
     }
+
 
 
     public static class Builder {
@@ -203,12 +224,14 @@ public class RecipeModel {
             return this;
         }
 
-        public Builder withIsFavorite(String isFavorite){
+        public Builder withIsFavorite(String isFavorite) {
             this.isFavorite = isFavorite;
             return this;
         }
         public RecipeModel build() {
-            return new RecipeModel(recipeId, recipeName, userId, servings, prepTime, cookTime, totalTime, ingredients, instructions, categoryName, tags, lastAccessed, isFavorite );
+            return new RecipeModel(recipeId, recipeName, userId, servings, prepTime,
+                    cookTime, totalTime, ingredients, instructions, categoryName,
+                    tags, lastAccessed, isFavorite);
         }
     }
 }

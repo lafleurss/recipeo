@@ -10,9 +10,9 @@ import recipeo.dynamodb.models.Recipe;
 import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.models.RecipeModel;
 
-import javax.inject.Inject;
 import java.util.List;
 
+import javax.inject.Inject;
 /**
  * Implementation of the GetRecipesForUserActivity for the RecipeoService's GetRecipe API.
  *
@@ -22,6 +22,11 @@ public class GetRecipesForUserActivity {
     private final Logger log = LogManager.getLogger();
     private final RecipeDao recipeDao;
 
+    /**
+     * Instantiates a new GetRecipesForUserActivity object.
+     *
+     * @param recipeDao RecipeDao to access the recipe table.
+     */
     @Inject
     public GetRecipesForUserActivity(RecipeDao recipeDao) {
         this.recipeDao = recipeDao;
@@ -29,14 +34,11 @@ public class GetRecipesForUserActivity {
 
     /**
      * This method handles the incoming request by retrieving the recipes for the requested
-     * userId from the database.
-     * <p>
-     * It then returns the list of recipes.
-     * <p>
+     * userId from the database. It then returns the list of recipes.
      * If recipes do not exist, this should throw a RecipeNotFoundException.
      *
      * @param getRecipesForUserRequest request object containing the user ID
-     * @return GetRecipesForUserResult object containing the API defined {@link List<RecipeModel>}
+     * @return GetRecipesForUserResult object containing the API defined {@link List} of {@link RecipeModel}
      */
     public GetRecipesForUserResult handleRequest(GetRecipesForUserRequest getRecipesForUserRequest) {
         log.info("Received GetRecipesForUserResult {}", getRecipesForUserRequest);

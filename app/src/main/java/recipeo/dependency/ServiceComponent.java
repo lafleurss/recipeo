@@ -1,8 +1,13 @@
-package recipeo.activity.dependency;
+package recipeo.dependency;
 
 import dagger.Component;
-import dagger.Provides;
-import recipeo.activity.*;
+
+import recipeo.activity.CreateCategoryActivity;
+import recipeo.activity.GetCategoriesForUserActivity;
+import recipeo.activity.GetCategoryActivity;
+import recipeo.activity.GetRecipeActivity;
+import recipeo.activity.GetRecipesForUserActivity;
+import recipeo.activity.UpdateCategoryActivity;
 
 import javax.inject.Singleton;
 

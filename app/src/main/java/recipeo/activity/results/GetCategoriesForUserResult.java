@@ -1,16 +1,13 @@
 package recipeo.activity.results;
 
-
 import recipeo.dynamodb.models.Category;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 public class GetCategoriesForUserResult {
     private final List<Category> categories;
 
-    public GetCategoriesForUserResult(List<Category> categories) {
+    private GetCategoriesForUserResult(List<Category> categories) {
         this.categories = List.copyOf(categories);
     }
 
@@ -25,6 +22,8 @@ public class GetCategoriesForUserResult {
                 '}';
     }
 
+    //CHECKSTYLE:OFF:Builder
+
     public static Builder builder() {
         return new Builder();
     }
@@ -37,6 +36,8 @@ public class GetCategoriesForUserResult {
             return this;
         }
 
-        public GetCategoriesForUserResult build(){ return new GetCategoriesForUserResult(categoryList);}
+        public GetCategoriesForUserResult build() {
+            return new GetCategoriesForUserResult(categoryList);
+        }
     }
 }

@@ -4,7 +4,7 @@ public class GetCategoriesForUserRequest {
     private final String userId;
 
 
-    public GetCategoriesForUserRequest(String userId) {
+    private GetCategoriesForUserRequest(String userId) {
         this.userId = userId;
     }
 
@@ -19,6 +19,7 @@ public class GetCategoriesForUserRequest {
                 '}';
     }
 
+    //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
     }

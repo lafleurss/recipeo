@@ -22,14 +22,12 @@ public class CreateCategoryLambda extends LambdaActivityRunner<CreateCategoryReq
 
         CreateCategoryRequest unauthenticatedRequest = input.fromBody(CreateCategoryRequest.class);
 
-        return super.runActivity(
-                () -> input.fromUserClaims(claims ->
+        return super.runActivity(() -> input.fromUserClaims(claims ->
                         CreateCategoryRequest.builder()
                                 .withCategoryName(unauthenticatedRequest.getCategoryName())
                                 .withCategoryDescription(unauthenticatedRequest.getCategoryDescription())
                                 .withUserId(claims.get("email"))
-                                .build()),
-                (request, serviceComponent) ->
+                                .build()), (request, serviceComponent) ->
                         serviceComponent.provideCreateCategoryActivity().handleRequest(request)
         );
     }

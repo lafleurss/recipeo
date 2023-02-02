@@ -4,6 +4,10 @@ public class GetRecipesForUserRequest {
     private final String userId;
 
 
+    /**
+     * Get an instance of GetRecipesForUserRequest.
+     * @param userId userId to request recipes for
+     */
     public GetRecipesForUserRequest(String userId) {
         this.userId = userId;
     }
@@ -18,6 +22,8 @@ public class GetRecipesForUserRequest {
                 "userId='" + userId + '\'' +
                 '}';
     }
+
+    //CHECKSTYLE:OFF:Builder
 
     public static Builder builder() {
         return new Builder();

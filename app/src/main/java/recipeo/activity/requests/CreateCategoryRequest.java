@@ -37,7 +37,7 @@ public class CreateCategoryRequest {
                 ", categoryDescription='" + categoryDescription + '\'' +
                 '}';
     }
-
+    //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
     }
