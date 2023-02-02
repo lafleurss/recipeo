@@ -29,12 +29,13 @@
 .button {
   background-color: var(--primary-color);
   border: none;
-  color: var(--secondary-color);
+  color: #de5f5c;
   padding: 6px 8px 4px 8px;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  font-weight: 300;
+
+  font-weight: bold;
 
 }
 
@@ -53,7 +54,7 @@
 
 .sidenav {
   height: 100%;
-  width: 200px;
+  width: 250px;
   position: fixed;
   z-index: 1;
   top: 20;
@@ -76,13 +77,12 @@
 }
 
 .main {
-  margin-left: 200px; /* Same as the width of the sidenav */
+  margin-left: 250px; /* Same as the width of the sidenav */
 }
 
 
 /* Recipe Title */
 .recipetitle {
-  padding: 10px;
   font-size: 16px;
   text-align: center;
   background: white;
@@ -123,10 +123,11 @@
   }
 }
 
+
 .div-1{
   font-weight:bold;
   display: inline-block;
-  color: #ff7f50;
+  color: #de5f5c;
 }
 
 .div-2{
