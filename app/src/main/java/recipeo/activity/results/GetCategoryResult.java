@@ -5,7 +5,7 @@ import recipeo.dynamodb.models.Category;
 public class GetCategoryResult {
     private final Category category;
 
-    public GetCategoryResult(Category category) {
+    private GetCategoryResult(Category category) {
         this.category = category;
     }
 

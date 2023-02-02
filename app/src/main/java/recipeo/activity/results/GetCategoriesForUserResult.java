@@ -7,7 +7,7 @@ import java.util.List;
 public class GetCategoriesForUserResult {
     private final List<Category> categories;
 
-    public GetCategoriesForUserResult(List<Category> categories) {
+    private GetCategoriesForUserResult(List<Category> categories) {
         this.categories = List.copyOf(categories);
     }
 

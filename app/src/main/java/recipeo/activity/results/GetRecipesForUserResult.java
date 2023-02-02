@@ -7,7 +7,7 @@ import java.util.List;
 public class GetRecipesForUserResult {
     private final List<RecipeModel> recipes;
 
-    public GetRecipesForUserResult(List<RecipeModel> recipes) {
+    private GetRecipesForUserResult(List<RecipeModel> recipes) {
         this.recipes = recipes;
     }
 

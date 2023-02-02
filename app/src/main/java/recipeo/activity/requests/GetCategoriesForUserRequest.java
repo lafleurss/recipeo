@@ -4,7 +4,7 @@ public class GetCategoriesForUserRequest {
     private final String userId;
 
 
-    public GetCategoriesForUserRequest(String userId) {
+    private GetCategoriesForUserRequest(String userId) {
         this.userId = userId;
     }
 

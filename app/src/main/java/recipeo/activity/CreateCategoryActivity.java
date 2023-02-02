@@ -27,6 +27,19 @@ public class CreateCategoryActivity {
         this.categoryDao = categoryDao;
     }
 
+    /**
+     * This method handles the incoming request by persisting a new category
+     * with the provided category name and customer ID from the request.
+     * <p>
+     * It then returns the newly created category.
+     * <p>
+     * If the provided category name, description or user ID has invalid characters, throws an
+     * InvalidAttributeValueException
+     *
+     * @param createCategoryRequest request object containing the category name, description
+     *                               and userId associated with it
+     * @return CreateCategoryResult object containing the API defined {@link Category}
+     */
     public CreateCategoryResult handleRequest(CreateCategoryRequest createCategoryRequest) {
         log.info("Received CreateCategoryRequest {}", createCategoryRequest);
 
