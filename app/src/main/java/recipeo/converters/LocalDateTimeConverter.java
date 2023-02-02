@@ -1,10 +1,8 @@
 package recipeo.converters;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
-import org.joda.time.format.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, LocalDateTime> {
@@ -15,7 +13,7 @@ public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, Loc
      */
     @Override
     public String convert(LocalDateTime object) {
-        if (object == null){
+        if (object == null) {
             return null;
         }
         return object.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
@@ -27,7 +25,7 @@ public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, Loc
      */
     @Override
     public LocalDateTime unconvert(String object) {
-        if (object == null){
+        if (object == null) {
             return null;
         }
         return LocalDateTime.parse(object, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));

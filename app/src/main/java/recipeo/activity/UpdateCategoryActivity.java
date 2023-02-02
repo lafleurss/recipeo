@@ -16,6 +16,12 @@ public class UpdateCategoryActivity {
     private final Logger log = LogManager.getLogger();
     private final CategoryDao categoryDao;
 
+
+    /**
+     * Instantiates a new UpdateCategoryActivity object.
+     *
+     * @param categoryDao CategoryDao to access the category table.
+     */
     @Inject
     public UpdateCategoryActivity(CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
@@ -53,7 +59,8 @@ public class UpdateCategoryActivity {
         }
 
         if (!RecipeoServiceUtils.isValidString(updateCategoryRequest.getCategoryDescription())) {
-            throw new InvalidAttributeValueException("Category description [" + updateCategoryRequest.getCategoryDescription() +
+            throw new InvalidAttributeValueException("Category description [" +
+                    updateCategoryRequest.getCategoryDescription() +
                     "] contains illegal characters");
         }
 
@@ -68,8 +75,9 @@ public class UpdateCategoryActivity {
 
         Category category = categoryDao.getCategory(userId, categoryName);
 
-        if (category == null){
-            throw new CategoryNotFoundException("The category name: " + categoryName + " cannot be found for user id: " + userId);
+        if (category == null) {
+            throw new CategoryNotFoundException("The category name: " + categoryName +
+                    " cannot be found for user id: " + userId);
         }
 
         categoryDao.saveCategory(categoryToBeSaved);
@@ -78,5 +86,5 @@ public class UpdateCategoryActivity {
                 .withCategory(categoryToBeSaved)
                 .build();
 
-        }
+    }
 }

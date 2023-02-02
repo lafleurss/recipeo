@@ -22,14 +22,12 @@ public class UpdateCategoryLambda extends LambdaActivityRunner<UpdateCategoryReq
 
         UpdateCategoryRequest unauthenticatedRequest = input.fromBody(UpdateCategoryRequest.class);
 
-        return super.runActivity(
-                () -> input.fromUserClaims(claims ->
+        return super.runActivity(() -> input.fromUserClaims(claims ->
                         UpdateCategoryRequest.builder()
                                 .withCategoryName(unauthenticatedRequest.getCategoryName())
                                 .withCategoryDescription(unauthenticatedRequest.getCategoryDescription())
                                 .withUserId(claims.get("email"))
-                                .build()),
-                (request, serviceComponent) ->
+                                .build()), (request, serviceComponent) ->
                         serviceComponent.provideUpdateCategoryActivity().handleRequest(request)
         );
     }

@@ -17,6 +17,11 @@ public class GetCategoriesForUserActivity {
     private final Logger log = LogManager.getLogger();
     private final CategoryDao categoryDao;
 
+    /**
+     * Instantiates a new GetCategoriesForUserActivity object.
+     *
+     * @param categoryDao CategoryDao to access the category table.
+     */
     @Inject
     public GetCategoriesForUserActivity(CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
@@ -24,14 +29,11 @@ public class GetCategoriesForUserActivity {
 
     /**
      * This method handles the incoming request by retrieving the categories for the requested
-     * userId from the database.
-     * <p>
-     * It then returns the list of categories.
-     * <p>
+     * userId from the database. It then returns the list of categories.
      * If categories do not exist, this should throw a CategoryNotFoundException.
      *
      * @param getCategoriesForUserRequest request object containing the user ID
-     * @return GetCategoriesForUserResult object containing the API defined {@link List<Category>}
+     * @return GetCategoriesForUserResult object containing the API defined {@link List} of {@link Category}
      */
     public GetCategoriesForUserResult handleRequest(GetCategoriesForUserRequest getCategoriesForUserRequest) {
 

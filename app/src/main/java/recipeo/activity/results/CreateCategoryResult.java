@@ -21,6 +21,8 @@ public class CreateCategoryResult {
                 '}';
     }
 
+    //CHECKSTYLE:OFF:Builder
+
     public static Builder builder() {
         return new Builder();
     }

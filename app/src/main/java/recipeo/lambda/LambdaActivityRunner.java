@@ -2,8 +2,8 @@ package recipeo.lambda;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import recipeo.activity.dependency.DaggerServiceComponent;
-import recipeo.activity.dependency.ServiceComponent;
+import recipeo.dependency.DaggerServiceComponent;
+import recipeo.dependency.ServiceComponent;
 
 import java.util.function.BiFunction;
 import java.util.function.Supplier;

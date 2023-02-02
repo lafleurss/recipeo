@@ -8,7 +8,7 @@ import recipeo.activity.requests.GetRecipeRequest;
 import recipeo.activity.results.GetRecipeResult;
 
 public class GetRecipeLambda extends LambdaActivityRunner<GetRecipeRequest, GetRecipeResult>
-implements RequestHandler<AuthenticatedLambdaRequest<GetRecipeRequest>, LambdaResponse> {
+    implements RequestHandler<AuthenticatedLambdaRequest<GetRecipeRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
 
     /**
@@ -26,13 +26,11 @@ implements RequestHandler<AuthenticatedLambdaRequest<GetRecipeRequest>, LambdaRe
                         .build());
 
 
-        return super.runActivity(
-                () -> input.fromUserClaims(claims ->
+        return super.runActivity(() -> input.fromUserClaims(claims ->
                         GetRecipeRequest.builder()
                                 .withRecipeId(unauthenticatedRequest.getRecipeId())
                                 .withUserId(claims.get("email"))
-                                .build()),
-                (request, serviceComponent) ->
+                                .build()), (request, serviceComponent) ->
                         serviceComponent.provideGetRecipeActivity().handleRequest(request)
         );
     }

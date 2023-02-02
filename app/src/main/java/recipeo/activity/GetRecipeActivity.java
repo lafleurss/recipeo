@@ -49,8 +49,9 @@ public class GetRecipeActivity {
         String userId = getRecipeRequest.getUserId();
         Recipe recipe = recipeDao.getRecipe(userId, recipeId);
 
-        if (recipe == null){
-            throw new RecipeNotFoundException("The recipe with id: " + recipeId + " cannot be found for user id: " + userId);
+        if (recipe == null) {
+            throw new RecipeNotFoundException("The recipe with id: " + recipeId +
+                     " cannot be found for user id: " + userId);
         }
 
         RecipeModel recipeModel = new ModelConverter().toRecipeModel(recipe);

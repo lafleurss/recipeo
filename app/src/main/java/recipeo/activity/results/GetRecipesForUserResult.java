@@ -22,6 +22,7 @@ public class GetRecipesForUserResult {
                 '}';
     }
 
+    //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
     }
@@ -34,6 +35,8 @@ public class GetRecipesForUserResult {
             return this;
         }
 
-        public GetRecipesForUserResult build(){ return new GetRecipesForUserResult(recipeList);}
+        public GetRecipesForUserResult build() {
+            return new GetRecipesForUserResult(recipeList);
+        }
     }
 }

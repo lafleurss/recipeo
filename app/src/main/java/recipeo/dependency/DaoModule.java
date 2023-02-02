@@ -1,4 +1,4 @@
-package recipeo.activity.dependency;
+package recipeo.dependency;
 
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;

@@ -20,12 +20,10 @@ public class GetRecipesForUserLambda extends LambdaActivityRunner<GetRecipesForU
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetRecipesForUserRequest> input, Context context) {
         log.info("handleRequest");
 
-        return super.runActivity(
-                () -> input.fromUserClaims(claims ->
+        return super.runActivity(() -> input.fromUserClaims(claims ->
                         GetRecipesForUserRequest.builder()
                                 .withUserId(claims.get("email"))
-                                .build()),
-                (request, serviceComponent) ->
+                                .build()), (request, serviceComponent) ->
                         serviceComponent.provideGetRecipesForUserActivity().handleRequest(request)
         );
     }

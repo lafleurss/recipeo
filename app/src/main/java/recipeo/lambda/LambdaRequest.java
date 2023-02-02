@@ -1,13 +1,15 @@
 package recipeo.lambda;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Map;
+
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -50,7 +52,7 @@ public class LambdaRequest<T> extends APIGatewayProxyRequestEvent {
 
     /**
      * Use the given converter to create an instance of T from the request's path parameters.
-     *
+     * @param converter converter that is input
      * @return A instance of T that contains data from the request's path parameters
      */
     public T fromPath(Function<Map<String, String>, T> converter) {

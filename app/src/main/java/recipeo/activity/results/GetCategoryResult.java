@@ -21,8 +21,10 @@ public class GetCategoryResult {
                 '}';
     }
 
-    public static GetCategoryResult.Builder builder() {
-        return new GetCategoryResult.Builder();
+    //CHECKSTYLE:OFF:Builder
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static class Builder {
@@ -33,6 +35,8 @@ public class GetCategoryResult {
             return this;
         }
 
-        public GetCategoryResult build(){ return new GetCategoryResult(category);}
+        public GetCategoryResult build() {
+            return new GetCategoryResult(category);
+        }
     }
 }

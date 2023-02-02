@@ -14,6 +14,11 @@ public class GetCategoryActivity {
     private final Logger log = LogManager.getLogger();
     private final CategoryDao categoryDao;
 
+    /**
+     * Instantiates a new GetCategoryActivity object.
+     *
+     * @param categoryDao CategoryDao to access the category table.
+     */
     @Inject
     public GetCategoryActivity(CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
@@ -35,12 +40,13 @@ public class GetCategoryActivity {
         String categoryName = getCategoryRequest.getCategoryName();
         Category category = categoryDao.getCategory(userId, categoryName);
 
-        if (category == null){
-            throw new CategoryNotFoundException("The category name: " + categoryName + " cannot be found for user id: " + userId);
+        if (category == null) {
+            throw new CategoryNotFoundException("The category name: " +
+                    categoryName + " cannot be found for user id: " + userId);
         }
 
         return GetCategoryResult.builder()
                 .withCategory(category)
                 .build();
-        }
+    }
 }

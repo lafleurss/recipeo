@@ -26,13 +26,11 @@ public class GetCategoryLambda extends LambdaActivityRunner<GetCategoryRequest, 
                         .build());
 
 
-        return super.runActivity(
-                () -> input.fromUserClaims(claims ->
+        return super.runActivity(() -> input.fromUserClaims(claims ->
                         GetCategoryRequest.builder()
                                 .withCategoryName(unauthenticatedRequest.getCategoryName())
                                 .withUserId(claims.get("email"))
-                                .build()),
-                (request, serviceComponent) ->
+                                .build()), (request, serviceComponent) ->
                         serviceComponent.provideGetCategoryActivity().handleRequest(request)
         );
     }
