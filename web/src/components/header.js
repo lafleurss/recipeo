@@ -11,6 +11,7 @@ export default class Header extends BindingClass {
         const methodsToBind = [
             'addHeaderToPage', 'createSiteTitle', 'createUserInfoForHeader',
             'createLoginButton', 'createLoginButton', 'createLogoutButton'
+            ,'loadCategories'
         ];
         this.bindClassMethods(methodsToBind, this);
 
@@ -25,6 +26,7 @@ export default class Header extends BindingClass {
 
         const siteTitle = this.createSiteTitle();
         const userInfo = this.createUserInfoForHeader(currentUser);
+        this.loadCategories();
 
         const header = document.getElementById('header');
         header.appendChild(siteTitle);
@@ -77,5 +79,13 @@ export default class Header extends BindingClass {
         });
 
         return button;
+    }
+
+    async loadCategories(){
+        alert("Hi!");
+        const categoriesList = await this.client.getCategoriesForUser();
+        alert(categoriesList[0].categoryName);
+        alert(categoriesList[1].categoryName);
+
     }
 }

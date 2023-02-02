@@ -29,6 +29,10 @@ class ViewRecipeDetail extends BindingClass {
         await this.displayRecipeOnPage();
     }
 
+    async addCategory(){
+        document.getElementById('add_category').innerHTML = recipe.recipeName;
+    }
+
 /**
      * When the recipe is  updated in the datastore, update recipe details DOM on the page.
      */
@@ -98,6 +102,7 @@ class ViewRecipeDetail extends BindingClass {
      */
     async mount() {
         this.header.addHeaderToPage();
+        this.header.loadCategories();
         this.client = new RecipeoClient();
         await this.clientLoaded();
     }

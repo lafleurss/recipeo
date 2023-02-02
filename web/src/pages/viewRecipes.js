@@ -22,7 +22,7 @@ class ViewRecipes extends BindingClass {
     async clientLoaded() {
 
         //Get all recipes for user API
-        const recipes = await this.client.getRecipesForUser("shilpa.sathya+test1@gmail.com", true);
+        const recipes = await this.client.getRecipesForUser(true);
         this.dataStore.set('recipes', recipes);
         //this.dataStore.set('veryFirstEmpId', employees[0].lastNameEmployeeId);
         //this.dataStore.set('firstEmpId', employees[0].lastNameEmployeeId);
