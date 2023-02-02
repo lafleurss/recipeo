@@ -29,12 +29,13 @@
 .button {
   background-color: var(--primary-color);
   border: none;
-  color: var(--secondary-color);
+  color: #de5f5c;
   padding: 6px 8px 4px 8px;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  font-weight: 300;
+
+  font-weight: bold;
 
 }
 
@@ -82,7 +83,6 @@
 
 /* Recipe Title */
 .recipetitle {
-  padding: 10px;
   font-size: 16px;
   text-align: center;
   background: white;
@@ -123,10 +123,11 @@
   }
 }
 
+
 .div-1{
   font-weight:bold;
   display: inline-block;
-  color: #ff7f50;
+  color: #de5f5c;
 }
 
 .div-2{

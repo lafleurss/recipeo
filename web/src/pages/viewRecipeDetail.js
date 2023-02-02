@@ -102,7 +102,7 @@ class ViewRecipeDetail extends BindingClass {
      */
     async mount() {
         this.header.addHeaderToPage();
-        this.header.loadCategories();
+
         this.client = new RecipeoClient();
         await this.clientLoaded();
     }

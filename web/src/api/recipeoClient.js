@@ -140,6 +140,29 @@ export default class RecipeoClient extends BindingClass {
     }
 
     /**
+         * Add a category for the logged in User ID.
+         * @param errorCallback (Optional) A function to execute if the call fails.
+         * @returns The categories' metadata.
+         */
+        async addCategory(payload, errorCallback) {
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can add categories.");
+
+                const identity = await this.getIdentity();
+                const response = await this.axiosClient.post(`category`, payload,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                return response.data.category;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+            }
+        }
+
+    /**
      * Helper method to log the error and run any error functions.
      * @param error The error received from the server.
      * @param errorCallback (Optional) A function to execute if the call fails.

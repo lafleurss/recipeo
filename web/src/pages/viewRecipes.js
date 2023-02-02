@@ -20,7 +20,6 @@ class ViewRecipes extends BindingClass {
      * Once the client is loaded, get the recipes list.
      */
     async clientLoaded() {
-
         //Get all recipes for user API
         const recipes = await this.client.getRecipesForUser(true);
         this.dataStore.set('recipes', recipes);
@@ -30,18 +29,17 @@ class ViewRecipes extends BindingClass {
 
     }
 
+
+
 /**
      * When the employees are updated in the datastore, update the list of recipes on the page.
      */
     async displayRecipesOnPage() {
         const recipes = this.dataStore.get('recipes');
-
         if (!recipes) {
             return;
         }
-
         let table = document.querySelector("table");
-
         //Flush the table first
         var tableHeaderRowCount = 1;
         var rowCount = table.rows.length;
@@ -101,10 +99,10 @@ class ViewRecipes extends BindingClass {
      */
     async mount() {
         this.header.addHeaderToPage();
+        document.getElementById('add_category').addEventListener('click', this.header.addCategory);
 
         this.client = new RecipeoClient();
         await this.clientLoaded();
-
     }
 }
 

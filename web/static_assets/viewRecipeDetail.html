@@ -14,20 +14,22 @@
   <p></p> <p></p>
   <div> <span> </span></div>
   <div> <span> </span></div>
-  <div class="sidenav">
-    <a href="/viewRecipes.html">All Recipes</a>
-    <a href="#">Recently Used</a>
-    <a href="#">Favorites</a>
-    <a href="#">Uncategorized</a>
-    <a href="#">CategoryA</a>
-    <a href="#">CategoryB</a>
-      <br>
-      <a href="#"> <input type="text" id="new_category" name="new_category" maxlength="50" size="25"> </a>
-      <a href="#"><button id="add" name="add"> Add Category</button></a>
-
-  </div>
+    <div class="sidenav">
+        <div id="sidenav_default_categories">
+            <a href="/viewRecipes.html">All Recipes</a>
+            <a href="#">Recently Used</a>
+            <a href="#">Favorites</a>
+            <a href="#">Uncategorized</a>
+        </div>
+        <div id="sidenav_custom_categories">
+        </div>
+        <div id="sidenav_categories_action">
+            <a href="#"> <input type="text" id="new_category" name="new_category" maxlength="50" size="25"> </a>
+            <a href="#"><button id="add_category" name="add"> Add Category</button></a>
+        </div>
+    </div>
     <div  class="recipetitle">
-        <h2 id= "recipetitle">Recipe Name Goes Here</h2>
+        <h1 align="left" id= "recipetitle">Recipe Name Goes Here</h1>
     </div>
 
     <div class="row">
