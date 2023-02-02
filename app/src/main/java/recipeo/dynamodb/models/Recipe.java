@@ -2,6 +2,8 @@ package recipeo.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
@@ -18,7 +20,8 @@ import java.util.Set;
  */
 @DynamoDBTable(tableName = "recipe")
 public class Recipe {
-
+    public static final String FAVORITE_RECIPES = "FavoriteRecipes";
+    public static final String RECENTLY_ACCESSED_RECIPES = "LastAccessedRecipes";
     private String recipeId;
     private String recipeName;
     private String userId;
@@ -28,13 +31,15 @@ public class Recipe {
     private Integer totalTime;
     private List<String> ingredients;
     private List<String> instructions;
-    private String categoryId;
     private String categoryName;
     private Set<String> tags;
     private LocalDateTime lastAccessed;
     private String isFavorite;
 
+
+
     @DynamoDBHashKey(attributeName = "userId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {FAVORITE_RECIPES, RECENTLY_ACCESSED_RECIPES})
     public String getUserId() {
         return userId;
     }
@@ -115,15 +120,6 @@ public class Recipe {
         this.instructions = instructions;
     }
 
-    @DynamoDBAttribute(attributeName = "categoryId")
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
     @DynamoDBAttribute(attributeName = "categoryName")
     public String getCategoryName() {
         return categoryName;
@@ -143,6 +139,7 @@ public class Recipe {
     }
 
     @DynamoDBAttribute(attributeName = "lastAccessed")
+    @DynamoDBIndexRangeKey(attributeName = "lastAccessed", globalSecondaryIndexName = RECENTLY_ACCESSED_RECIPES)
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime  getLastAccessed() {
         return lastAccessed;
@@ -153,6 +150,7 @@ public class Recipe {
     }
 
     @DynamoDBAttribute(attributeName = "isFavorite")
+    @DynamoDBIndexRangeKey(attributeName = "isFavorite", globalSecondaryIndexName = FAVORITE_RECIPES)
     public String getIsFavorite() {
         return isFavorite;
     }
@@ -190,7 +188,6 @@ public class Recipe {
                 ", totalTime=" + totalTime +
                 ", ingredients=" + ingredients +
                 ", instructions=" + instructions +
-                ", categoryId='" + categoryId + '\'' +
                 ", categoryName='" + categoryName + '\'' +
                 ", tags=" + tags +
                 ", lastAccessed=" + lastAccessed +

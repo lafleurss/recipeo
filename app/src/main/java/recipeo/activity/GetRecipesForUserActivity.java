@@ -8,6 +8,7 @@ import recipeo.converters.ModelConverter;
 import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Recipe;
 import recipeo.exceptions.RecipeNotFoundException;
+import recipeo.models.RecipeFilter;
 import recipeo.models.RecipeModel;
 
 import java.util.List;
@@ -43,7 +44,8 @@ public class GetRecipesForUserActivity {
     public GetRecipesForUserResult handleRequest(GetRecipesForUserRequest getRecipesForUserRequest) {
         log.info("Received GetRecipesForUserResult {}", getRecipesForUserRequest);
         String userId = getRecipesForUserRequest.getUserId();
-        List<Recipe> recipeList = recipeDao.getRecipesForUser(userId);
+        RecipeFilter filterType = getRecipesForUserRequest.getFilterType();
+        List<Recipe> recipeList = recipeDao.getRecipesForUser(userId, filterType);
 
         if (recipeList == null || recipeList.isEmpty()) {
             throw new RecipeNotFoundException("No recipes found for user id: " + userId);

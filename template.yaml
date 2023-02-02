@@ -256,7 +256,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /recipes/user/{userId}
+            Path: /recipes/user
             Method: get
 
   SearchRecipesLambda:
@@ -318,7 +318,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /category/user/{userId}
+            Path: /category/user
             Method: get
 
   CreateRecipeLambda:
