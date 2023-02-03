@@ -264,7 +264,7 @@ Resources:
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: app
-      Handler: recipeo.lambda.GetRecipesForUserLambda::handleRequest
+      Handler: recipeo.lambda.GetRecipesForUserInCategoryLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -276,7 +276,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /recipes/user/category
+            Path: /recipes/user/{categoryName}
             Method: get
 
   SearchRecipesLambda:

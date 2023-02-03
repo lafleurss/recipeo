@@ -24,7 +24,7 @@ public class GetRecipesForUserInCategoryLambda
 
         GetRecipesForUserInCategoryRequest unauthenticatedRequest = input.fromPath(i ->
                 GetRecipesForUserInCategoryRequest.builder()
-                        .withCategoryName(i.get("category"))
+                        .withCategoryName(i.get("categoryName"))
                         .build());
 
 

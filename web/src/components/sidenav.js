@@ -11,7 +11,7 @@ export default class SideNav extends BindingClass {
 
         const methodsToBind = [
             'loadCategories', 'addCategory', 'viewFavorites', 'viewRecent'
-            ,'viewUncategorized'
+            ,'viewUncategorized', 'viewCategory'
         ];
         this.bindClassMethods(methodsToBind, this);
         this.dataStore = dataStore;
@@ -41,11 +41,12 @@ export default class SideNav extends BindingClass {
                 a.appendChild(link);
                 // Set the title.
                 a.title = element.categoryName ;
-                // Set the event listener property.
-                a.addEventListener('click', this.viewUncategorized(element.categoryName));
 
                 // Append the anchor element to the body.
                 divElement.append(a);
+
+                // Set the event listener property.
+                a.addEventListener('click', async () => await this.viewCategory(element.categoryName));
             }
         }
     }
@@ -71,22 +72,23 @@ export default class SideNav extends BindingClass {
 
 
     async viewFavorites(){
-        const recipes = await this.client.getRecipesForUser("FAVORITES",  true);
+        const recipes = await this.client.getRecipesForUser("FAVORITES");
         this.dataStore.set('recipes', recipes);
     }
 
     async viewRecent(){
-        const recipes = await this.client.getRecipesForUser("RECENTLY_USED", true);
+        const recipes = await this.client.getRecipesForUser("RECENTLY_USED");
         this.dataStore.set('recipes', recipes);
     }
 
     async viewUncategorized(){
-        const recipes = await this.client.getRecipesForUser("UNCATEGORIZED", true);
+        const recipes = await this.client.getRecipesForUser("UNCATEGORIZED");
         this.dataStore.set('recipes', recipes);
     }
 
     async viewCategory(categoryName){
-        const recipes = await this.client.getRecipesForUserInCategory(categoryName, true);
+        //alert("Clicked " + categoryName);
+        const recipes = await this.client.getRecipesForUserInCategory(categoryName);
         this.dataStore.set('recipes', recipes);
     }
 }

@@ -78,10 +78,10 @@ public class RecipeDao {
                     .withLimit(PAGE_SIZE);
 
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
-        }
-        //*************************
-        //Query from base table FAVORITE Recipes
-        if (filterType == RecipeFilter.FAVORITES) {
+
+            //*************************
+            //Query from base table FAVORITE Recipes
+        } else if (filterType == RecipeFilter.FAVORITES) {
             valueMap.put(":isFavorite", new AttributeValue().withS("true"));
             DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withConsistentRead(false)
@@ -91,11 +91,10 @@ public class RecipeDao {
                     .withLimit(PAGE_SIZE);
 
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
-        }
 
         //*************************
         //Query from base table UNCATEGORIZED only
-        if (filterType == RecipeFilter.UNCATEGORIZED) {
+        } else if (filterType == RecipeFilter.UNCATEGORIZED) {
             valueMap.put(":categoryName", new AttributeValue().withS("Uncategorized"));
             DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withConsistentRead(false)
@@ -105,11 +104,10 @@ public class RecipeDao {
                     .withLimit(PAGE_SIZE);
 
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
-        }
 
-        //Query from GSI LastAccessed sorted by descending order of lastAccessed
-        //*************************
-        if (filterType == RecipeFilter.RECENTLY_USED) {
+            //Query from GSI LastAccessed sorted by descending order of lastAccessed
+            //*************************
+        } else if (filterType == RecipeFilter.RECENTLY_USED) {
             DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withIndexName(Recipe.RECENTLY_ACCESSED_RECIPES)
                     .withConsistentRead(false)
@@ -140,7 +138,7 @@ public class RecipeDao {
     public List<Recipe> getRecipesForUserInCategory(String userId, String category) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":userId", new AttributeValue().withS(userId));
-        valueMap.put(":categoryName", new AttributeValue().withS("Uncategorized"));
+        valueMap.put(":categoryName", new AttributeValue().withS(category));
 
         List<Recipe> recipeList = new ArrayList<>();
 
