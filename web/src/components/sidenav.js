@@ -76,7 +76,7 @@ export default class SideNav extends BindingClass {
 
 
     async viewFavorites(){
-        const recipes = await this.client.getRecipesForUser("FAVORITES", true);
+        const recipes = await this.client.getRecipesForUser("FAVORITES",  true);
         this.dataStore.set('recipes', recipes);
     }
 
