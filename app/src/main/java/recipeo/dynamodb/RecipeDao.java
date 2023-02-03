@@ -8,7 +8,9 @@ import recipeo.dynamodb.models.Recipe;
 import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.metrics.MetricsConstants;
 import recipeo.metrics.MetricsPublisher;
+import recipeo.models.RecipeFilter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,18 +62,50 @@ public class RecipeDao {
      * Returns the {@link List} of {@link Recipe} corresponding to the specified user id.
      *
      * @param userId the User ID
+     * @param filterType  Filter type to show ALL, FAVORITES or RECENTLY USED
      * @return the stored list of Recipes, or null if none was found.
      */
-    public List<Recipe> getRecipesForUser(String userId) {
+    public List<Recipe> getRecipesForUser(String userId, RecipeFilter filterType) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put(":userId" , new AttributeValue().withS(userId));
+        valueMap.put(":userId", new AttributeValue().withS(userId));
+        List<Recipe> recipeList = new ArrayList<>();
 
-        DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
-                .withKeyConditionExpression("userId = :userId")
-                .withExpressionAttributeValues(valueMap)
-                .withLimit(PAGE_SIZE);
+        //Query from base table
+        if (filterType == RecipeFilter.ALL) {
+            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                    .withKeyConditionExpression("userId = :userId")
+                    .withExpressionAttributeValues(valueMap)
+                    .withLimit(PAGE_SIZE);
 
-        List<Recipe> recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+        }
+        //*************************
+        //Query from GSI Fav
+        if (filterType == RecipeFilter.FAVORITES) {
+            valueMap.put(":isFavorite", new AttributeValue().withS("true"));
+            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                    .withConsistentRead(false)
+                    .withKeyConditionExpression("userId = :userId")
+                    .withExpressionAttributeValues(valueMap)
+                    .withFilterExpression("isFavorite = :isFavorite")
+                    .withLimit(PAGE_SIZE);
+
+            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+        }
+
+        //Query from GSI LastAccessed
+        //*************************
+        if (filterType == RecipeFilter.RECENTLY_USED) {
+            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                    .withIndexName(Recipe.RECENTLY_ACCESSED_RECIPES)
+                    .withConsistentRead(false)
+                    .withKeyConditionExpression("userId = :userId")
+                    .withExpressionAttributeValues(valueMap)
+                    .withScanIndexForward(false)
+                    .withLimit(PAGE_SIZE);
+
+            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+        }
 
         if (recipeList == null) {
             metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);

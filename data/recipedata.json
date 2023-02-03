@@ -27,6 +27,9 @@
           "categoryName": {
             "S": "Uncategorized"
           },
+          "lastAccessed": {
+            "S": "2020-12-03T12:20:59.000"
+          },
           "isFavorite": {
             "S": "true"
           },
@@ -87,6 +90,9 @@
           },
           "categoryName": {
             "S": "Uncategorized"
+          },
+          "lastAccessed": {
+            "S": "2021-12-03T12:20:59.000"
           },
           "isFavorite": {
             "S": "true"

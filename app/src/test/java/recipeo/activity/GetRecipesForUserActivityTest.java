@@ -11,6 +11,7 @@ import recipeo.activity.results.GetRecipesForUserResult;
 import recipeo.converters.ModelConverter;
 import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Recipe;
+import recipeo.models.RecipeFilter;
 import recipeo.models.RecipeModel;
 
 import java.util.List;
@@ -73,11 +74,12 @@ public class GetRecipesForUserActivityTest {
         recipe_2.setInstructions(expectedInstructions);
 
 
-        when(recipeDao.getRecipesForUser(expectedUserId)).thenReturn(List.of(recipe_1, recipe_2));
+        when(recipeDao.getRecipesForUser(expectedUserId, RecipeFilter.ALL)).thenReturn(List.of(recipe_1, recipe_2));
 
         //WHEN
         GetRecipesForUserRequest request = GetRecipesForUserRequest.builder()
                 .withUserId(expectedUserId)
+                .withFilterType(RecipeFilter.ALL)
                 .build();
 
         GetRecipesForUserResult result = getRecipesForUserActivity.handleRequest(request);

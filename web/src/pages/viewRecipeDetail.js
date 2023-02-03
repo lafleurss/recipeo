@@ -1,5 +1,6 @@
 import RecipeoClient from '../api/recipeoClient';
 import Header from '../components/header';
+import SideNav from '../components/sidenav';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
 
@@ -13,7 +14,8 @@ class ViewRecipeDetail extends BindingClass {
         this.bindClassMethods(['mount'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
-        this.header = new Header(this.dataStore);
+        this.header = new Header();
+        this.sidenav = new SideNav(this.dataStore);
     }
 
  /**
@@ -102,6 +104,7 @@ class ViewRecipeDetail extends BindingClass {
      */
     async mount() {
         this.header.addHeaderToPage();
+        this.sidenav.addSideNavToPage();
 
         this.client = new RecipeoClient();
         await this.clientLoaded();

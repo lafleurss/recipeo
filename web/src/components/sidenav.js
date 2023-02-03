@@ -3,82 +3,28 @@ import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
 
 /**
- * The header component for the website.
+ * The sidenav component for the website.
  */
-export default class Header extends BindingClass {
-    constructor() {
+export default class SideNav extends BindingClass {
+    constructor(dataStore) {
         super();
 
         const methodsToBind = [
-            'addHeaderToPage', 'createSiteTitle', 'createUserInfoForHeader',
-            'createLoginButton', 'createLoginButton', 'createLogoutButton'
+            'loadCategories', 'addCategory', 'viewFavorites', 'viewRecent'
         ];
         this.bindClassMethods(methodsToBind, this);
+        this.dataStore = dataStore;
         this.client = new RecipeoClient();
     }
 
-    /**
-     * Add the header to the page.
-     */
-    async addHeaderToPage() {
-        const currentUser = await this.client.getIdentity();
+    async addSideNavToPage(){
+        await this.loadCategories();
 
-        const siteTitle = this.createSiteTitle();
-        const userInfo = this.createUserInfoForHeader(currentUser);
+        //Event listeners for side
+        document.getElementById('add_category').addEventListener('click', this.addCategory);
+        document.getElementById('favorite_recipes').addEventListener('click', this.viewFavorites);
+        document.getElementById('recent_recipes').addEventListener('click', this.viewRecent);
 
-        const header = document.getElementById('header');
-        header.appendChild(siteTitle);
-        header.appendChild(userInfo);
-
-
-    }
-
-    createSiteTitle() {
-        const homeButton = document.createElement('img');
-        homeButton.classList.add('header_home');
-        homeButton.href = 'index.html';
-        homeButton.innerText = 'RECIPEO';
-        homeButton.src = "/logo.png"
-
-        const siteTitle = document.createElement('div');
-        siteTitle.classList.add('site-title');
-        siteTitle.appendChild(homeButton);
-
-        return siteTitle;
-    }
-
-    createUserInfoForHeader(currentUser) {
-        const userInfo = document.createElement('div');
-        userInfo.classList.add('user');
-
-        const childContent = currentUser
-            ? this.createLogoutButton(currentUser)
-            : this.createLoginButton();
-
-        userInfo.appendChild(childContent);
-
-        return userInfo;
-    }
-
-    createLoginButton() {
-        return this.createButton('Login', this.client.login);
-    }
-
-    createLogoutButton(currentUser) {
-        return this.createButton(`Logout: ${currentUser.name}`, this.client.logout);
-    }
-
-    createButton(text, clickHandler) {
-        const button = document.createElement('a');
-        button.classList.add('button');
-        button.href = '#';
-        button.innerText = text;
-
-        button.addEventListener('click', async () => {
-            await clickHandler();
-        });
-
-        return button;
     }
 
     async loadCategories(){
@@ -126,14 +72,10 @@ export default class Header extends BindingClass {
     async viewFavorites(){
         const recipes = await this.client.getRecipesForUser("FAVORITES", true);
         this.dataStore.set('recipes', recipes);
-
-
-        await viewRecipes.displayRecipesOnPage();
     }
 
     async viewRecent(){
         const recipes = await this.client.getRecipesForUser("RECENTLY_USED", true);
         this.dataStore.set('recipes', recipes);
-        await this.displayRecipesOnPage();
     }
 }
