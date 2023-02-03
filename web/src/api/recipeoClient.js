@@ -98,12 +98,12 @@ export default class RecipeoClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The recipe's metadata.
      */
-    async getRecipesForUser(errorCallback) {
+    async getRecipesForUser(filterType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
 
             const identity = await this.getIdentity();
-            const response = await this.axiosClient.get(`recipes/user?filterType=ALL`,
+            const response = await this.axiosClient.get(`recipes/user?filterType=${filterType}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`

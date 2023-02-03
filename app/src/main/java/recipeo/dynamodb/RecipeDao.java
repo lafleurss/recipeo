@@ -70,7 +70,7 @@ public class RecipeDao {
         valueMap.put(":userId", new AttributeValue().withS(userId));
         List<Recipe> recipeList = new ArrayList<>();
 
-        //No flags Query from base table
+        //Query from base table
         if (filterType == RecipeFilter.ALL) {
             DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withKeyConditionExpression("userId = :userId")
@@ -80,13 +80,32 @@ public class RecipeDao {
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
         }
         //*************************
-        //is FavFlag
         //Query from GSI Fav
+        if (filterType == RecipeFilter.FAVORITES) {
+            valueMap.put(":isFavorite", new AttributeValue().withS("true"));
+            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                    .withConsistentRead(false)
+                    .withKeyConditionExpression("userId = :userId")
+                    .withExpressionAttributeValues(valueMap)
+                    .withFilterExpression("isFavorite = :isFavorite")
+                    .withLimit(PAGE_SIZE);
 
-        //isLastAccessedFlag
+            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+        }
+
         //Query from GSI LastAccessed
         //*************************
+        if (filterType == RecipeFilter.RECENTLY_USED) {
+            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                    .withIndexName(Recipe.RECENTLY_ACCESSED_RECIPES)
+                    .withConsistentRead(false)
+                    .withKeyConditionExpression("userId = :userId")
+                    .withExpressionAttributeValues(valueMap)
+                    .withScanIndexForward(false)
+                    .withLimit(PAGE_SIZE);
 
+            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+        }
 
         if (recipeList == null) {
             metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);
