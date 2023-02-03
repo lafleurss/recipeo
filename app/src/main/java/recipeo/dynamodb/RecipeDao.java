@@ -93,6 +93,21 @@ public class RecipeDao {
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
         }
 
+        //*************************
+        //Query from Base Table filter by UNCATEGORIZED only
+        if (filterType == RecipeFilter.UNCATEGORIZED) {
+            valueMap.put(":categoryName", new AttributeValue().withS("Uncategorized"));
+            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                    .withConsistentRead(false)
+                    .withKeyConditionExpression("userId = :userId")
+                    .withExpressionAttributeValues(valueMap)
+                    .withFilterExpression("categoryName = :categoryName")
+                    .withLimit(PAGE_SIZE);
+
+            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+        }
+
+
         //Query from GSI LastAccessed
         //*************************
         if (filterType == RecipeFilter.RECENTLY_USED) {

@@ -3,5 +3,5 @@ package recipeo.models;
 public enum RecipeFilter {
     ALL,
     FAVORITES,
-    RECENTLY_USED;
+    RECENTLY_USED, UNCATEGORIZED;
 }

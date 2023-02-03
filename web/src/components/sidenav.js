@@ -11,41 +11,47 @@ export default class SideNav extends BindingClass {
 
         const methodsToBind = [
             'loadCategories', 'addCategory', 'viewFavorites', 'viewRecent'
+            ,'viewUncategorized'
         ];
         this.bindClassMethods(methodsToBind, this);
         this.dataStore = dataStore;
         this.client = new RecipeoClient();
-    }
-
-    async addSideNavToPage(){
-        await this.loadCategories();
 
         //Event listeners for side
         document.getElementById('add_category').addEventListener('click', this.addCategory);
         document.getElementById('favorite_recipes').addEventListener('click', this.viewFavorites);
         document.getElementById('recent_recipes').addEventListener('click', this.viewRecent);
+        document.getElementById('uncategorized_recipes').addEventListener('click', this.viewUncategorized);
+
+    }
+
+    async addSideNavToPage(){
+        await this.loadCategories();
+
+
 
     }
 
     async loadCategories(){
         const categoriesList = await this.client.getCategoriesForUser();
         var divElement = document.getElementById('sidenav_custom_categories');
+        if (categoriesList) {
+            for (let element of categoriesList) {
+                // Create anchor element.
+                var a = document.createElement('a');
+                // Create the text node for anchor element.
+                var link = document.createTextNode(element.categoryName);
+                // Append the text node to anchor element.
+                a.appendChild(link);
+                // Set the title.
+                a.title = element.categoryName ;
+                // Set the href property.
 
-        for (let element of categoriesList) {
-            // Create anchor element.
-            var a = document.createElement('a');
-            // Create the text node for anchor element.
-            var link = document.createTextNode(element.categoryName);
-            // Append the text node to anchor element.
-            a.appendChild(link);
-            // Set the title.
-            a.title = element.categoryName ;
-            // Set the href property.
-
-            //a.href = "https://www.geeksforgeeks.org";
-            //TODO: Call CategoryRecipes
-            // Append the anchor element to the body.
-            divElement.append(a);
+                //a.href = "https://www.geeksforgeeks.org";
+                //TODO: Call CategoryRecipes
+                // Append the anchor element to the body.
+                divElement.append(a);
+            }
         }
     }
 
@@ -76,6 +82,11 @@ export default class SideNav extends BindingClass {
 
     async viewRecent(){
         const recipes = await this.client.getRecipesForUser("RECENTLY_USED", true);
+        this.dataStore.set('recipes', recipes);
+    }
+
+    async viewUncategorized(){
+        const recipes = await this.client.getRecipesForUser("UNCATEGORIZED", true);
         this.dataStore.set('recipes', recipes);
     }
 }

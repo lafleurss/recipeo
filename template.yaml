@@ -394,11 +394,7 @@ Resources:
           AttributeType: "S"
         - AttributeName: "recipeId"
           AttributeType: "S"
-        - AttributeName: "isFavorite"
-          AttributeType: "S"
         - AttributeName: "lastAccessed"
-          AttributeType: "S"
-        - AttributeName: "categoryName"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "userId"
@@ -408,27 +404,11 @@ Resources:
       BillingMode: "PAY_PER_REQUEST"
       TableName: "recipe"
       GlobalSecondaryIndexes:
-        - IndexName: "FavoriteRecipes"
-          KeySchema:
-            - AttributeName: "userId"
-              KeyType: "HASH"
-            - AttributeName: "isFavorite"
-              KeyType: "RANGE"
-          Projection:
-            ProjectionType: "ALL"
         - IndexName: "LastAccessedRecipes"
           KeySchema:
             - AttributeName: "userId"
               KeyType: "HASH"
             - AttributeName: "lastAccessed"
-              KeyType: "RANGE"
-          Projection:
-            ProjectionType: "ALL"
-        - IndexName: "RecipeCategory"
-          KeySchema:
-            - AttributeName: "userId"
-              KeyType: "HASH"
-            - AttributeName: "categoryName"
               KeyType: "RANGE"
           Projection:
             ProjectionType: "ALL"
