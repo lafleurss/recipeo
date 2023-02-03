@@ -27,8 +27,39 @@ export default class SideNav extends BindingClass {
     }
 
     async addSideNavToPage(){
+        //Load categories
         await this.loadCategories();
+
+
     }
+
+    async sideNavRedirects(){
+    //Logic for handling sidenav bar links
+            const urlParams = new URLSearchParams(window.location.search);
+            const filterType = urlParams.get('filterType');
+            const categoryName = urlParams.get('categoryName');
+            let recipes;
+
+            //Get all recipes for user API
+            if (filterType == "ALL"){
+                recipes = await this.viewAll("ALL");
+            }
+            else if (filterType == "RECENTLY_USED"){
+                recipes = await this.viewRecent();
+            }
+            else if (filterType == "FAVORITES"){
+                recipes = await this.viewFavorites();
+            }
+            else if (filterType == "UNCATEGORIZED"){
+                recipes = await this.viewUncategorized();
+
+            } else if (categoryName){
+                recipes = await this.viewCategory(categoryName);
+            }
+
+            this.dataStore.set('recipes', recipes);
+    }
+    
 
     async loadCategories(){
         const categoriesList = await this.client.getCategoriesForUser();
@@ -49,6 +80,8 @@ export default class SideNav extends BindingClass {
 
                 // Set the event listener property.
                 a.addEventListener('click', async () => await this.viewCategory(element.categoryName));
+
+                a.href="/viewRecipes.html?categoryName="+element.categoryName;
             }
         }
     }
@@ -72,6 +105,10 @@ export default class SideNav extends BindingClass {
         document.getElementById('new_category').value = "";
     }
 
+    async viewAll(){
+        const recipes = await this.client.getRecipesForUser("ALL");
+        this.dataStore.set('recipes', recipes);
+    }
 
     async viewFavorites(){
         const recipes = await this.client.getRecipesForUser("FAVORITES");
@@ -93,4 +130,5 @@ export default class SideNav extends BindingClass {
         const recipes = await this.client.getRecipesForUserInCategory(categoryName);
         this.dataStore.set('recipes', recipes);
     }
+
 }

@@ -82,7 +82,7 @@ Resources:
         - !If
           - DeployCloudFront
           - !Sub "https://${CloudfrontDistribution.DomainName}"
-          - http://localhost:8000/viewRecipes.html
+          - http://localhost:8000/viewRecipes.html?filterType=ALL
       LogoutURLs:
         - !If
           - DeployCloudFront

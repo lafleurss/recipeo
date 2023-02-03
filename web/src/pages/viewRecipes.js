@@ -23,13 +23,33 @@ class ViewRecipes extends BindingClass {
      * Once the client is loaded, get the recipes list.
      */
     async clientLoaded() {
-        //Get all recipes for user API
-        const recipes = await this.client.getRecipesForUser("ALL");
-        this.dataStore.set('recipes', recipes);
+        await this.sidenav.sideNavRedirects();
+//        const urlParams = new URLSearchParams(window.location.search);
+//        const filterType = urlParams.get('filterType');
+//        const categoryName = urlParams.get('categoryName');
+//        let recipes;
+//
+//        //Get all recipes for user API
+//        if (filterType == "ALL"){
+//            recipes = await this.client.getRecipesForUser("ALL");
+//        }
+//        else if (filterType == "RECENTLY_USED"){
+//            recipes = await this.sidenav.viewRecent();
+//        }
+//        else if (filterType == "FAVORITES"){
+//            recipes = await this.sidenav.viewFavorites();
+//        }
+//        else if (filterType == "UNCATEGORIZED"){
+//            recipes = await this.sidenav.viewUncategorized();
+//
+//        } else if (categoryName){
+//            recipes = await this.sidenav.viewCategory(categoryName);
+//        }
+//
+//        this.dataStore.set('recipes', recipes);
         //this.dataStore.set('veryFirstEmpId', employees[0].lastNameEmployeeId);
         //this.dataStore.set('firstEmpId', employees[0].lastNameEmployeeId);
     }
-
 
 
 /**
