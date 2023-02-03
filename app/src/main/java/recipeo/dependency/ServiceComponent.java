@@ -10,7 +10,6 @@ import recipeo.activity.GetRecipesForUserActivity;
 import recipeo.activity.GetRecipesForUserInCategoryActivity;
 import recipeo.activity.UpdateCategoryActivity;
 
-
 import javax.inject.Singleton;
 
 /**

@@ -22,14 +22,10 @@ export default class SideNav extends BindingClass {
         document.getElementById('favorite_recipes').addEventListener('click', this.viewFavorites);
         document.getElementById('recent_recipes').addEventListener('click', this.viewRecent);
         document.getElementById('uncategorized_recipes').addEventListener('click', this.viewUncategorized);
-
     }
 
     async addSideNavToPage(){
         await this.loadCategories();
-
-
-
     }
 
     async loadCategories(){
@@ -45,10 +41,9 @@ export default class SideNav extends BindingClass {
                 a.appendChild(link);
                 // Set the title.
                 a.title = element.categoryName ;
-                // Set the href property.
+                // Set the event listener property.
+                a.addEventListener('click', this.viewUncategorized(element.categoryName));
 
-                //a.href = "https://www.geeksforgeeks.org";
-                //TODO: Call CategoryRecipes
                 // Append the anchor element to the body.
                 divElement.append(a);
             }
@@ -87,6 +82,11 @@ export default class SideNav extends BindingClass {
 
     async viewUncategorized(){
         const recipes = await this.client.getRecipesForUser("UNCATEGORIZED", true);
+        this.dataStore.set('recipes', recipes);
+    }
+
+    async viewCategory(categoryName){
+        const recipes = await this.client.getRecipesForUserInCategory(categoryName, true);
         this.dataStore.set('recipes', recipes);
     }
 }

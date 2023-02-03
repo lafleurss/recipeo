@@ -1,9 +1,5 @@
 package recipeo.activity.requests;
 
-import recipeo.activity.results.GetRecipesForUserInCategoryResult;
-import recipeo.dynamodb.models.Category;
-import recipeo.models.RecipeFilter;
-
 public class GetRecipesForUserInCategoryRequest {
     private final String userId;
     private final String categoryName;

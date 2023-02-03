@@ -3,18 +3,16 @@ package recipeo.activity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import recipeo.activity.requests.GetRecipesForUserInCategoryRequest;
-import recipeo.activity.requests.GetRecipesForUserRequest;
 import recipeo.activity.results.GetRecipesForUserInCategoryResult;
-import recipeo.activity.results.GetRecipesForUserResult;
 import recipeo.converters.ModelConverter;
 import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Recipe;
 import recipeo.exceptions.RecipeNotFoundException;
-import recipeo.models.RecipeFilter;
 import recipeo.models.RecipeModel;
 
-import javax.inject.Inject;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Implementation of the GetRecipesForUserInCategoryActivity for the RecipeoService's GetRecipe API.
@@ -43,7 +41,8 @@ public class GetRecipesForUserInCategoryActivity {
      * @param getRecipesForUserInCategoryRequest request object containing the user ID and categoryName
      * @return GetRecipesForUserResult object containing the API defined {@link List} of {@link RecipeModel}
      */
-    public GetRecipesForUserInCategoryResult handleRequest(GetRecipesForUserInCategoryRequest getRecipesForUserInCategoryRequest) {
+    public GetRecipesForUserInCategoryResult handleRequest(GetRecipesForUserInCategoryRequest
+                                                                   getRecipesForUserInCategoryRequest) {
         log.info("Received GetRecipesForUserInCategoryRequest {}", getRecipesForUserInCategoryRequest);
         String userId = getRecipesForUserInCategoryRequest.getUserId();
         String category = getRecipesForUserInCategoryRequest.getCategory();
