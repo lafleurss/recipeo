@@ -15,6 +15,10 @@ export default class Header extends BindingClass {
         ];
         this.bindClassMethods(methodsToBind, this);
         this.client = new RecipeoClient();
+
+
+
+
     }
 
     /**
@@ -29,6 +33,14 @@ export default class Header extends BindingClass {
         const header = document.getElementById('header');
         header.appendChild(siteTitle);
         header.appendChild(userInfo);
+
+        const token = await this.client.getTokenOrThrow("Please log in!");
+
+        if (window.location.pathname == "/index.html" || window.location.pathname == "/" ){
+            if (token){
+             window.location.href = `/viewRecipes.html`;
+            }
+        }
 
 
     }

@@ -18,10 +18,12 @@ export default class SideNav extends BindingClass {
         this.client = new RecipeoClient();
 
         //Event listeners for side
-        document.getElementById('add_category').addEventListener('click', this.addCategory);
-        document.getElementById('favorite_recipes').addEventListener('click', this.viewFavorites);
-        document.getElementById('recent_recipes').addEventListener('click', this.viewRecent);
-        document.getElementById('uncategorized_recipes').addEventListener('click', this.viewUncategorized);
+        if (document.getElementById('sidenav_default_categories')){
+            document.getElementById('add_category').addEventListener('click', this.addCategory);
+            document.getElementById('favorite_recipes').addEventListener('click', this.viewFavorites);
+            document.getElementById('recent_recipes').addEventListener('click', this.viewRecent);
+            document.getElementById('uncategorized_recipes').addEventListener('click', this.viewUncategorized);
+        }
     }
 
     async addSideNavToPage(){

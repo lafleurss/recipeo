@@ -101,8 +101,6 @@ export default class RecipeoClient extends BindingClass {
     async getRecipesForUser(filterType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
-
-            const identity = await this.getIdentity();
             const response = await this.axiosClient.get(`recipes/user?filterType=${filterType}`,
             {
                 headers: {
