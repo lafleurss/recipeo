@@ -70,7 +70,7 @@ public class RecipeDao {
         valueMap.put(":userId", new AttributeValue().withS(userId));
         List<Recipe> recipeList = new ArrayList<>();
 
-        //Query from base table
+        //Query from base table ALL Recipes
         if (filterType == RecipeFilter.ALL) {
             DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withKeyConditionExpression("userId = :userId")
@@ -78,10 +78,10 @@ public class RecipeDao {
                     .withLimit(PAGE_SIZE);
 
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
-        }
-        //*************************
-        //Query from GSI Fav
-        if (filterType == RecipeFilter.FAVORITES) {
+
+            //*************************
+            //Query from base table FAVORITE Recipes
+        } else if (filterType == RecipeFilter.FAVORITES) {
             valueMap.put(":isFavorite", new AttributeValue().withS("true"));
             DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withConsistentRead(false)
@@ -91,11 +91,23 @@ public class RecipeDao {
                     .withLimit(PAGE_SIZE);
 
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
-        }
 
-        //Query from GSI LastAccessed
         //*************************
-        if (filterType == RecipeFilter.RECENTLY_USED) {
+        //Query from base table UNCATEGORIZED only
+        } else if (filterType == RecipeFilter.UNCATEGORIZED) {
+            valueMap.put(":categoryName", new AttributeValue().withS("Uncategorized"));
+            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                    .withConsistentRead(false)
+                    .withKeyConditionExpression("userId = :userId")
+                    .withExpressionAttributeValues(valueMap)
+                    .withFilterExpression("categoryName = :categoryName")
+                    .withLimit(PAGE_SIZE);
+
+            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+
+            //Query from GSI LastAccessed sorted by descending order of lastAccessed
+            //*************************
+        } else if (filterType == RecipeFilter.RECENTLY_USED) {
             DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withIndexName(Recipe.RECENTLY_ACCESSED_RECIPES)
                     .withConsistentRead(false)
@@ -114,6 +126,40 @@ public class RecipeDao {
         metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 0);
         return recipeList;
     }
+
+
+    /**
+     * Returns the {@link List} of {@link Recipe} corresponding to the specified user id and category name.
+     *
+     * @param userId the User ID
+     * @param category  custom category name
+     * @return the stored list of Recipes, or null if none was found.
+     */
+    public List<Recipe> getRecipesForUserInCategory(String userId, String category) {
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":userId", new AttributeValue().withS(userId));
+        valueMap.put(":categoryName", new AttributeValue().withS(category));
+
+        List<Recipe> recipeList = new ArrayList<>();
+
+        //Query from base table
+        DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+                .withConsistentRead(false)
+                .withKeyConditionExpression("userId = :userId")
+                .withExpressionAttributeValues(valueMap)
+                .withFilterExpression("categoryName = :categoryName")
+                .withLimit(PAGE_SIZE);
+
+        recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+
+        if (recipeList == null) {
+            metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);
+            throw new RecipeNotFoundException("Could not find recipes for user with id: " + userId);
+        }
+        metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 0);
+        return recipeList;
+    }
+
 
     /**
      * Saves (creates or updates) the recipe.
@@ -163,6 +209,7 @@ public class RecipeDao {
         return this.dynamoDbMapper.scan(Recipe.class, dynamoDBScanExpression);
     }
 
+
     private StringBuilder filterExpressionPart(String target, String valueMapNamePrefix, int position) {
         String possiblyAnd = position == 0 ? "" : "and ";
         return new StringBuilder()
@@ -173,6 +220,7 @@ public class RecipeDao {
                 .append(valueMapNamePrefix).append(position)
                 .append(") ");
     }
+
 
 
 }

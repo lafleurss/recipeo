@@ -20,7 +20,6 @@ import java.util.Set;
  */
 @DynamoDBTable(tableName = "recipe")
 public class Recipe {
-    public static final String FAVORITE_RECIPES = "FavoriteRecipes";
     public static final String RECENTLY_ACCESSED_RECIPES = "LastAccessedRecipes";
     private String recipeId;
     private String recipeName;
@@ -39,7 +38,7 @@ public class Recipe {
 
 
     @DynamoDBHashKey(attributeName = "userId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {FAVORITE_RECIPES, RECENTLY_ACCESSED_RECIPES})
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {RECENTLY_ACCESSED_RECIPES})
     public String getUserId() {
         return userId;
     }
@@ -150,7 +149,6 @@ public class Recipe {
     }
 
     @DynamoDBAttribute(attributeName = "isFavorite")
-    @DynamoDBIndexRangeKey(attributeName = "isFavorite", globalSecondaryIndexName = FAVORITE_RECIPES)
     public String getIsFavorite() {
         return isFavorite;
     }

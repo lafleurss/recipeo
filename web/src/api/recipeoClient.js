@@ -101,8 +101,6 @@ export default class RecipeoClient extends BindingClass {
     async getRecipesForUser(filterType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
-
-            const identity = await this.getIdentity();
             const response = await this.axiosClient.get(`recipes/user?filterType=${filterType}`,
             {
                 headers: {
@@ -115,6 +113,29 @@ export default class RecipeoClient extends BindingClass {
             this.handleError(error, errorCallback)
         }
     }
+
+        /**
+         * Gets the recipe for the logged in User ID in the requested category name.
+         * @param errorCallback (Optional) A function to execute if the call fails.
+         * @returns The recipe's metadata.
+         */
+        async getRecipesForUserInCategory(categoryName, errorCallback) {
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
+
+                const identity = await this.getIdentity();
+                const response = await this.axiosClient.get(`recipes/user/${categoryName}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                return response.data.recipes;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+            }
+        }
 
    /**
      * Gets the categories for the logged in User ID.

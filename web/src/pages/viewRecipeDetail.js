@@ -26,7 +26,7 @@ class ViewRecipeDetail extends BindingClass {
         const recipeId = urlParams.get('id');
 
         //Get the recipe metadata for the recipeId selected
-        const recipe = await this.client.getRecipe(recipeId, true);
+        const recipe = await this.client.getRecipe(recipeId);
         this.dataStore.set('recipe', recipe);
         await this.displayRecipeOnPage();
     }
