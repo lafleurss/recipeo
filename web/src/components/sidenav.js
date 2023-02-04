@@ -59,7 +59,7 @@ export default class SideNav extends BindingClass {
 
             this.dataStore.set('recipes', recipes);
     }
-    
+
 
     async loadCategories(){
         const categoriesList = await this.client.getCategoriesForUser();

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipeo</title>
+    <script type="text/javascript" src="assets/addRecipeDetail.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<header class="header" id="header"></header>
+<div class="main">
+  <p></p> <p></p>
+  <div> <span> </span></div>
+  <div> <span> </span></div>
+    <div class="sidenav">
+        <div id="sidenav_default_categories">
+            <a href="/viewRecipes.html?filterType=ALL">All Recipes</a>
+            <a href="/viewRecipes.html?filterType=RECENTLY_USED" id="recent_recipes">Recently Used</a>
+            <a href="/viewRecipes.html?filterType=FAVORITES" id="favorite_recipes">Favorites</a>
+            <a href="/viewRecipes.html?filterType=UNCATEGORIZED" id="uncategorized_recipes">Uncategorized</a>
+        </div>
+        <div id="sidenav_custom_categories">
+        </div>
+        <div id="sidenav_categories_action">
+            <a href="#"> <input type="text" id="new_category" name="new_category" maxlength="50" size="25"> </a>
+            <a href="#"><button id="add_category" name="add"> Add Category</button></a>
+        </div>
+    </div>
+    <div  class="recipetitle">
+        <h1 align="left" id= "recipetitle">Recipe Name</h1>
+    </div>
+
+
+    <div class="row">
+        <div class="column">
+            <div class ="div-1">  Recipe Name:  </div>
+            <input align="left"  id="recipename" maxlength="50" size="50"></input>
+            <br><br>
+
+            <div class ="div-1">  Servings:  </div>
+            <input class ="div-2" id="servings" maxlength="3" size="3"></input>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="div-1">  Category:  </div>
+            <select  id="category">
+                <!--                <option value="Uncategorized">Uncategorized</option>-->
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <i id="favorite" class="fa fa-heart-o"></i>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br> <br>
+            <div class = "div-1">  Prep Time (min):  </div>
+            <input class = "div-2" id="preptime" maxlength="3" size="3" ></input>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="div-1">  Cook Time (min):  </div>
+            <input class = "div-2" id="cooktime" maxlength="3" size="3" ></input>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="div-1">  Total Time (min):  </div>
+            <input class = "div-2" id="totaltime" maxlength="3" size="3"></input>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="row">
+        <div class="columnleft">
+            <div class="card">
+                <h2>Ingredients</h2>
+                <div class="text-area" contenteditable="true">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="columnright">
+            <div class="card">
+                <h2>Instructions</h2>
+                <div class="text-area" contenteditable="true">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <input type="button" name="Save" value ="Save">
+    </div>
+
+
+
+
+</div>
+</body>
+</html>

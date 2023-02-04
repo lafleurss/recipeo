@@ -137,6 +137,16 @@
   display: inline-block;
 }
 
+.text-area {
+  display: list-item;
+  list-style-type: decimal;
+  margin-left : 1em;
+  outline: none;
+}
+.text-area div {
+  display: list-item;
+}
+
 .card {
 padding: 1rem;
 border: 1px solid grey;
