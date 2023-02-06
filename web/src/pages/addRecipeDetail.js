@@ -15,6 +15,8 @@ class AddRecipeDetail extends BindingClass {
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.saveRecipe);
+
+        document.getElementById('favorite').addEventListener('click', this.toggleHeart);
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
     }
@@ -24,6 +26,14 @@ class AddRecipeDetail extends BindingClass {
      */
     async clientLoaded() {
         this.loadCategoryDropDown();
+    }
+
+    toggleHeart() {
+        if(document.getElementById('favorite').className == "fa fa-heart-o"){
+            document.getElementById('favorite').className = "fa fa-heart";
+        } else {
+            document.getElementById('favorite').className = "fa fa-heart-o";
+        }
     }
 
     async loadCategoryDropDown(){
@@ -39,7 +49,6 @@ class AddRecipeDetail extends BindingClass {
               categoryDropDown.appendChild(option);
             }
         }
-
     }
 
 /**
