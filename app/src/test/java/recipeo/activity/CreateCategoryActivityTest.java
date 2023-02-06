@@ -44,15 +44,13 @@ public class CreateCategoryActivityTest {
                 .withUserId(userId)
                 .build();
 
-        System.out.println(request.toString());
-
         // WHEN
         CreateCategoryResult result = createCategoryActivity.handleRequest(request);
 
         // THEN
         verify(categoryDao).saveCategory(any(Category.class));
 
-        //assertNotNull(result.getCategory().getCategoryName());
+        assertNotNull(result.getCategory().getCategoryName());
         assertEquals(newCategoryName, result.getCategory().getCategoryName());
         assertEquals(newCategoryDescription, result.getCategory().getCategoryDescription());
         assertEquals(userId, result.getCategory().getUserId());

@@ -32,10 +32,8 @@ public class CreateRecipeLambda extends LambdaActivityRunner<CreateRecipeRequest
                         .withIngredients(unauthenticatedRequest.getIngredients())
                         .withInstructions(unauthenticatedRequest.getInstructions())
                         .withTags(unauthenticatedRequest.getTags())
-                        .withCategoryName(unauthenticatedRequest.getCategoryName().isEmpty() ?
-                                "Uncategorized" : unauthenticatedRequest.getCategoryName())
-                        .withIsFavorite(unauthenticatedRequest.getIsFavorite().isEmpty() ?
-                                "false" : unauthenticatedRequest.getIsFavorite())
+                        .withCategoryName(unauthenticatedRequest.getCategoryName())
+                        .withIsFavorite(unauthenticatedRequest.getIsFavorite())
                         .withUserId(claims.get("email"))
                         .build()), (request, serviceComponent) ->
                 serviceComponent.provideCreateRecipeActivity().handleRequest(request)

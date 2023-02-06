@@ -15,11 +15,12 @@ import recipeo.models.RecipeModel;
 import recipeo.utils.RecipeoServiceUtils;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
-import static recipeo.utils.CollectionUtils.copyToSet;
 
 public class CreateRecipeActivity {
     private final Logger log = LogManager.getLogger();
@@ -61,13 +62,7 @@ public class CreateRecipeActivity {
         String recipeName = createRecipeRequest.getRecipeName();
         List<Category> validCategoriesForUser = categoryDao.getCategoriesForUser(userId);
 
-        //No matching categories found
-        if (validCategoriesForUser.stream()
-                .map(category -> category.getCategoryName())
-                .noneMatch(str -> str.equals(requestedCategoryName))) {
-            throw new CategoryNotFoundException("No category " + requestedCategoryName + " exists for user id: " +
-                    userId);
-        }
+
 
         //Check for illegal characters
         if (!RecipeoServiceUtils.isValidString(recipeName)) {
@@ -84,6 +79,38 @@ public class CreateRecipeActivity {
 
 
         Recipe recipeToBeSaved = new Recipe();
+        String isFavourite = "false";
+        if (createRecipeRequest.getIsFavorite() != null) {
+            isFavourite = createRecipeRequest.getIsFavorite();
+        }
+
+        Set<String> recipeTags = null;
+        if (createRecipeRequest.getTags() != null) {
+            recipeTags = new HashSet<>(createRecipeRequest.getTags());
+        }
+
+        String categoryName = "Uncategorized";
+        if (createRecipeRequest.getCategoryName() != null) {
+            categoryName = createRecipeRequest.getCategoryName();
+            boolean match = false;
+            for (Category availableCategory : validCategoriesForUser){
+                if (availableCategory.getCategoryName().equals(requestedCategoryName)){
+                    match = true;
+                    break;
+                }
+            }
+            if (!match) {
+                throw new CategoryNotFoundException("No category " + requestedCategoryName + " exists for user id: " +
+                        userId);
+            }
+//            //No matching categories found
+//            if (validCategoriesForUser.stream()
+//                    .map(category -> category.getCategoryName())
+//                    .noneMatch(str -> str.equals(requestedCategoryName))) {
+//
+//            }
+        }
+
         recipeToBeSaved.setRecipeId(RecipeoServiceUtils.generateRecipeId());
         recipeToBeSaved.setRecipeName(createRecipeRequest.getRecipeName());
         recipeToBeSaved.setUserId(createRecipeRequest.getUserId());
@@ -91,11 +118,11 @@ public class CreateRecipeActivity {
         recipeToBeSaved.setPrepTime(createRecipeRequest.getPrepTime());
         recipeToBeSaved.setCookTime(createRecipeRequest.getCookTime());
         recipeToBeSaved.setTotalTime(createRecipeRequest.getTotalTime());
-        recipeToBeSaved.setCategoryName(createRecipeRequest.getCategoryName());
-        recipeToBeSaved.setTags(copyToSet(createRecipeRequest.getTags()));
+        recipeToBeSaved.setCategoryName(categoryName);
+        recipeToBeSaved.setTags(recipeTags);
         recipeToBeSaved.setInstructions(createRecipeRequest.getInstructions());
         recipeToBeSaved.setIngredients(createRecipeRequest.getIngredients());
-        recipeToBeSaved.setIsFavorite("false");
+        recipeToBeSaved.setIsFavorite(isFavourite);
         recipeToBeSaved.setLastAccessed(LocalDateTime.now());
 
         RecipeModel recipeModel = new ModelConverter().toRecipeModel(recipeToBeSaved);
