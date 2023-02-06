@@ -15,8 +15,9 @@ You can also organize your recipes by categories like Recently Used, Favorites, 
 7. As a user I want to be able to see top 25 recipes in my Recently Used Category
 8. As a user I want to be able to see all recipes in my Favorites Category
 9. As a user I want to be able to create my own custom Categories 
-10. As a user I want to be able to sort my recipes by recipe name A-Z, Z-A
-11. As a user I want to be able to delete my custom Category without deleting the recipes in it
+10. As a user I want to be able to see my custom Categories
+11. As a user I want to be able to sort my recipes by recipe name alphabetically
+12. As a user I want to be able to delete my custom Category without deleting the recipes in it
 
 
 A list of “stretch goals”/features

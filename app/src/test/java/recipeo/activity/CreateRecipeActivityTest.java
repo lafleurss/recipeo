@@ -82,7 +82,7 @@ public class CreateRecipeActivityTest {
     @Test
     public void handleRequest_addRecipeNoTags_returnsRecipeInResult() {
         // GIVEN
-        String recipeName = "expectedName";
+        String recipeName = "expected's Name";
         String userId = "expectedUserId";
         Integer servings = 2;
         List<String> ingredients = List.of("ing1", "ing2");

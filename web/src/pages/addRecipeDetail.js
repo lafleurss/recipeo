@@ -17,6 +17,7 @@ class AddRecipeDetail extends BindingClass {
         this.dataStore.addChangeListener(this.saveRecipe);
 
         document.getElementById('favorite').addEventListener('click', this.toggleHeart);
+        document.getElementById('save_recipe').addEventListener('click', this.saveRecipe);
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
     }
@@ -55,61 +56,56 @@ class AddRecipeDetail extends BindingClass {
      * When the recipe is  saved in the datastore, update recipe details DOM on the page.
      */
     async saveRecipe() {
-        const recipe = this.dataStore.get('recipe');
+        const nameRegex = new RegExp('[^a-zA-Z\\s-\'.]');
+                const recipeName = document.getElementById('recipename').value;
+                const servings =  document.getElementById('servings').value;
+                const preptime =  document.getElementById('preptime').value;
+                const cooktime =  document.getElementById('cooktime').value;
+                const totaltime =  document.getElementById('totaltime').value;
+                const categoryElement = document.getElementById('category');
+                const categoryName = categoryElement.options[categoryElement.selectedIndex].innerHTML;
+                const favoriteClassName = document.getElementById('favorite').className;
 
-        if (!recipe) {
-            return;
-        }
+                if (favoriteClassName == "fa fa-heart-o") {
+                    const isFavorite = "false";
+                } else if (favoriteClassName == "fa fa-heart"){
+                    const isFavorite = "true";
+                }
 
-        if (recipe.recipeName){
-            document.getElementById('recipetitle').innerHTML = recipe.recipeName;
-        }
-        if (recipe.servings){
-            document.getElementById('servings').innerHTML = recipe.servings;
-        }
-        if (recipe.prepTime){
-            document.getElementById('preptime').innerHTML = recipe.prepTime;
-        }
-        if (recipe.cookTime){
-            document.getElementById('cooktime').innerHTML = recipe.cookTime;
-        }
-        if (recipe.totalTime){
-            document.getElementById('totaltime').innerHTML = recipe.totalTime;
-        }
+                const instructions = document.getElementById('instructions').innerText;
+                const ingredients = document.getElementById('ingredients').innerText;
 
-        if (recipe.isFavorite){
-            if (recipe.isFavorite == "true"){
-                document.getElementById('favorite').className = "fa fa-heart";
-            }
-        }
+                if (!recipeName || !servings || !preptime || !cooktime || !totaltime || !ingredients || !instructions) {
+                    alert("Please fill in all required fields");
+                    return;
+                }
 
-        if (recipe.categoryName){
-            var select = document.getElementById('category');
-            var opt = document.createElement('option');
-            opt.value = recipe.categoryName;
-            opt.innerHTML = recipe.categoryName;
-            select.appendChild(opt);
-        }
+                if (nameRegex.test(recipeName)) {
+                    alert("The first name you entered has invalid characters");
+                    return;
+                }
 
-        if (recipe.ingredients){
-            var list = document.getElementById('ingredients')
-            var counter = 0;
-            for (var i in recipe.ingredients) {
-              var elem = document.createElement("li");
-              elem.innerText =  recipe.ingredients[i];
-              list.appendChild(elem);
-            }
-        }
+                let payload = {recipeName: recipeName, servings: servings, prepTime: prepTime, cookTime: cookTime,
+                totalTime : totalTime, ingredients : ingredients, instructions : instructions,
+                tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
-        if (recipe.instructions){
-            var list = document.getElementById('instructions')
-            var counter = 0;
-            for (var i in recipe.instructions) {
-              var elem = document.createElement("li");
-              elem.innerText =  recipe.instructions[i];
-              list.appendChild(elem);
-            }
-        }
+                document.getElementById('save_recipe').disabled = true;
+                document.getElementById('save_recipe').innerHTML = 'Saving Recipe...';
+                document.getElementById('save_recipe').style.background='grey';
+                const recipe = await this.client.createRecipe(payload);
+                this.dataStore.set('recipe', recipe);
+
+
+
+//        if (recipe.ingredients){
+//            var list = document.getElementById('ingredients')
+//            var counter = 0;
+//            for (var i in recipe.ingredients) {
+//              var elem = document.createElement("li");
+//              elem.innerText =  recipe.ingredients[i];
+//              list.appendChild(elem);
+//            }
+//        }
 
  }
 

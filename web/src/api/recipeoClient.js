@@ -183,6 +183,29 @@ export default class RecipeoClient extends BindingClass {
             }
         }
 
+   /**
+         * Add a recipe for the logged in User ID.
+         * @param errorCallback (Optional) A function to execute if the call fails.
+         * @returns The recipes' metadata.
+         */
+        async addRecipe(payload, errorCallback) {
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can add recipes.");
+
+                const identity = await this.getIdentity();
+                const response = await this.axiosClient.post(`recipe`, payload,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                return response.data.recipe;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+            }
+        }
+
     /**
      * Helper method to log the error and run any error functions.
      * @param error The error received from the server.

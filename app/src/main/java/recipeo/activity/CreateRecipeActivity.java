@@ -92,23 +92,14 @@ public class CreateRecipeActivity {
         String categoryName = "Uncategorized";
         if (createRecipeRequest.getCategoryName() != null) {
             categoryName = createRecipeRequest.getCategoryName();
-            boolean match = false;
-            for (Category availableCategory : validCategoriesForUser){
-                if (availableCategory.getCategoryName().equals(requestedCategoryName)){
-                    match = true;
-                    break;
-                }
-            }
-            if (!match) {
+
+            //No matching categories found
+            if (validCategoriesForUser.stream()
+                    .map(category -> category.getCategoryName())
+                    .noneMatch(str -> str.equals(requestedCategoryName))) {
                 throw new CategoryNotFoundException("No category " + requestedCategoryName + " exists for user id: " +
                         userId);
             }
-//            //No matching categories found
-//            if (validCategoriesForUser.stream()
-//                    .map(category -> category.getCategoryName())
-//                    .noneMatch(str -> str.equals(requestedCategoryName))) {
-//
-//            }
         }
 
         recipeToBeSaved.setRecipeId(RecipeoServiceUtils.generateRecipeId());
