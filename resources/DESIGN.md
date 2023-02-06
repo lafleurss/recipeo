@@ -114,7 +114,7 @@ List of Tables and global secondary indexes:
       ],
   "isFavorite" : false,
   "category": "Uncategorized" } ``
-* Optional: list of tags (default: no tags), (default: false), category (default: Uncategorized). Returns the new recipe with the lastAccessed timestamp set to time of POST, including a unique recipe ID assigned by the Recipeo service.
+* Optional: list of tags (default: no tags), isFavorite (default: false), category (default: Uncategorized). Returns the new recipe with the lastAccessed timestamp set to time of POST, including a unique recipe ID assigned by the Recipeo service.
 
   * For security concerns, we will validate the provided recipe name does not contain any invalid characters: " ' \`
   * If the recipe name contains any of the invalid characters, will throw an InvalidAttributeValueException.
