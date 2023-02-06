@@ -5,13 +5,17 @@ import org.apache.logging.log4j.Logger;
 import recipeo.activity.requests.CreateRecipeRequest;
 import recipeo.activity.results.CreateRecipeResult;
 import recipeo.converters.ModelConverter;
+import recipeo.dynamodb.CategoryDao;
 import recipeo.dynamodb.RecipeDao;
+import recipeo.dynamodb.models.Category;
 import recipeo.dynamodb.models.Recipe;
+import recipeo.exceptions.CategoryNotFoundException;
 import recipeo.exceptions.InvalidAttributeValueException;
 import recipeo.models.RecipeModel;
 import recipeo.utils.RecipeoServiceUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,14 +24,17 @@ import static recipeo.utils.CollectionUtils.copyToSet;
 public class CreateRecipeActivity {
     private final Logger log = LogManager.getLogger();
     private final RecipeDao recipeDao;
+    private final CategoryDao categoryDao;
     /**
      * Instantiates a new CreateRecipeActivity object.
      *
-     * @param recipeDao RecipeDao to access the recipe table.
+     * @param recipeDao   RecipeDao to access the recipe table.
+     * @param categoryDao CategoryDao to access the category table.
      */
     @Inject
-    public CreateRecipeActivity(RecipeDao recipeDao) {
+    public CreateRecipeActivity(RecipeDao recipeDao, CategoryDao categoryDao) {
         this.recipeDao = recipeDao;
+        this.categoryDao = categoryDao;
     }
 
     /**
@@ -49,14 +56,27 @@ public class CreateRecipeActivity {
     public CreateRecipeResult handleRequest(CreateRecipeRequest createRecipeRequest) {
         log.info("Received CreateRecipeRequest {}", createRecipeRequest);
 
+        String requestedCategoryName = createRecipeRequest.getCategoryName();
+        String userId = createRecipeRequest.getUserId();
+        String recipeName = createRecipeRequest.getRecipeName();
+        List<Category> validCategoriesForUser = categoryDao.getCategoriesForUser(userId);
+
+        //No matching categories found
+        if (validCategoriesForUser.stream()
+                .map(category -> category.getCategoryName())
+                .noneMatch(str -> str.equals(requestedCategoryName))) {
+            throw new CategoryNotFoundException("No category " + requestedCategoryName + " exists for user id: " +
+                    userId);
+        }
+
         //Check for illegal characters
-        if (!RecipeoServiceUtils.isValidString(createRecipeRequest.getRecipeName())) {
+        if (!RecipeoServiceUtils.isValidString(recipeName)) {
             throw new InvalidAttributeValueException("Recipe name [" +
                     createRecipeRequest.getRecipeName() +
                     "] contains illegal characters");
         }
 
-        if (!RecipeoServiceUtils.isValidString(createRecipeRequest.getUserId())) {
+        if (!RecipeoServiceUtils.isValidString(userId)) {
             throw new InvalidAttributeValueException("Recipe user ID [" +
                     createRecipeRequest.getUserId() +
                     "] contains illegal characters");
@@ -73,6 +93,8 @@ public class CreateRecipeActivity {
         recipeToBeSaved.setTotalTime(createRecipeRequest.getTotalTime());
         recipeToBeSaved.setCategoryName(createRecipeRequest.getCategoryName());
         recipeToBeSaved.setTags(copyToSet(createRecipeRequest.getTags()));
+        recipeToBeSaved.setInstructions(createRecipeRequest.getInstructions());
+        recipeToBeSaved.setIngredients(createRecipeRequest.getIngredients());
         recipeToBeSaved.setIsFavorite("false");
         recipeToBeSaved.setLastAccessed(LocalDateTime.now());
 

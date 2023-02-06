@@ -87,33 +87,7 @@ List of Tables and global secondary indexes:
 ## Create Recipe Endpoint
 * Accepts POST requests to `/recipes`
 * Accepts input to create a new recipe:
-``{"recipeName":"name", "userId":"id", "servings":4, "prepTime":1200000000, "cookTime": 1200000000, "totalTime":2400000000, "ingredients": [
-  {
-  "name": "1 cup chickpeas (dry)"
-  },
-  {
-  "name": "1  large onion (finely chopped)"
-  },    
-  {
-  "name": "Cilantro for garnish (optional)"
-  }
-  ], "instructions": [
-  {
-  "name": "do x"
-  },
-  {
-  "name": "prep y"
-  },    
-  {
-  "name": "another step"
-  }
-  ], "tags": [
-        "tag1",
-        "tag2",
-        "tag3"
-      ],
-  "isFavorite" : false,
-  "category": "Uncategorized" } ``
+``{"recipeName":"name",  "servings":4, "prepTime":20, "cookTime": 20, "totalTime":20, "ingredients": [ { "name": "1 cup chickpeas (dry)" }, { "name": "1 large onion (finely chopped)" }, { "name": "Cilantro for garnish (optional)" } ], "instructions": [ { "name": "do x" }, { "name": "prep y" }, { "name": "another step" } ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : false, "category": "Uncategorized" }``
 * Optional: list of tags (default: no tags), isFavorite (default: false), category (default: Uncategorized). Returns the new recipe with the lastAccessed timestamp set to time of POST, including a unique recipe ID assigned by the Recipeo service.
 
   * For security concerns, we will validate the provided recipe name does not contain any invalid characters: " ' \`
@@ -127,7 +101,7 @@ List of Tables and global secondary indexes:
 
 ## Update Recipe Endpoint
 * Accepts PUT requests to `/recipes/:recipeId`
-* Accepts input to update a recipe `{"recipeName":"name",  "servings":4, "prepTime":1200000000, "cookTime": 1200000000, "totalTime":2400000000, "ingredients": [ { "name": "1 cup chickpeas (dry)" }, { "name": "1 large onion (finely chopped)" }, { "name": "Cilantro for garnish (optional)" } ], "instructions": [ { "name": "do x" }, { "name": "prep y" }, { "name": "another step" } ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : false, "category": "Uncategorized" }`. Returns the updated recipe.
+* Accepts input to update a recipe `{"recipeName":"name",  "servings":4, "prepTime":20, "cookTime": 20, "totalTime":20, "ingredients": [ { "name": "1 cup chickpeas (dry)" }, { "name": "1 large onion (finely chopped)" }, { "name": "Cilantro for garnish (optional)" } ], "instructions": [ { "name": "do x" }, { "name": "prep y" }, { "name": "another step" } ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : false, "category": "Uncategorized" }`. Returns the updated recipe.
   * If the recipe ID is not found, will throw a RecipeNotFoundException
   * For security concerns, we will validate the provided recipe name does not contain invalid characters: " ' \`
   * If the recipe name contains invalid characters, will throw an InvalidAttributeValueException
