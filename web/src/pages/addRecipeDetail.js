@@ -6,7 +6,7 @@ import DataStore from "../util/DataStore";
 
 
 /**
- * Logic needed for the view playlist page of the website.
+ * Logic needed for the save recipe page of the website.
  */
 class AddRecipeDetail extends BindingClass {
     constructor() {
@@ -14,27 +14,23 @@ class AddRecipeDetail extends BindingClass {
         this.bindClassMethods(['mount', 'saveRecipe'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.displayRecipeOnPage);
+        this.dataStore.addChangeListener(this.saveRecipe);
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
     }
 
  /**
-     * Once the client is loaded, get the recipe details.
+     * Once the client is loaded, display the recipe details.
      */
     async clientLoaded() {
         const urlParams = new URLSearchParams(window.location.search);
         const recipeId = urlParams.get('id');
-
-        //Get the recipe metadata for the recipeId selected
-        const recipe = await this.client.getRecipe(recipeId);
-        this.dataStore.set('recipe', recipe);
     }
 
 /**
      * When the recipe is  saved in the datastore, update recipe details DOM on the page.
      */
-    saveRecipe() {
+    async saveRecipe() {
         const recipe = this.dataStore.get('recipe');
 
         if (!recipe) {
@@ -111,8 +107,8 @@ class AddRecipeDetail extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const viewRecipeDetail = new ViewRecipeDetail();
-    viewRecipeDetail.mount();
+    const addRecipeDetail = new AddRecipeDetail();
+    addRecipeDetail.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
