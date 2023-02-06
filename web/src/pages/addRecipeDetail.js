@@ -11,7 +11,7 @@ import DataStore from "../util/DataStore";
 class AddRecipeDetail extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'saveRecipe'], this);
+        this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.saveRecipe);
@@ -23,8 +23,23 @@ class AddRecipeDetail extends BindingClass {
      * Once the client is loaded, display the recipe details.
      */
     async clientLoaded() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const recipeId = urlParams.get('id');
+        this.loadCategoryDropDown();
+    }
+
+    async loadCategoryDropDown(){
+        const categoriesList = await this.client.getCategoriesForUser();
+        var categoryDropDown = document.getElementById('category');
+        if (categoriesList) {
+           for (let key of categoriesList) {
+              let option = document.createElement("option");
+              option.setAttribute('value', key.categoryName);
+              option.setAttribute('innerHTML', key.categoryName);
+              let optionText = document.createTextNode(key.categoryName);
+              option.appendChild(optionText);
+              categoryDropDown.appendChild(option);
+            }
+        }
+
     }
 
 /**

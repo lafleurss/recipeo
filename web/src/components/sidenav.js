@@ -60,7 +60,6 @@ export default class SideNav extends BindingClass {
             this.dataStore.set('recipes', recipes);
     }
 
-
     async loadCategories(){
         const categoriesList = await this.client.getCategoriesForUser();
         var divElement = document.getElementById('sidenav_custom_categories');

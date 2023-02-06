@@ -13,6 +13,17 @@
     <p></p> <p></p>
     <div> <span> </span></div>
     <div> <span> </span></div>
+    <div id="search">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" maxlength="60" size="67">
+        <input class="button" type="button" name="Search" value ="Search" >
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <input class="button" id="add_recipe_button" type="button" name="Add Recipe" value ="Add Recipe"  onclick="location.href='addRecipeDetail.html';">
+
+    </div>
+    <div id="add_recipe">
+    </div>
+
     <div class="sidenav">
         <div id="sidenav_default_categories">
             <a href="/viewRecipes.html?filterType=ALL">All Recipes</a>
@@ -23,8 +34,9 @@
         <div id="sidenav_custom_categories">
         </div>
         <div id="sidenav_categories_action">
+
             <a href="#"> <input type="text" id="new_category" name="new_category" maxlength="50" size="25"> </a>
-            <a href="#"><button id="add_category" name="add"> Add Category</button></a>
+            <a href="#"><button class="button" id="add_category" name="add"> Add Category</button></a>
         </div>
     </div>
 

@@ -10,7 +10,6 @@
     background-color: #ffffff;
     margin: 0;
     counter-reset: section;
-    font-family: "Abril Fatface";
 }
 
 .header {
@@ -34,8 +33,8 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-
   font-weight: bold;
+  font-family: Cambria,Georgia,serif;
 
 }
 
@@ -50,6 +49,7 @@
     height: 100px;
     text-decoration: none;
     color: var(--secondary-color);
+    font-family: Cambria,Georgia,serif;
 }
 
 .sidenav {
@@ -62,6 +62,7 @@
   background-color: var(--secondary-color);
   overflow-x: hidden;
   padding-top: 20px;
+  font-family: Cambria,Georgia,serif;
   }
 
 .sidenav a {
@@ -80,6 +81,7 @@
 
 .main {
   margin-left: 250px; /* Same as the width of the sidenav */
+  font-family: Cambria,Georgia,serif;
 }
 
 
