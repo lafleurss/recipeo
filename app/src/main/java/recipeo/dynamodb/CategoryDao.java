@@ -85,11 +85,6 @@ public class CategoryDao {
 
         List<Category> categoryList = dynamoDbMapper.queryPage(Category.class, queryExpression).getResults();
 
-        if (categoryList == null) {
-            metricsPublisher.addCount(MetricsConstants.GETCATEGORIESFORUSER_CATEGORYNOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipes with for user with id" + userId);
-        }
-        metricsPublisher.addCount(MetricsConstants.GETCATEGORIESFORUSER_CATEGORYNOTFOUND_COUNT, 0);
         return categoryList;
     }
 }
