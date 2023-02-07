@@ -81,7 +81,7 @@ export default class RecipeoClient extends BindingClass {
     async getRecipe(id, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
-            const response = await this.axiosClient.get(`recipes/${id}`,
+            const response = await this.axiosClient.get(`recipe/${id}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -101,7 +101,7 @@ export default class RecipeoClient extends BindingClass {
     async getRecipesForUser(filterType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
-            const response = await this.axiosClient.get(`recipes/user?filterType=${filterType}`,
+            const response = await this.axiosClient.get(`recipe/user?filterType=${filterType}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -124,7 +124,7 @@ export default class RecipeoClient extends BindingClass {
                 const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
 
                 const identity = await this.getIdentity();
-                const response = await this.axiosClient.get(`recipes/user/${categoryName}`,
+                const response = await this.axiosClient.get(`recipe/user/${categoryName}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
