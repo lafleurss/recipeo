@@ -21,8 +21,6 @@
     color: var(--secondary-color);
     padding: 4px 20px;
 
-
-
 }
 
 .button {
@@ -45,8 +43,8 @@
 
 .header_home {
     font-size: 36px;
-    line-height: 40px;
-    height: 100px;
+    line-height: 20px;
+    height: 120px;
     text-decoration: none;
     color: var(--secondary-color);
     font-family: Cambria,Georgia,serif;
@@ -57,7 +55,7 @@
   width: 250px;
   position: fixed;
   z-index: 1;
-  top: 20;
+  top: 10;
   left: 0;
   background-color: var(--secondary-color);
   overflow-x: hidden;
@@ -76,8 +74,6 @@
 .sidenav a:hover {
   color: #f1f1f1;
 }
-
-
 
 .main {
   margin-left: 250px; /* Same as the width of the sidenav */
@@ -138,6 +134,11 @@
 .div-2{
   font-weight:bold;
   display: inline-block;
+  color: #818181;
+}
+
+input[type="number"] {
+   width:45px;
 }
 
 .h2-1{
@@ -158,7 +159,7 @@
 
 .text-area div {
   display: list-item;
-  
+
 }
 
 .card {

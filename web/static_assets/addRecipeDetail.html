@@ -37,14 +37,15 @@
 
             <br>
             <div class ="div-1">  Recipe Name:  </div>
-            <input align="left"  id="recipename" maxlength="50" size="50"></input>
+            <input class="div-2" align="left"  id="recipename" maxlength="50" size="50"></input>
             <br><br>
 
             <div class ="div-1">  Servings:  </div>
-            <input class ="div-2" id="servings" maxlength="3" size="3"></input>
+            <input type="number" class ="div-2" id="servings" ></input>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="div-1">  Category:  </div>
-            <select  id="category">
+            <select class="div-2" id="category">
+                <option>Uncategorized</option>
             </select>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -53,15 +54,17 @@
             <br><br>
             <div class = "times">
                 <div class = "div-1"> Prep Time (min):  </div>
-                <input class = "div-2" id="preptime" maxlength="3" size="3" ></input>
+                <input type="number" class = "div-2" id="preptime"  ></input>
 
                 <div class="div-1"> Cook Time (min):  </div>
-                <input class = "div-2" id="cooktime" maxlength="3" size="3" ></input>
+                <input type="number" class = "div-2" id="cooktime" ></input>
 
                 <div class="div-1"> Total Time (min):  </div>
-                <input class = "div-2" id="totaltime" maxlength="3" size="3"></input>
+                <input type="number" class = "div-2" id="totaltime" ></input>
                 <br>
             </div>
+            <div class="div-1"> Tags: </div>
+            <input type="text"  class = "div-2" id="tags" placeholder="tag1,tag2" data-tip="Must be a comma separated list of tags"></input>
 
         </div>
     </div>

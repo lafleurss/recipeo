@@ -90,7 +90,8 @@ public class CreateRecipeActivity {
         }
 
         String categoryName = "Uncategorized";
-        if (createRecipeRequest.getCategoryName() != null) {
+        if (createRecipeRequest.getCategoryName() != null &&
+                !createRecipeRequest.getCategoryName().equals("Uncategorized")) {
             categoryName = createRecipeRequest.getCategoryName();
 
             //No matching categories found

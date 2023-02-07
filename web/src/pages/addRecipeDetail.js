@@ -11,12 +11,19 @@ import DataStore from "../util/DataStore";
 class AddRecipeDetail extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown'], this);
+        this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown', 'checkNumberFieldLength'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
 
         document.getElementById('favorite').addEventListener('click', this.toggleHeart);
         document.getElementById('save_recipe').addEventListener('click', this.saveRecipe);
+        document.getElementById('preptime').addEventListener('input', this.checkNumberFieldLength);
+        document.getElementById('cooktime').addEventListener('input', this.checkNumberFieldLength);
+        document.getElementById('totaltime').addEventListener('input', this.checkNumberFieldLength);
+        document.getElementById('servings').addEventListener('input', this.checkNumberFieldLength);
+
+
+
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
     }
@@ -41,16 +48,33 @@ class AddRecipeDetail extends BindingClass {
         var categoryDropDown = document.getElementById('category');
         if (categoriesList) {
            for (let key of categoriesList) {
-              let option = document.createElement("option");
-              option.setAttribute('value', key.categoryName);
-              option.setAttribute('innerHTML', key.categoryName);
-              let optionText = document.createTextNode(key.categoryName);
-              option.appendChild(optionText);
-              categoryDropDown.appendChild(option);
+            let option = document.createElement("option");
+            let optionText = document.createTextNode(key.categoryName);
+            option.appendChild(optionText);
+            categoryDropDown.appendChild(option);
             }
         }
     }
 
+    checkNumberFieldLength(){
+        const prepTime =  document.getElementById('preptime');
+        const cookTime =  document.getElementById('cooktime');
+        const totalTime =  document.getElementById('totaltime');
+        const servings =  document.getElementById('servings');
+
+        if (prepTime.value.length > 3) {
+            prepTime.value = prepTime.value.slice(0,3);
+        }
+        if (cookTime.value.length > 3) {
+            cookTime.value = cookTime.value.slice(0,3);
+        }
+        if (totalTime.value.length > 3) {
+            totalTime.value = totalTime.value.slice(0,3);
+        }
+        if (servings.value.length > 2) {
+            servings.value = servings.value.slice(0,2);
+        }
+    }
 /**
      * Read recipe meta data on page and call sa to database.
      */
@@ -77,6 +101,15 @@ class AddRecipeDetail extends BindingClass {
         const ingredients = document.getElementById('ingredients').innerText;
         const ingredientsArray = ingredients.split("\n");
 
+        const tagsText = document.getElementById('tags').value;
+
+        let tags;
+        if (tagsText.length < 1) {
+            tags = null;
+        } else {
+            tags = tagsText.split(/\s*,\s*/);
+        }
+
 
         if (!recipeName || !servings || !preptime || !cooktime || !totaltime || !ingredients || !instructions) {
             alert("Please fill in all required fields");
@@ -90,7 +123,7 @@ class AddRecipeDetail extends BindingClass {
 
         let payload = {recipeName: recipeName, servings: servings, prepTime: prepTime, cookTime: cookTime,
         totalTime : totalTime, ingredients : ingredientsArray, instructions : instructionsArray,
-        tags : null, isFavorite : isFavorite, categoryName : categoryName};
+        tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').innerHTML = 'Saving Recipe...';

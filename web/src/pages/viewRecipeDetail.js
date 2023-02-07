@@ -63,6 +63,10 @@ class ViewRecipeDetail extends BindingClass {
             }
         }
 
+        if (recipe.tags){
+            document.getElementById('tags').innerHTML = recipe.tags;
+        }
+
         if (recipe.categoryName){
             var select = document.getElementById('category');
             var opt = document.createElement('option');
