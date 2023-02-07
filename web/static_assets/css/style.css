@@ -139,6 +139,12 @@
   font-weight:bold;
   display: inline-block;
 }
+
+.h2-1{
+  display: inline-block;
+  color: #de5f5c;
+}
+
 .times{
  display: inline-block;
 }
@@ -149,8 +155,10 @@
   margin-left : 1em;
   outline: none;
 }
+
 .text-area div {
   display: list-item;
+  
 }
 
 .card {

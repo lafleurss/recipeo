@@ -23,7 +23,7 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class RecipeDao {
-    private static final int PAGE_SIZE = 100;
+    private static final int PAGE_SIZE = 250;
     private static final int RECENT_PAGE_SIZE = 25;
 
     private final DynamoDBMapper dynamoDbMapper;
