@@ -23,7 +23,9 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class RecipeDao {
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 250;
+    private static final int RECENT_PAGE_SIZE = 25;
+
     private final DynamoDBMapper dynamoDbMapper;
     private final MetricsPublisher metricsPublisher;
 
@@ -43,15 +45,15 @@ public class RecipeDao {
      * Returns the {@link Recipe} corresponding to the specified recipe id.
      *
      * @param userId the User ID
-     * @param recipeId the Recipe ID
+     * @param recipeName the Recipe ID
      * @return the stored Recipe, or null if none was found.
      */
-    public Recipe getRecipe(String userId, String recipeId) {
-        Recipe recipe = this.dynamoDbMapper.load(Recipe.class, userId, recipeId);
+    public Recipe getRecipe(String userId, String recipeName) {
+        Recipe recipe = this.dynamoDbMapper.load(Recipe.class, userId, recipeName);
 
         if (recipe == null) {
             metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipe with id: " + recipeId +
+            throw new RecipeNotFoundException("Could not find recipe with id: " + recipeName +
                     " for user with id: " + userId);
         }
         metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 0);
@@ -114,16 +116,10 @@ public class RecipeDao {
                     .withKeyConditionExpression("userId = :userId")
                     .withExpressionAttributeValues(valueMap)
                     .withScanIndexForward(false)
-                    .withLimit(PAGE_SIZE);
+                    .withLimit(RECENT_PAGE_SIZE);
 
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
         }
-
-        if (recipeList == null) {
-            metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipes for user with id: " + userId);
-        }
-        metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 0);
         return recipeList;
     }
 
@@ -152,11 +148,7 @@ public class RecipeDao {
 
         recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
 
-        if (recipeList == null) {
-            metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipes for user with id: " + userId);
-        }
-        metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 0);
+
         return recipeList;
     }
 

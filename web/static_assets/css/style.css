@@ -10,7 +10,6 @@
     background-color: #ffffff;
     margin: 0;
     counter-reset: section;
-    font-family: "Abril Fatface";
 }
 
 .header {
@@ -22,8 +21,6 @@
     color: var(--secondary-color);
     padding: 4px 20px;
 
-
-
 }
 
 .button {
@@ -34,8 +31,8 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-
   font-weight: bold;
+  font-family: Cambria,Georgia,serif;
 
 }
 
@@ -46,10 +43,11 @@
 
 .header_home {
     font-size: 36px;
-    line-height: 40px;
-    height: 100px;
+    line-height: 20px;
+    height: 120px;
     text-decoration: none;
     color: var(--secondary-color);
+    font-family: Cambria,Georgia,serif;
 }
 
 .sidenav {
@@ -57,11 +55,12 @@
   width: 250px;
   position: fixed;
   z-index: 1;
-  top: 20;
+  top: 10;
   left: 0;
   background-color: var(--secondary-color);
   overflow-x: hidden;
   padding-top: 20px;
+  font-family: Cambria,Georgia,serif;
   }
 
 .sidenav a {
@@ -76,10 +75,10 @@
   color: #f1f1f1;
 }
 
-
-
 .main {
   margin-left: 250px; /* Same as the width of the sidenav */
+  font-family: Cambria,Georgia,serif;
+  font-size: 12px;
 }
 
 
@@ -102,7 +101,7 @@
 
 .column {
   float: left;
-  width: 50%;
+  width: 65%;
 }
 
 .recipemetadata {
@@ -135,6 +134,32 @@
 .div-2{
   font-weight:bold;
   display: inline-block;
+  color: #818181;
+}
+
+input[type="number"] {
+   width:45px;
+}
+
+.h2-1{
+  display: inline-block;
+  color: #de5f5c;
+}
+
+.times{
+ display: inline-block;
+}
+
+.text-area {
+  display: list-item;
+  list-style-type: decimal;
+  margin-left : 1em;
+  outline: none;
+}
+
+.text-area div {
+  display: list-item;
+
 }
 
 .card {

@@ -38,7 +38,7 @@ export default class Header extends BindingClass {
 
         if (window.location.pathname == "/index.html" || window.location.pathname == "/" ){
             if (token){
-             window.location.href = `/viewRecipes.html`;
+             window.location.href = `/viewRecipes.html?filterType=ALL`;
             }
         }
 

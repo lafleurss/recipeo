@@ -11,9 +11,10 @@ import DataStore from "../util/DataStore";
 class ViewRecipeDetail extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount'], this);
+        this.bindClassMethods(['mount', 'displayRecipeOnPage'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
+        this.dataStore.addChangeListener(this.displayRecipeOnPage);
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
     }
@@ -28,17 +29,12 @@ class ViewRecipeDetail extends BindingClass {
         //Get the recipe metadata for the recipeId selected
         const recipe = await this.client.getRecipe(recipeId);
         this.dataStore.set('recipe', recipe);
-        await this.displayRecipeOnPage();
-    }
-
-    async addCategory(){
-        document.getElementById('add_category').innerHTML = recipe.recipeName;
     }
 
 /**
      * When the recipe is  updated in the datastore, update recipe details DOM on the page.
      */
-    async displayRecipeOnPage() {
+    displayRecipeOnPage() {
         const recipe = this.dataStore.get('recipe');
 
         if (!recipe) {
@@ -65,6 +61,10 @@ class ViewRecipeDetail extends BindingClass {
             if (recipe.isFavorite == "true"){
                 document.getElementById('favorite').className = "fa fa-heart";
             }
+        }
+
+        if (recipe.tags){
+            document.getElementById('tags').innerHTML = recipe.tags;
         }
 
         if (recipe.categoryName){

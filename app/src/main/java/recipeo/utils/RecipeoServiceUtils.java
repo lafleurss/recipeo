@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 
 public final class RecipeoServiceUtils {
 
-    private static final int PLAYLIST_ID_LENGTH = 5;
-    private static final Pattern INVALID_CHARACTER_PATTERN = Pattern.compile("[\"'\\\\]");
+    private static final int RECIPE_ID_LENGTH = 5;
+    private static final Pattern INVALID_CHARACTER_PATTERN = Pattern.compile("[\"\\\\]");
 
 
     private RecipeoServiceUtils() {
@@ -33,6 +33,6 @@ public final class RecipeoServiceUtils {
      * @return a String composed of an alphanumeric of length 5
      */
     public static String generateRecipeId() {
-        return RandomStringUtils.randomAlphanumeric(5);
+        return RandomStringUtils.randomAlphanumeric(RECIPE_ID_LENGTH);
     }
 }

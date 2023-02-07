@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipeo</title>
-    <script type="text/javascript" src="assets/viewRecipeDetail.js"></script>
+    <script type="text/javascript" src="assets/addRecipeDetail.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -25,37 +25,46 @@
         </div>
         <div id="sidenav_categories_action">
             <a href="#"> <input type="text" id="new_category" name="new_category" maxlength="50" size="25"> </a>
-            <a href="#"><button id="add_category" name="add"> Add Category</button></a>
+            <a href="#"><button class="button" id="add_category" name="add"> Add Category</button></a>
         </div>
     </div>
-    <div  class="recipetitle">
-        <h1 align="left" id= "recipetitle">Recipe Name Goes Here</h1>
-    </div>
 
+    <div align="left">
+        <input class="button" type="button" id="save_recipe" value ="Save"  >
+    </div>
     <div class="row">
         <div class="column">
+
+            <br>
+            <div class ="div-1">  Recipe Name:  </div>
+            <input class="div-2" align="left"  id="recipename" maxlength="50" size="50"></input>
+            <br><br>
+
             <div class ="div-1">  Servings:  </div>
-            <div class ="div-2" id="servings"></div>
+            <input type="number" class ="div-2" id="servings" ></input>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="div-1">  Category:  </div>
-            <select  id="category">
-                <!--                <option value="Uncategorized">Uncategorized</option>-->
+            <select class="div-2" id="category">
+                <option>Uncategorized</option>
             </select>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <i id="favorite" class="fa fa-heart-o"></i>
+
+            <div id="favorite" class="fa fa-heart-o"></div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <br> <br>
-            <div class = "div-1">  Prep Time:  </div>
-            <div class = "div-2" id="preptime" ></div>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="div-1">  Cook Time:  </div>
-            <div class = "div-2" id="cooktime" ></div>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="div-1">  Total Time:  </div>
-            <div class = "div-2" id="totaltime" ></div>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br><br>
+            <div class = "times">
+                <div class = "div-1"> Prep Time (min):  </div>
+                <input type="number" class = "div-2" id="preptime"  ></input>
+
+                <div class="div-1"> Cook Time (min):  </div>
+                <input type="number" class = "div-2" id="cooktime" ></input>
+
+                <div class="div-1"> Total Time (min):  </div>
+                <input type="number" class = "div-2" id="totaltime" ></input>
+                <br>
+            </div>
             <div class="div-1"> Tags: </div>
-            <div  class = "div-2" id="tags" ></div>
+            <input type="text"  class = "div-2" id="tags" placeholder="tag1,tag2" data-tip="Must be a comma separated list of tags"></input>
 
         </div>
     </div>
@@ -66,24 +75,25 @@
         <div class="columnleft">
             <div class="card">
                 <h2 class="h2-1">Ingredients</h2>
-                <ol id="ingredients">
-                </ol>
+                <div  id = "ingredients" class="text-area" contenteditable="true">
+                    <div></div>
+                </div>
             </div>
         </div>
 
         <div class="columnright">
             <div class="card">
-                <h2 class="h2-1">Instructions</h2>
-                <ol id="instructions">
-                </ol>
+                <h2  class="h2-1">Instructions</h2>
+                <div  id = "instructions" class="text-area" contenteditable="true">
+                    <div></div>
+                </div>
             </div>
         </div>
-
     </div>
 
 
-  <ol id="recipes"></ol>
 
-</div>
+
+
 </body>
 </html>

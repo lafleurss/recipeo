@@ -23,13 +23,10 @@ class ViewRecipes extends BindingClass {
      * Once the client is loaded, get the recipes list.
      */
     async clientLoaded() {
-        //Get all recipes for user API
-        const recipes = await this.client.getRecipesForUser("ALL");
-        this.dataStore.set('recipes', recipes);
+        await this.sidenav.sideNavRedirects();
         //this.dataStore.set('veryFirstEmpId', employees[0].lastNameEmployeeId);
         //this.dataStore.set('firstEmpId', employees[0].lastNameEmployeeId);
     }
-
 
 
 /**
@@ -93,6 +90,7 @@ class ViewRecipes extends BindingClass {
            }
        }
      }
+
 
 
     /**

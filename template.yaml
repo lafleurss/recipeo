@@ -82,7 +82,7 @@ Resources:
         - !If
           - DeployCloudFront
           - !Sub "https://${CloudfrontDistribution.DomainName}"
-          - http://localhost:8000/viewRecipes.html
+          - http://localhost:8000/viewRecipes.html?filterType=ALL
       LogoutURLs:
         - !If
           - DeployCloudFront
@@ -236,7 +236,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /recipes/{recipeId}
+            Path: /recipe/{recipeId}
             Method: get
 
   GetRecipesForUserLambda:
@@ -256,7 +256,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /recipes/user
+            Path: /recipe/user
             Method: get
 
   GetRecipesForUserInCategoryLambda:
@@ -276,7 +276,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /recipes/user/{categoryName}
+            Path: /recipe/user/{categoryName}
             Method: get
 
   SearchRecipesLambda:
@@ -296,7 +296,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /recipes/search
+            Path: /recipe/search
             Method: get
 
 
@@ -358,7 +358,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /recipes
+            Path: /recipe
             Method: post
 
   CreateCategoryLambda:
@@ -398,7 +398,7 @@ Resources:
         RecipeoService:
           Type: Api
           Properties:
-            Path: /recipes/{recipeId}
+            Path: /recipe/{recipeId}
             Method: put
 
 
