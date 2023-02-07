@@ -120,12 +120,6 @@ public class RecipeDao {
 
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
         }
-
-        if (recipeList == null) {
-            metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipes for user with id: " + userId);
-        }
-        metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 0);
         return recipeList;
     }
 
@@ -154,11 +148,7 @@ public class RecipeDao {
 
         recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
 
-        if (recipeList == null) {
-            metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipes for user with id: " + userId);
-        }
-        metricsPublisher.addCount(MetricsConstants.GETRECIPESFORUSER_RECIPENOTFOUND_COUNT, 0);
+
         return recipeList;
     }
 
