@@ -98,11 +98,10 @@ class AddRecipeDetail extends BindingClass {
         const recipe = await this.client.addRecipe(payload);
 
         if (recipe) {
-            window.location.href = `/viewRecipes.html`;
+            window.location.href = `/viewRecipes.html?filterType=ALL`;
         }
 
  }
-
 
     /**
      * Add the header to the page and load the RecipeoClient.

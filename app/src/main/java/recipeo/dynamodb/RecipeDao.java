@@ -23,7 +23,9 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class RecipeDao {
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 100;
+    private static final int RECENT_PAGE_SIZE = 25;
+
     private final DynamoDBMapper dynamoDbMapper;
     private final MetricsPublisher metricsPublisher;
 
@@ -114,7 +116,7 @@ public class RecipeDao {
                     .withKeyConditionExpression("userId = :userId")
                     .withExpressionAttributeValues(valueMap)
                     .withScanIndexForward(false)
-                    .withLimit(PAGE_SIZE);
+                    .withLimit(RECENT_PAGE_SIZE);
 
             recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
         }
