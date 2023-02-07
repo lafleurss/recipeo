@@ -50,10 +50,19 @@
     font-family: Cambria,Georgia,serif;
 }
 
+.body {
+overflow: hidden;
+}
+
+.search {
+padding-left: 250px;
+}
+
 .sidenav {
   height: 100%;
   width: 250px;
   position: fixed;
+  align: left;
   z-index: 1;
   top: 10;
   left: 0;
@@ -79,6 +88,9 @@
   margin-left: 250px; /* Same as the width of the sidenav */
   font-family: Cambria,Georgia,serif;
   font-size: 12px;
+  overflow: auto;
+  overflow-x: hidden;
+  height: 800px;
 }
 
 

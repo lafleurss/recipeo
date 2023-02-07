@@ -7,13 +7,13 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
-<body>
+<body class="body">
 <header class="header" id="header"></header>
-<div class="main">
+
     <p></p> <p></p>
     <div> <span> </span></div>
     <div> <span> </span></div>
-    <div id="search">
+    <div class="search" id="search">
         &nbsp;&nbsp;&nbsp;&nbsp;
         <input type="text" maxlength="60" size="67">
         <input class="button" type="button" name="Search" value ="Search" >
@@ -23,6 +23,7 @@
     </div>
     <div id="add_recipe">
     </div>
+<br>
 
     <div class="sidenav">
         <div id="sidenav_default_categories">
@@ -39,8 +40,7 @@
             <a href="#"><button class="button" id="add_category" name="add"> Add Category</button></a>
         </div>
     </div>
-
-
+<div class="main">
     <table id="table" class="table">
         <tr class="tr">
             <th>Recipe Name</th>
@@ -52,9 +52,7 @@
         </tr>
     </table>
     <ol id="recipes"></ol>
-
-    </div>
-
 </div>
+
 </body>
 </html>
