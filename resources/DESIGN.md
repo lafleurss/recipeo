@@ -10,23 +10,23 @@ You can also organize your recipes by categories like Recently Used, Favorites, 
 2. As a user I want to Create a Recipe so that I can save it
 3. As a user I want to optionally Assign a Category to a Recipe when Creating a Recipe
 4. As a user I want to Edit a Recipe card so that I can note my recipe adjustments
-5. As a user I want to Delete a Recipe card because I don't need it anymore
-6. As a user I want to Search for recipes via tags
-7. As a user I want to be able to see top 25 recipes in my Recently Used Category
-8. As a user I want to be able to see all recipes in my Favorites Category
-9. As a user I want to be able to create my custom Categories 
-10. As a user I want to be able to update my custom Categories
-11. As a user I want to be able to view all my custom Categories
-12. As a user I want to be able to sort my recipes by recipe name alphabetically
-13. As a user I want to be able to delete my custom Category without deleting the recipes in it
+5. As a user I want to be able to see top 25 recipes in my Recently Used Category
+6. As a user I want to be able to see all recipes in my Favorites Category
+7. As a user I want to be able to see all my recipes
+8. As a user I want to be able to create my custom Categories 
+9. As a user I want to be able to update my custom Categories
+10. As a user I want to be able to view all my custom Categories
+11. As a user I want to Delete a Cateogry
+12. As a user I want to Search for recipes via tags
 
 
 A list of “stretch goals”/features
-1. As a user I want to be able to selectively add/remove recipes to my custom Category
-2. As a user I want to be able to use JustTheRecipe api in this app to extract a recipe from any URL
-2. Ability to store and display a picture for every recipe
-3. Ability to invite friends, add friends and share recipes within the app
-4. Create grocery lists within the app
+1. As a user I want to be able to sort my recipes by recipe name alphabetically
+2. As a user I want to be able to selectively add/remove recipes to my custom Category
+3. As a user I want to be able to use JustTheRecipe api in this app to extract a recipe from any URL
+4. Ability to store and display a picture for every recipe
+5. Ability to invite friends, add friends and share recipes within the app
+6. Create grocery lists within the app
 
 
 # UML class diagram

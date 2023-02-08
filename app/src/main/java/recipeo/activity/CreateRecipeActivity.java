@@ -46,10 +46,10 @@ public class CreateRecipeActivity {
      * <p>
      * It then returns the newly created recipe.
      * <p>
-     * If the provided recipe name, ingredients, instructions or user ID has invalid characters, throws an
+     * If the provided recipe name or user ID has invalid characters, throws an
      * InvalidAttributeValueException
      *
-     * @param createRecipeRequest request object containing the ecipe name, user ID, servings, prepTime,
+     * @param createRecipeRequest request object containing the recipe name, user ID, servings, prepTime,
      *  cookTime, totalTime, ingredients, instructions, categoryName(optional),
      *  tags(optional), isFavorite(optional) associated with it
      * @return CreateRecipeResult object containing the API defined {@link RecipeModel}
