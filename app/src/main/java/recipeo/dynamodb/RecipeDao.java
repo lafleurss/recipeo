@@ -45,15 +45,15 @@ public class RecipeDao {
      * Returns the {@link Recipe} corresponding to the specified recipe id.
      *
      * @param userId the User ID
-     * @param recipeName the Recipe ID
+     * @param recipeId the Recipe ID
      * @return the stored Recipe, or null if none was found.
      */
-    public Recipe getRecipe(String userId, String recipeName) {
-        Recipe recipe = this.dynamoDbMapper.load(Recipe.class, userId, recipeName);
+    public Recipe getRecipe(String userId, String recipeId) {
+        Recipe recipe = this.dynamoDbMapper.load(Recipe.class, userId, recipeId);
 
         if (recipe == null) {
             metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 1);
-            throw new RecipeNotFoundException("Could not find recipe with id: " + recipeName +
+            throw new RecipeNotFoundException("Could not find recipe with id: " + recipeId +
                     " for user with id: " + userId);
         }
         metricsPublisher.addCount(MetricsConstants.GETRECIPE_RECIPENOTFOUND_COUNT, 0);

@@ -163,7 +163,6 @@ input[type="number"] {
 }
 
 .text-area {
-  display: list-item;
   list-style-type: decimal;
   margin-left : 1em;
   outline: none;
@@ -173,7 +172,11 @@ input[type="number"] {
 .text-area div {
   display: list-item;
   font-color: #818181;
+}
 
+.text-area-update div {
+  font-color: #818181;
+  display: list-item;
 }
 
 
@@ -237,30 +240,6 @@ margin: 1px;
     margin: auto;
 }
 
-.song {
-    padding: 2px;
-    display: flex;
-}
-
-.song .title {
-    flex: 20%;
-}
-
-.song .album {
-    flex: 80%;
-}
-
-/*
-Flexbox on a lists removes the numbers. We use a counter here to add them back.
-https://stackoverflow.com/a/34316093
-https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters
-*/
-.song:before {
-    counter-increment: section;
-    content: counter(section) ".";
-    position: absolute;
-    margin-left: -40px;
-}
 
 .hidden {
     display: none;

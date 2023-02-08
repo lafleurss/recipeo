@@ -11,10 +11,11 @@ import DataStore from "../util/DataStore";
 class ViewRecipeDetail extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'displayRecipeOnPage'], this);
+        this.bindClassMethods(['mount', 'displayRecipeOnPage', 'redirectToUpdateRecipe'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayRecipeOnPage);
+        document.getElementById("update_recipe").addEventListener('click', this.redirectToUpdateRecipe);
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
     }
@@ -31,6 +32,11 @@ class ViewRecipeDetail extends BindingClass {
         this.dataStore.set('recipe', recipe);
     }
 
+    redirectToUpdateRecipe(){
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipeId = urlParams.get('id');
+        window.location.href = `/updateRecipeDetail.html?id=${recipeId}`;
+    }
 /**
      * When the recipe is  updated in the datastore, update recipe details DOM on the page.
      */
@@ -42,7 +48,7 @@ class ViewRecipeDetail extends BindingClass {
         }
 
         if (recipe.recipeName){
-            document.getElementById('recipetitle').innerHTML = recipe.recipeName;
+            document.getElementById('recipename').innerHTML = recipe.recipeName;
         }
         if (recipe.servings){
             document.getElementById('servings').innerHTML = recipe.servings;

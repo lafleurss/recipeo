@@ -24,8 +24,6 @@ class ViewRecipes extends BindingClass {
      */
     async clientLoaded() {
         await this.sidenav.sideNavRedirects();
-        //this.dataStore.set('veryFirstEmpId', employees[0].lastNameEmployeeId);
-        //this.dataStore.set('firstEmpId', employees[0].lastNameEmployeeId);
     }
 
 
