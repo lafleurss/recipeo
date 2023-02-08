@@ -148,7 +148,7 @@ class UpdateRecipeDetail extends BindingClass {
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
-        const nameRegex = new RegExp('[^a-zA-Z\\s-\'.]');
+        const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
         const recipeName = document.getElementById('recipename').value;
         const servings =  document.getElementById('servings').value;
         const prepTime =  document.getElementById('preptime').value;
@@ -186,7 +186,7 @@ class UpdateRecipeDetail extends BindingClass {
         }
 
         if (nameRegex.test(recipeName)) {
-            alert("The first name you entered has invalid characters");
+            alert("The recipe name you entered has invalid characters");
             return;
         }
 
@@ -197,7 +197,9 @@ class UpdateRecipeDetail extends BindingClass {
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').innerHTML = 'Saving Recipe...';
         document.getElementById('save_recipe').style.background='grey';
-        const recipe = await this.client.addRecipe(payload);
+
+        let recipeData = this.dataStore.get('recipe');
+        const recipe = await this.client.updateRecipe(recipeData.recipeId, payload);
 
         if (recipe) {
             window.location.href = `/viewRecipes.html?filterType=ALL`;

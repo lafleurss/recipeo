@@ -16,7 +16,7 @@ public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, Loc
         if (object == null) {
             return null;
         }
-        return object.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+        return object.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"));
     }
 
     /**
@@ -28,6 +28,6 @@ public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, Loc
         if (object == null) {
             return null;
         }
-        return LocalDateTime.parse(object, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+        return LocalDateTime.parse(object, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"));
     }
 }

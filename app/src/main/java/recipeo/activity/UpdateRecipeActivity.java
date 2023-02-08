@@ -78,7 +78,7 @@ public class UpdateRecipeActivity {
         Recipe recipeToBeSaved = recipeDao.getRecipe(updateRecipeRequest.getUserId(),
                 updateRecipeRequest.getRecipeId());
 
-        if (recipeToBeSaved == null){
+        if (recipeToBeSaved == null) {
             throw new RecipeNotFoundException("Recipe name [" +
                     updateRecipeRequest.getRecipeName() +
                     "] does not exist");
@@ -93,21 +93,34 @@ public class UpdateRecipeActivity {
 
         String isFavourite = updateRecipeRequest.getIsFavorite();
         if (isFavourite != null) {
-            if (!isFavourite.equals("true") || !isFavourite.equals("false")) {
+            if (isFavourite.equals("true") || isFavourite.equals("false")) {
+                recipeToBeSaved.setIsFavorite(updateRecipeRequest.getIsFavorite());
+            } else {
                 throw new InvalidAttributeValueException("Valid values for isFavorite are 'true' or 'false' only");
             }
         }
-        if (requestedCategoryName != null && validCategoriesForUser != null) {
-            if (validCategoriesForUser.stream()
+        //If Category change was requested
+        if (requestedCategoryName != null) {
+            //Check if  valid categories was null
+            //Check if it exits in valid categories available in the database.
+            if (requestedCategoryName.equals("Uncategorized")) {
+                recipeToBeSaved.setCategoryName("Uncategorized");
+            } else if (validCategoriesForUser == null) {
+                throw new CategoryNotFoundException("No category " + requestedCategoryName + " exists for user id: " +
+                        userId);
+            } else if (validCategoriesForUser.stream()
                     .map(category -> category.getCategoryName())
                     .noneMatch(str -> str.equals(requestedCategoryName))) {
                 throw new CategoryNotFoundException("No category " + requestedCategoryName + " exists for user id: " +
                         userId);
+            } else {
+                //requestedCategoryName matches an existing Category for user
+                recipeToBeSaved.setCategoryName(updateRecipeRequest.getCategoryName());
             }
         }
 
-        if (updateRecipeRequest.getIsFavorite() != null) {
-            recipeToBeSaved.setIsFavorite(updateRecipeRequest.getIsFavorite());
+        if (updateRecipeRequest.getRecipeName() != null) {
+            recipeToBeSaved.setRecipeName(updateRecipeRequest.getRecipeName());
         }
 
         if (updateRecipeRequest.getTags() != null) {
@@ -137,11 +150,6 @@ public class UpdateRecipeActivity {
         if (updateRecipeRequest.getIngredients() != null) {
             recipeToBeSaved.setIngredients(updateRecipeRequest.getIngredients());
         }
-
-        if (updateRecipeRequest.getCategoryName() != null) {
-            recipeToBeSaved.setCategoryName(updateRecipeRequest.getCategoryName());
-        }
-
 
         recipeToBeSaved.setLastAccessed(LocalDateTime.now());
 

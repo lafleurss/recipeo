@@ -386,7 +386,7 @@ Resources:
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: app
-      Handler: recipeo.lambda.UpdatePlaylistLambda::handleRequest
+      Handler: recipeo.lambda.UpdateRecipeLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -400,7 +400,6 @@ Resources:
           Properties:
             Path: /recipe/{recipeId}
             Method: put
-
 
   #-----------------------------------------------------
   # DynamoDB Configuration

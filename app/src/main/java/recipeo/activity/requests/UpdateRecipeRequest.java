@@ -1,5 +1,6 @@
 package recipeo.activity.requests;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import static recipeo.utils.CollectionUtils.copyToList;
 
+@JsonDeserialize(builder = UpdateRecipeRequest.Builder.class)
 public class UpdateRecipeRequest {
     private final String recipeIdFromPath;
     private final String recipeName;

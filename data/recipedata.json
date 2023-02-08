@@ -28,7 +28,7 @@
             "S": "Uncategorized"
           },
           "lastAccessed": {
-            "S": "2020-12-03T12:20:59.000"
+            "S": "2020-12-03T12:20:59.000000"
           },
           "isFavorite": {
             "S": "true"
@@ -92,7 +92,7 @@
             "S": "Uncategorized"
           },
           "lastAccessed": {
-            "S": "2021-12-03T12:20:59.000"
+            "S": "2021-12-03T12:20:59.000000"
           },
           "isFavorite": {
             "S": "true"

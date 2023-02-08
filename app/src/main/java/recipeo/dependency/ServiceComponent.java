@@ -10,6 +10,7 @@ import recipeo.activity.GetRecipeActivity;
 import recipeo.activity.GetRecipesForUserActivity;
 import recipeo.activity.GetRecipesForUserInCategoryActivity;
 import recipeo.activity.UpdateCategoryActivity;
+import recipeo.activity.UpdateRecipeActivity;
 
 import javax.inject.Singleton;
 
@@ -43,6 +44,12 @@ public interface ServiceComponent {
      * @return CreateCategoryActivity
      */
     CreateRecipeActivity provideCreateRecipeActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return UpdateRecipeActivity
+     */
+    UpdateRecipeActivity provideUpdateRecipeActivity();
 
 
     /**

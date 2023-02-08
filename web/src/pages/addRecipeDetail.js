@@ -79,7 +79,8 @@ class AddRecipeDetail extends BindingClass {
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
-        const nameRegex = new RegExp('[^a-zA-Z\\s-\'.]');
+        const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
+
         const recipeName = document.getElementById('recipename').value;
         const servings =  document.getElementById('servings').value;
         const prepTime =  document.getElementById('preptime').value;
@@ -117,7 +118,7 @@ class AddRecipeDetail extends BindingClass {
         }
 
         if (nameRegex.test(recipeName)) {
-            alert("The first name you entered has invalid characters");
+            alert("The recipe name you entered has invalid characters");
             return;
         }
 
