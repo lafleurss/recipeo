@@ -8,12 +8,13 @@ import DataStore from "../util/DataStore";
 /**
  * Logic needed for the save recipe page of the website.
  */
-class AddRecipeDetail extends BindingClass {
+class UpdateRecipeDetail extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown', 'checkNumberFieldLength'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
+//        this.dataStore.addChangeListener(this.displayRecipeOnPage);
 
         document.getElementById('favorite').addEventListener('click', this.toggleHeart);
         document.getElementById('save_recipe').addEventListener('click', this.saveRecipe);
@@ -21,8 +22,6 @@ class AddRecipeDetail extends BindingClass {
         document.getElementById('cooktime').addEventListener('input', this.checkNumberFieldLength);
         document.getElementById('totaltime').addEventListener('input', this.checkNumberFieldLength);
         document.getElementById('servings').addEventListener('input', this.checkNumberFieldLength);
-
-
 
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
@@ -33,6 +32,14 @@ class AddRecipeDetail extends BindingClass {
      */
     async clientLoaded() {
         this.loadCategoryDropDown();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipeId = urlParams.get('id');
+
+        //Get the recipe metadata for the recipeId selected
+        const recipe = await this.client.getRecipe(recipeId);
+        this.dataStore.set('recipe', recipe);
+        this.displayRecipeOnPage();
     }
 
     toggleHeart() {
@@ -75,12 +82,73 @@ class AddRecipeDetail extends BindingClass {
             servings.value = servings.value.slice(0,2);
         }
     }
+
+    /**
+         * When the recipe is  updated in the datastore, update recipe details DOM on the page.
+         */
+    async displayRecipeOnPage() {
+        let recipe = this.dataStore.get('recipe');
+        if (!recipe) {
+            return;
+        }
+        if (recipe.recipeName){
+            document.getElementById('recipename').value = recipe.recipeName;
+        }
+        if (recipe.servings){
+            document.getElementById('servings').value = recipe.servings;
+        }
+        if (recipe.prepTime){
+            document.getElementById('preptime').value = recipe.prepTime;
+        }
+        if (recipe.cookTime){
+            document.getElementById('cooktime').value = recipe.cookTime;
+        }
+        if (recipe.totalTime){
+            document.getElementById('totaltime').value = recipe.totalTime;
+        }
+
+        if (recipe.isFavorite){
+            if (recipe.isFavorite == "true"){
+                document.getElementById('favorite').className = "fa fa-heart";
+            }
+        }
+
+        if (recipe.tags){
+            document.getElementById('tags').value = recipe.tags;
+        }
+
+        if (recipe.categoryName){
+            var select = document.getElementById('category');
+            var opt = document.createElement('option');
+            opt.value = recipe.categoryName;
+            opt.innerHTML = recipe.categoryName;
+            select.appendChild(opt);
+        }
+
+        if (recipe.ingredients){
+            var list = document.getElementById('ingredients')
+            for (var i in recipe.ingredients) {
+              var elem = document.createElement("li");
+              elem.innerText =  recipe.ingredients[i];
+              list.appendChild(elem);
+            }
+        }
+
+        if (recipe.instructions){
+            var list = document.getElementById('instructions')
+            for (var i in recipe.instructions) {
+              var elem = document.createElement("li");
+              elem.innerText =  recipe.instructions[i];
+              list.appendChild(elem);
+            }
+        }
+    }
+
 /**
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
         const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
-
         const recipeName = document.getElementById('recipename').value;
         const servings =  document.getElementById('servings').value;
         const prepTime =  document.getElementById('preptime').value;
@@ -129,7 +197,9 @@ class AddRecipeDetail extends BindingClass {
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').innerHTML = 'Saving Recipe...';
         document.getElementById('save_recipe').style.background='grey';
-        const recipe = await this.client.addRecipe(payload);
+
+        let recipeData = this.dataStore.get('recipe');
+        const recipe = await this.client.updateRecipe(recipeData.recipeId, payload);
 
         if (recipe) {
             window.location.href = `/viewRecipes.html?filterType=ALL`;
@@ -153,8 +223,8 @@ class AddRecipeDetail extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const addRecipeDetail = new AddRecipeDetail();
-    addRecipeDetail.mount();
+    const updateRecipeDetail = new UpdateRecipeDetail();
+    updateRecipeDetail.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

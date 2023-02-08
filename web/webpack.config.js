@@ -26,6 +26,7 @@ module.exports = {
     viewRecipes: path.resolve(__dirname, 'src', 'pages', 'viewRecipes.js'),
     viewRecipeDetail: path.resolve(__dirname, 'src', 'pages', 'viewRecipeDetail.js'),
     addRecipeDetail: path.resolve(__dirname, 'src', 'pages', 'addRecipeDetail.js'),
+    updateRecipeDetail: path.resolve(__dirname, 'src', 'pages', 'updateRecipeDetail.js'),
 
   },
   output: {

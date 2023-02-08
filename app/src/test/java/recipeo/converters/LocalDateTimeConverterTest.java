@@ -13,20 +13,20 @@ public class LocalDateTimeConverterTest {
     @Test
     void convert() {
         // GIVEN
-        LocalDateTime givenDateTime = LocalDateTime.parse("2020-12-03T12:20:59.000");
+        LocalDateTime givenDateTime = LocalDateTime.parse("2020-12-03T12:20:59.000000");
 
         // WHEN
         String convertedTime = converter.convert(givenDateTime);
 
         // THEN
-        assertEquals("2020-12-03T12:20:59.000", convertedTime);
+        assertEquals("2020-12-03T12:20:59.000000", convertedTime);
     }
 
     @Test
     void unconvert() {
         // GIVEN
-        String time = "2020-12-03T12:20:59.000";
-        LocalDateTime expected = LocalDateTime.parse("2020-12-03T12:20:59.000");
+        String time = "2020-12-03T12:20:59.000000";
+        LocalDateTime expected = LocalDateTime.parse("2020-12-03T12:20:59.000000");
 
         // WHEN
         LocalDateTime unconvertedTime = LocalDateTime.from(converter.unconvert(time));

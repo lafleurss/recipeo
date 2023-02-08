@@ -16,7 +16,7 @@ export default class RecipeoClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getRecipe', 'getRecipesForUser'
-                               ,'getCategoriesForUser'];
+                               ,'getCategoriesForUser', 'updateRecipe'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -114,28 +114,28 @@ export default class RecipeoClient extends BindingClass {
         }
     }
 
-        /**
-         * Gets the recipe for the logged in User ID in the requested category name.
-         * @param errorCallback (Optional) A function to execute if the call fails.
-         * @returns The recipe's metadata.
-         */
-        async getRecipesForUserInCategory(categoryName, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
+    /**
+     * Gets the recipe for the logged in User ID in the requested category name.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The recipe's metadata.
+     */
+    async getRecipesForUserInCategory(categoryName, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can get recipes.");
 
-                const identity = await this.getIdentity();
-                const response = await this.axiosClient.get(`recipe/user/${categoryName}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            const identity = await this.getIdentity();
+            const response = await this.axiosClient.get(`recipe/user/${categoryName}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-                return response.data.recipes;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-            }
+            return response.data.recipes;
+        } catch (error) {
+            this.handleError(error, errorCallback)
         }
+    }
 
    /**
      * Gets the categories for the logged in User ID.
@@ -160,51 +160,75 @@ export default class RecipeoClient extends BindingClass {
         }
     }
 
-    /**
-         * Add a category for the logged in User ID.
-         * @param errorCallback (Optional) A function to execute if the call fails.
-         * @returns The categories' metadata.
-         */
-        async addCategory(payload, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can add categories.");
+/**
+     * Add a category for the logged in User ID.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The categories' metadata.
+     */
+    async addCategory(payload, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can add categories.");
 
-                const identity = await this.getIdentity();
-                const response = await this.axiosClient.post(`category`, payload,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            const identity = await this.getIdentity();
+            const response = await this.axiosClient.post(`category`, payload,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-                return response.data.category;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-            }
+            return response.data.category;
+        } catch (error) {
+            this.handleError(error, errorCallback)
         }
+    }
 
-   /**
-         * Add a recipe for the logged in User ID.
-         * @param errorCallback (Optional) A function to execute if the call fails.
-         * @returns The recipes' metadata.
-         */
-        async addRecipe(payload, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can add recipes.");
+/**
+     * Add a recipe for the logged in User ID.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The recipes' metadata.
+     */
+    async addRecipe(payload, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can add recipes.");
 
-                const identity = await this.getIdentity();
-                const response = await this.axiosClient.post(`recipe`, payload,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            const identity = await this.getIdentity();
+            const response = await this.axiosClient.post(`recipe`, payload,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-                return response.data.recipe;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-            }
+            return response.data.recipe;
+        } catch (error) {
+            this.handleError(error, errorCallback)
         }
+    }
+
+/**
+     * Update a recipe for the logged in User ID.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The recipes' metadata.
+     */
+    async updateRecipe(recipeId, payload, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can update recipes.");
+
+            const identity = await this.getIdentity();
+
+            const response = await this.axiosClient.put(`recipe/${recipeId}`, payload,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            return response.data.recipe;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
 
     /**
      * Helper method to log the error and run any error functions.
