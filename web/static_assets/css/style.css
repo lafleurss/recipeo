@@ -55,7 +55,10 @@ overflow: hidden;
 }
 
 .search {
-padding-left: 250px;
+  font-family: Cambria,Georgia,serif;
+  font-size: 12px;
+  position:absolute;
+  left:250px;
 }
 
 .sidenav {
@@ -68,7 +71,7 @@ padding-left: 250px;
   left: 0;
   background-color: var(--secondary-color);
   overflow-x: hidden;
-  padding-top: 20px;
+  padding-top: 0px;
   font-family: Cambria,Georgia,serif;
   }
 

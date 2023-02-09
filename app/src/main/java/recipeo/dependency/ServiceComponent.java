@@ -9,6 +9,7 @@ import recipeo.activity.GetCategoryActivity;
 import recipeo.activity.GetRecipeActivity;
 import recipeo.activity.GetRecipesForUserActivity;
 import recipeo.activity.GetRecipesForUserInCategoryActivity;
+import recipeo.activity.SearchRecipesActivity;
 import recipeo.activity.UpdateCategoryActivity;
 import recipeo.activity.UpdateRecipeActivity;
 
@@ -76,5 +77,11 @@ public interface ServiceComponent {
      * @return UpdateCategoryActivity
      */
     UpdateCategoryActivity provideUpdateCategoryActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return SearchRecipesActivity
+     */
+    SearchRecipesActivity provideSearchPlaylistsActivity();
 
 }
