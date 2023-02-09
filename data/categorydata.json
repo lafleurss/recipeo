@@ -1,0 +1,49 @@
+{
+  "category": [
+    {
+      "PutRequest": {
+        "Item": {
+          "userId": {
+            "S": "shilpa.sathya+test1@gmail.com"
+          },
+          "categoryName": {
+            "S": "Soups"
+          },
+          "categoryDescription": {
+            "S": "Warm Fall-Winter Soups"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "userId": {
+            "S": "shilpa.sathya+test1@gmail.com"
+          },
+          "categoryName": {
+            "S": "Indian"
+          },
+          "categoryDescription": {
+            "S": "Traditional Indian"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "userId": {
+            "S": "shilpa.sathya+test1@gmail.com"
+          },
+          "categoryName": {
+            "S": "Potluck Ideas"
+          },
+          "categoryDescription": {
+            "S": "Potluck Ideas"
+          }
+        }
+      }
+    }
+  ]
+}

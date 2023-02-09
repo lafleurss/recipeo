@@ -239,6 +239,26 @@ Resources:
             Path: /recipe/{recipeId}
             Method: get
 
+  DeleteRecipeLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: recipeo.lambda.DeleteRecipeLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        RecipeoService:
+          Type: Api
+          Properties:
+            Path: /recipe/{recipeId}
+            Method: delete
+
   GetRecipesForUserLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -399,6 +419,26 @@ Resources:
           Type: Api
           Properties:
             Path: /recipe/{recipeId}
+            Method: put
+
+  UpdateCategoryLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: recipeo.lambda.UpdateCategoryLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        RecipeoService:
+          Type: Api
+          Properties:
+            Path: /category/{categoryName}
             Method: put
 
   #-----------------------------------------------------

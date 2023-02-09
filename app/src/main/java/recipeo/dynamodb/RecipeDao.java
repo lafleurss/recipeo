@@ -165,6 +165,17 @@ public class RecipeDao {
     }
 
     /**
+     * Deletes the recipe.
+     *
+     * @param recipe The Recipe to delete
+     * @return The Recipe object that was deleted
+     */
+    public Recipe deleteRecipe(Recipe recipe) {
+        this.dynamoDbMapper.delete(recipe);
+        return recipe;
+    }
+
+    /**
      * Perform a search (via a "scan") of the recipe table for recipes matching the given criteria.
      * Both "recipeName" and "tags" attributes are searched.
      * The criteria are an array of Strings. Each element of the array is search individually.

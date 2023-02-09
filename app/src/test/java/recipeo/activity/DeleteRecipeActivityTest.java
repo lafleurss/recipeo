@@ -4,9 +4,8 @@ import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import recipeo.activity.requests.GetRecipeRequest;
-import recipeo.activity.results.GetRecipeResult;
+import recipeo.activity.requests.DeleteRecipeRequest;
+import recipeo.activity.results.DeleteRecipeResult;
 import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Recipe;
 
@@ -14,20 +13,19 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 
-public class GetRecipeActivityTest {
+public class DeleteRecipeActivityTest {
     @Mock
     private RecipeDao recipeDao;
 
-    private GetRecipeActivity getRecipeActivity;
+    private DeleteRecipeActivity deleteRecipeActivity;
 
     @BeforeEach
     public void setUp() {
         openMocks(this);
-        getRecipeActivity = new GetRecipeActivity(recipeDao);
+        deleteRecipeActivity = new DeleteRecipeActivity(recipeDao);
     }
 
     @Test
@@ -55,14 +53,15 @@ public class GetRecipeActivityTest {
 
 
         when(recipeDao.getRecipe(expectedUserId,expectedRecipeId)).thenReturn(recipe);
+        when(recipeDao.deleteRecipe(recipe)).thenReturn(recipe);
 
-        GetRecipeRequest request = GetRecipeRequest.builder()
+        DeleteRecipeRequest request = DeleteRecipeRequest.builder()
                 .withUserId(expectedUserId)
                 .withRecipeId(expectedRecipeId)
                 .build();
 
         // WHEN
-        GetRecipeResult result = getRecipeActivity.handleRequest(request);
+        DeleteRecipeResult result = deleteRecipeActivity.handleRequest(request);
 
         // THEN
         assertEquals(expectedRecipeId, result.getRecipe().getRecipeId());

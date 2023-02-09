@@ -94,6 +94,27 @@ export default class RecipeoClient extends BindingClass {
     }
 
     /**
+     * Gets the recipe for the given ID and deletes it from the database.
+     * @param id Unique identifier for a recipe
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The recipe's metadata.
+     */
+    async deleteRecipe(id, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can delete recipes.");
+            const response = await this.axiosClient.delete(`recipe/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.recipe;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
      * Gets the recipe for the logged in User ID.
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The recipe's metadata.
@@ -225,6 +246,30 @@ export default class RecipeoClient extends BindingClass {
             });
 
             return response.data.recipe;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+/**
+     * Update a category for the logged in User ID.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The category's metadata.
+     */
+    async updateCategory(categoryName, payload, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can update categories.");
+
+            const identity = await this.getIdentity();
+
+            const response = await this.axiosClient.put(`category/${categoryName}`, payload,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            return response.data.category;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

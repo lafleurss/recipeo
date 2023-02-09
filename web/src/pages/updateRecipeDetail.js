@@ -11,13 +11,17 @@ import DataStore from "../util/DataStore";
 class UpdateRecipeDetail extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown', 'checkNumberFieldLength'], this);
+        this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown', 'checkNumberFieldLength',
+        'deleteRecipe'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
 //        this.dataStore.addChangeListener(this.displayRecipeOnPage);
 
         document.getElementById('favorite').addEventListener('click', this.toggleHeart);
+
         document.getElementById('save_recipe').addEventListener('click', this.saveRecipe);
+        document.getElementById('delete_recipe').addEventListener('click', this.deleteRecipe);
+
         document.getElementById('preptime').addEventListener('input', this.checkNumberFieldLength);
         document.getElementById('cooktime').addEventListener('input', this.checkNumberFieldLength);
         document.getElementById('totaltime').addEventListener('input', this.checkNumberFieldLength);
@@ -195,7 +199,7 @@ class UpdateRecipeDetail extends BindingClass {
         tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
         document.getElementById('save_recipe').disabled = true;
-        document.getElementById('save_recipe').innerHTML = 'Saving Recipe...';
+        document.getElementById('save_recipe').value = 'Saving Recipe...';
         document.getElementById('save_recipe').style.background='grey';
 
         let recipeData = this.dataStore.get('recipe');
@@ -206,6 +210,20 @@ class UpdateRecipeDetail extends BindingClass {
         }
 
  }
+
+     async deleteRecipe() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipeId = urlParams.get('id');
+
+        document.getElementById('delete_recipe').disabled = true;
+        document.getElementById('delete_recipe').value = 'Deleting Recipe...';
+        document.getElementById('delete_recipe').style.background='grey';
+
+        const recipe = await this.client.deleteRecipe(recipeId);
+        if (recipe) {
+            window.location.href = `/viewRecipes.html?filterType=ALL`;
+        }
+     }
 
     /**
      * Add the header to the page and load the RecipeoClient.
