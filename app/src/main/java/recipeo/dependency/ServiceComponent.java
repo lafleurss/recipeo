@@ -4,6 +4,7 @@ import dagger.Component;
 
 import recipeo.activity.CreateCategoryActivity;
 import recipeo.activity.CreateRecipeActivity;
+import recipeo.activity.DeleteRecipeActivity;
 import recipeo.activity.GetCategoriesForUserActivity;
 import recipeo.activity.GetCategoryActivity;
 import recipeo.activity.GetRecipeActivity;
@@ -52,6 +53,11 @@ public interface ServiceComponent {
      */
     UpdateRecipeActivity provideUpdateRecipeActivity();
 
+    /**
+     * Provides the relevant activity.
+     * @return DeleteRecipeActivity
+     */
+    DeleteRecipeActivity provideDeleteRecipeActivity();
 
     /**
      * Provides the relevant activity.

@@ -11,7 +11,7 @@ export default class SideNav extends BindingClass {
 
         const methodsToBind = [
             'loadCategories', 'addCategory', 'viewFavorites', 'viewRecent'
-            ,'viewUncategorized', 'viewCategory'
+            ,'viewUncategorized', 'viewCategory', 'updateCategory'
         ];
         this.bindClassMethods(methodsToBind, this);
         this.dataStore = dataStore;
@@ -73,12 +73,13 @@ export default class SideNav extends BindingClass {
                 a.appendChild(link);
                 // Set the title.
                 a.title = element.categoryName ;
-
+                a.setAttribute("contenteditable", true);
                 // Append the anchor element to the body.
                 divElement.append(a);
 
                 // Set the event listener property.
                 a.addEventListener('click', async () => await this.viewCategory(element.categoryName));
+                a.addEventListener('blur', async () => await this.updateCategory(a));
 
                 a.href="/viewRecipes.html?categoryName="+element.categoryName;
             }
@@ -102,6 +103,30 @@ export default class SideNav extends BindingClass {
         document.getElementById('sidenav_custom_categories').innerHTML = '';
         this.loadCategories();
         document.getElementById('new_category').value = "";
+    }
+
+    async updateCategory(categoryElement){
+        categoryElement.removeAttribute('contenteditable');
+        categoryElement.removeEventListener('blur', async () => await this.updateCategory(a));
+
+        const nameRegex = new RegExp('[^a-zA-Z\\s-\'.]');
+        const categoryName = categoryElement.innerHTML;
+        const categoryDescription = categoryName;
+
+
+
+        if (!categoryName) {
+            alert("Please fill a valid Category Name");
+            return;
+        }
+        let payload = {categoryName: categoryName, categoryDescription: categoryDescription}
+
+        payload.categoryName = categoryName;
+        payload.categoryDescription = categoryName;
+
+        const categories = await this.client.updateCategory(categoryName, payload);
+        document.getElementById('sidenav_custom_categories').innerHTML = '';
+        this.loadCategories();
     }
 
     async viewAll(){

@@ -2,8 +2,8 @@ package recipeo.activity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import recipeo.activity.requests.GetRecipeRequest;
-import recipeo.activity.results.GetRecipeResult;
+import recipeo.activity.requests.DeleteRecipeRequest;
+import recipeo.activity.results.DeleteRecipeResult;
 import recipeo.converters.ModelConverter;
 import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Recipe;
@@ -13,22 +13,22 @@ import recipeo.models.RecipeModel;
 import javax.inject.Inject;
 
 /**
- * Implementation of the GetRecipeActivity for the RecipeoService's GetRecipe API.
+ * Implementation of the DeleteRecipeActivity for the RecipeoService's GetRecipe API.
  *
- * This API allows the customer to get one of their saved recipes.
+ * This API allows the customer to delete one of their saved recipes.
  */
-public class GetRecipeActivity {
+public class DeleteRecipeActivity {
 
     private final Logger log = LogManager.getLogger();
     private final RecipeDao recipeDao;
 
     /**
-     * Instantiates a new GetRecipeActivity object.
+     * Instantiates a new DeleteRecipeActivity object.
      *
      * @param recipeDao RecipeDao to access the recipe table.
      */
     @Inject
-    public GetRecipeActivity(RecipeDao recipeDao) {
+    public DeleteRecipeActivity(RecipeDao recipeDao) {
         this.recipeDao = recipeDao;
     }
 
@@ -36,17 +36,18 @@ public class GetRecipeActivity {
     /**
      * This method handles the incoming request by retrieving the recipe from the database.
      * <p>
-     * It then returns the recipe.
+     * It then deletes the recipe.
      * <p>
      * If the recipe does not exist, this should throw a RecipeNotFoundException.
      *
-     * @param getRecipeRequest request object containing the recipe ID
-     * @return GetRecipeResult object containing the API defined {@link RecipeModel}
+     * @param deleteRecipeRequest request object containing the recipe ID
+     * @return DeleteRecipeResult object containing the API defined {@link RecipeModel}
      */
-    public GetRecipeResult handleRequest(GetRecipeRequest getRecipeRequest) {
-        log.info("Received GetRecipeRequest {}", getRecipeRequest);
-        String recipeId = getRecipeRequest.getRecipeId();
-        String userId = getRecipeRequest.getUserId();
+    public DeleteRecipeResult handleRequest(DeleteRecipeRequest deleteRecipeRequest) {
+        log.info("Received DeleteRecipeResult {}", deleteRecipeRequest);
+        String recipeId = deleteRecipeRequest.getRecipeId();
+        String userId = deleteRecipeRequest.getUserId();
+
         Recipe recipe = recipeDao.getRecipe(userId, recipeId);
 
         if (recipe == null) {
@@ -54,9 +55,11 @@ public class GetRecipeActivity {
                      " cannot be found for user id: " + userId);
         }
 
-        RecipeModel recipeModel = new ModelConverter().toRecipeModel(recipe);
+        Recipe deletedRecipe = recipeDao.deleteRecipe(recipe);
 
-        return GetRecipeResult.builder()
+        RecipeModel recipeModel = new ModelConverter().toRecipeModel(deletedRecipe);
+
+        return DeleteRecipeResult.builder()
                 .withRecipe(recipeModel)
                 .build();
     }

@@ -114,4 +114,16 @@ public class RecipeDaoTest {
         assertEquals(recipe, result);
     }
 
+    @Test
+    public void deleteRecipe_callsMapperWithRecipe() {
+        // GIVEN
+        Recipe recipe = new Recipe();
+
+        // WHEN
+        recipeDao.deleteRecipe(recipe);
+
+        // THEN
+        verify(dynamoDBMapper).delete(recipe);
+    }
+
 }
