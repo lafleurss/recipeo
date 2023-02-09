@@ -57,7 +57,7 @@ export default class SideNav extends BindingClass {
                 recipes = await this.viewCategory(categoryName);
             }
 
-            this.dataStore.set('recipes', recipes);
+//            this.dataStore.set('recipes', recipes);
     }
 
     async loadCategories(){
@@ -125,7 +125,6 @@ export default class SideNav extends BindingClass {
     }
 
     async viewCategory(categoryName){
-        //alert("Clicked " + categoryName);
         const recipes = await this.client.getRecipesForUserInCategory(categoryName);
         this.dataStore.set('recipes', recipes);
     }

@@ -16,8 +16,9 @@ You can also organize your recipes by categories like Recently Used, Favorites, 
 8. As a user I want to be able to create my custom Categories 
 9. As a user I want to be able to update my custom Categories
 10. As a user I want to be able to view all my custom Categories
-11. As a user I want to Delete a Cateogry
-12. As a user I want to Search for recipes via tags
+11. As a user I want to Delete a Recipe when I no longer have use for it
+12. As a user I want to Delete a Category
+13. As a user I want to Search for recipes via tags
 
 
 A list of “stretch goals”/features

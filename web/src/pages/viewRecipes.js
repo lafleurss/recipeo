@@ -4,6 +4,12 @@ import SideNav from '../components/sidenav';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
 
+const SEARCH_CRITERIA_KEY = 'search-criteria';
+const SEARCH_RESULTS_KEY = 'search-results';
+const EMPTY_DATASTORE_STATE = {
+    [SEARCH_CRITERIA_KEY]: '',
+    [SEARCH_RESULTS_KEY]: [],
+};
 
 /**
  * Logic needed for the view recipes page of the website.
@@ -11,12 +17,14 @@ import DataStore from "../util/DataStore";
 class ViewRecipes extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','displayRecipesOnPage'], this);
-        // Create a enw datastore with an initial "empty" state.
+        this.bindClassMethods(['mount','displayRecipesOnPage', 'search'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayRecipesOnPage);
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
+
+        document.getElementById("search_button").addEventListener('click', this.search);
+
     }
 
  /**
@@ -26,30 +34,56 @@ class ViewRecipes extends BindingClass {
         await this.sidenav.sideNavRedirects();
     }
 
+/**
+     * Uses the client to perform the search,
+     * then updates the datastore with the criteria and results.
+     * @param evt The "event" object representing the user-initiated event that triggered this method.
+     */
+    async search(evt) {
+        const searchCriteria = document.getElementById('search_criteria').value;
+        const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
+
+        // If the user didn't change the search criteria, do nothing
+        if (previousSearchCriteria === searchCriteria) {
+            return;
+        }
+
+        if (searchCriteria) {
+            const results = await this.client.search(searchCriteria);
+
+            if (!results || results.length === 0) {
+                this.dataStore.set('recipes', undefined);
+                document.getElementById('recipes').innerText = "(No recipes found...)";
+            } else {
+                this.dataStore.set('recipes', results);
+            }
+        }
+
+    }
+
 
 /**
-     * When the employees are updated in the datastore, update the list of recipes on the page.
+     * When the recipes are updated in the datastore, update the list of recipes on the page.
      */
     displayRecipesOnPage() {
         const recipes = this.dataStore.get('recipes');
-        if (!recipes) {
-            return;
-        }
-        let table = document.querySelector("table");
+
         //Flush the table first
+        let table = document.querySelector("table");
         var tableHeaderRowCount = 1;
         var rowCount = table.rows.length;
         for (var i = tableHeaderRowCount; i < rowCount; i++) {
             table.deleteRow(tableHeaderRowCount);
         }
-        //Generate table data with the new set of recipes
-        this.generateTable(table, recipes);
-        //this.genCard(recipes);
-        document.getElementById('recipes').innerText = "";
 
-        if (recipes.length === 0) {
+        if (!recipes || recipes.length === 0) {
             document.getElementById('recipes').innerText = "(No recipes found...)";
+        } else {
+            //Generate table data with the new set of recipes
+            this.generateTable(table, recipes);
+            document.getElementById('recipes').innerText = "";
         }
+
  }
 
      generateTable(table, data) {
