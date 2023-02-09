@@ -73,7 +73,7 @@ export default class SideNav extends BindingClass {
                 a.appendChild(link);
                 // Set the title.
                 a.title = element.categoryName ;
-                a.setAttribute("contenteditable", true);
+                //a.setAttribute("contenteditable", true);
                 // Append the anchor element to the body.
                 divElement.append(a);
 
@@ -106,14 +106,9 @@ export default class SideNav extends BindingClass {
     }
 
     async updateCategory(categoryElement){
-        categoryElement.removeAttribute('contenteditable');
-        categoryElement.removeEventListener('blur', async () => await this.updateCategory(a));
-
         const nameRegex = new RegExp('[^a-zA-Z\\s-\'.]');
         const categoryName = categoryElement.innerHTML;
         const categoryDescription = categoryName;
-
-
 
         if (!categoryName) {
             alert("Please fill a valid Category Name");
