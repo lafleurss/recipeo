@@ -162,12 +162,12 @@ public class UpdateRecipeRequest {
         }
 
         public Builder withIngredients(List<String> ingredients){
-            this.ingredients = new ArrayList<>(ingredients);
+            this.ingredients = copyToList(ingredients);
             return this;
         }
 
         public Builder withInstructions(List<String> instructions){
-            this.instructions = new ArrayList<>(instructions);
+            this.instructions = copyToList(instructions);
             return this;
         }
 

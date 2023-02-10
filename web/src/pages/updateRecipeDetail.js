@@ -220,7 +220,7 @@ class UpdateRecipeDetail extends BindingClass {
         }
 
 
-        if (!recipeName || !servings || !preptime || !cooktime || !totaltime || ingredientsArray.length == 0 || ingredients == "\n" || instructionsArray.length == 0 || instructions == "\n") {
+        if (!recipeName || !servings || !preptime || !cooktime || !totaltime ) {
             alert("Please fill in all required fields");
             return;
         }
