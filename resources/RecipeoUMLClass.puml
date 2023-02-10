@@ -1,14 +1,18 @@
 @startuml
 'https://plantuml.com/class-diagram
 RecipeDao o---- GetRecipeActivity
+RecipeDao o--- GetRecipesForUserActivity
+RecipeDao o---- GetRecipesForUserInCategoryActivity
 RecipeDao o-- UpdateRecipeActivity
 RecipeDao o--- SearchRecipeActivity
-RecipeDao o---- CreateRecipeActivity
+RecipeDao o-- CreateRecipeActivity
 
-
-CategoryDao o--- GetCategoryActivity
-CategoryDao o-- UpdateCategoryActivity
+CategoryDao o-- CreateRecipeActivity
+CategoryDao o-- UpdateRecipeActivity
+CategoryDao o---- GetCategoryActivity
+CategoryDao o--- UpdateCategoryActivity
 CategoryDao o--- CreateCategoryActivity
+CategoryDao o--- GetCategoriesForUserActivity
 
 
 Category -- Recipe
@@ -16,6 +20,7 @@ Category -- Recipe
 
 class CreateRecipeActivity{
 - recipeDao:RecipeDao
+- categoryDao:CategoryDao
 --
 + handleRequest(CreateRecipeRequest) : CreateRecipeResult
 }
@@ -26,8 +31,21 @@ class GetRecipeActivity{
 + handleRequest(GetRecipeRequest) : GetRecipeResult
 }
 
+class GetRecipesForUserActivity{
+- recipeDao:RecipeDao
+--
++ handleRequest(GetRecipesForUserRequest) : GetRecipesForUserResult
+}
+
+class GetRecipesForUserInCategoryActivity{
+- recipeDao:RecipeDao
+--
++ handleRequest(GetRecipesForUserInCategoryRequest) : GetRecipesForUserInCategoryResult
+}
+
 class UpdateRecipeActivity{
 - recipeDao:RecipeDao
+- categoryDao:CategoryDao
 --
 + handleRequest(UpdateRecipeRequest) : UpdateRecipeResult
 }
@@ -50,6 +68,12 @@ class GetCategoryActivity{
 + handleRequest(GetCategoryRequest) : GetCategoryResult
 }
 
+class GetCategoriesForUserActivity{
+- categoryDao:CategoryDao
+--
++ handleRequest(GetCategoriesForUserRequest) : GetCategoriesForUserResult
+}
+
 class CreateCategoryActivity{
 - categoryDao:CategoryDao
 --
@@ -58,13 +82,18 @@ class CreateCategoryActivity{
 
 
 class RecipeDao{
-+ getRecipe()
-+ saveRecipe()
++ getRecipe(userId : String, recipeId : String) : Recipe
++ saveRecipe(recipe : Recipe) : Recipe
++ deleteRecipe(recipe : Recipe) : Recipe
++ getRecipesForUser(userId : String, filterType : RecipeFilter)
++ getRecipesForUserInCategory(userId : String, category : String)
++ searchRecipes(criteria : String[]) : List<Recipe>
 }
 
 class CategoryDao{
-+ getCategory()
-+ saveCategory()
++ getCategory(userId : String, categoryName : String) : Category
++ getCategoriesForUser(userId : String) : Category
++ saveCategory(category : Category)
 }
 
 
