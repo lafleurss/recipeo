@@ -56,18 +56,23 @@ class UpdateRecipeDetail extends BindingClass {
     }
 
     async loadCategoryDropDown(){
-        const categoriesList = await this.client.getCategoriesForUser();
-        if (!categoriesList || !categoriesList.includes("Uncategorized")){
-            categoriesList.push(
-                    {
-                       "userId": "userId",
-                       "categoryName": "Uncategorized",
-                       "categoryDescription": "Uncategorized"
-                    }
-               );
+        var categoriesList = await this.client.getCategoriesForUser();
+        var categoryDropDown = document.getElementById('category');
+
+        if (!categoriesList ){
+            categoriesList = [
+                    { userId: "userId",
+                      categoryName: "Uncategorized",
+                      categoryDescription: "Uncategorized"
+                    } ];
+        } else if ( !categoriesList.includes("Uncategorized"))  {
+             categoriesList.push(
+                     { userId: "userId",
+                       categoryName: "Uncategorized",
+                       categoryDescription: "Uncategorized"
+                     });
         }
 
-        var categoryDropDown = document.getElementById('category');
         if (categoriesList) {
            for (let key of categoriesList) {
             let option = document.createElement("option");

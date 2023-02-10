@@ -23,8 +23,8 @@ class ViewRecipes extends BindingClass {
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
 
-        let link = new URLSearchParams(window.location.href).toString();
-        if (link.includes("/viewRecipeDetail.html")) {
+        var link = window.location.href.toString();
+        if (link.includes("/viewRecipes.html")) {
             document.getElementById("search_button").addEventListener('click', this.search);
         }
 

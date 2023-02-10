@@ -44,21 +44,17 @@ class AddRecipeDetail extends BindingClass {
     }
 
     async loadCategoryDropDown(){
-        const categoriesList = await this.client.getCategoriesForUser();
+        let categoriesList = await this.client.getCategoriesForUser();
         var categoryDropDown = document.getElementById('category');
 
         if (!categoriesList || !categoriesList.includes("Uncategorized")){
-            categoriesList.push(
-                    {
-                       "userId": "userId",
-                       "categoryName": "Uncategorized",
-                       "categoryDescription": "Uncategorized"
-                    }
-               );
-               categoryDropDown.selectedIndex = "0";
+            categoriesList =[
+                    { userId: "userId",
+                      categoryName: "Uncategorized",
+                      categoryDescription: "Uncategorized"
+                    } ];
         }
-
-        if (categoriesList) {
+         if (categoriesList) {
            let i=0;
            for (let key of categoriesList) {
                 let option = document.createElement("option");
