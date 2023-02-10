@@ -318,7 +318,8 @@ Resources:
           Properties:
             Path: /recipe/search
             Method: get
-
+            Auth:
+              Authorizer: 'NONE'
 
   GetCategoryLambda:
     Type: AWS::Serverless::Function
