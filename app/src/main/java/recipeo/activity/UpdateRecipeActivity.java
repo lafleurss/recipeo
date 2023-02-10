@@ -75,6 +75,18 @@ public class UpdateRecipeActivity {
                     "] contains illegal characters");
         }
 
+        if (!RecipeoServiceUtils.isValidList(updateRecipeRequest.getIngredients())) {
+            throw new InvalidAttributeValueException("Ingredients list [" +
+                    updateRecipeRequest.getIngredients() +
+                    "] contains null-empty-whitespace characters");
+        }
+
+        if (!RecipeoServiceUtils.isValidList(updateRecipeRequest.getInstructions())) {
+            throw new InvalidAttributeValueException("Instructions list [" +
+                    updateRecipeRequest.getInstructions() +
+                    "] contains null-empty-whitespace characters");
+        }
+
         Recipe recipeToBeSaved = recipeDao.getRecipe(updateRecipeRequest.getUserId(),
                 updateRecipeRequest.getRecipeId());
 

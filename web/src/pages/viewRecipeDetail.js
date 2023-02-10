@@ -26,6 +26,8 @@ class ViewRecipeDetail extends BindingClass {
     async clientLoaded() {
         const urlParams = new URLSearchParams(window.location.search);
         const recipeId = urlParams.get('id');
+        document.getElementById('update_recipe').disabled = true;
+        document.getElementById('update_recipe').style.background='grey';
 
         //Get the recipe metadata for the recipeId selected
         const recipe = await this.client.getRecipe(recipeId);
@@ -101,6 +103,8 @@ class ViewRecipeDetail extends BindingClass {
             }
         }
 
+    document.getElementById('update_recipe').disabled = false;
+    document.getElementById('update_recipe').style.background='#f0bab9';
  }
 
 

@@ -3,6 +3,7 @@ package recipeo.utils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -26,6 +27,20 @@ public final class RecipeoServiceUtils {
         } else {
             return !INVALID_CHARACTER_PATTERN.matcher(stringToValidate).find();
         }
+    }
+
+    /**
+     * Method to validate is a given List of String has null/empty/whitespace.
+     * @param listToValidate List of String
+     * @return a boolean indicating if the string is valid(true) or not(False)
+     */
+    public static boolean isValidList(List<String> listToValidate) {
+        for (String stringVal : listToValidate) {
+            if (StringUtils.isBlank(stringVal)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

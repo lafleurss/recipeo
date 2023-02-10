@@ -39,9 +39,9 @@ A list of “stretch goals”/features
 List of Tables and global secondary indexes:
 
 ### Recipe
-- recipeId:String (partition key)
-- recipeName:String (sort key)
-- userId:String 
+- userId:String (Partition Key)
+- recipeId:String (Sort Key)
+- recipeName:String 
 - servings:Integer
 - prepTime:Integer
 - cookTime:Integer
@@ -54,74 +54,79 @@ List of Tables and global secondary indexes:
 - isFavourite:Boolean
 
 ### Category
-- categoryId:String (partition key)
-- categoryName:String
-- userId:String (partition key)
+- userId:String (Partition key)
+- categoryName:String (Sort key)
 
-### UserRecipe (GSI)
-- userId:String (partition key)
-- recipeId:String
-
-### UserCategory (GSI)
-- userId:String (partition key)
-- categoryId:String
+### LastAccessedRecipes (GSI)
+- userId:String (Partition Key)
+- lastAccessed:String (Sort Key)
 
 
 # API Endpoints
 ## Get Recipes for User Endpoint
-* Accepts GET requests to `/recipes/:userId`
-* Accepts a userId and returns a list of RecipeModels created by that customer.
+* Accepts GET requests to `/recipe/user/`
+* Returns a list of RecipeModels created by the authenticated user.
 * If the given user has not created any recipes, an empty list will be returned
 
-## Get Categories for User Endpoint
-* Accepts GET requests to `/categories/:userId`
-* Accepts a userId and returns a list of CategoryModels created by that customer.
-* If the given user has not created any categories, an empty list will be returned
+## Get Recipes for User in Category Endpoint
+* Accepts GET requests to `/recipe/user/:categoryName`
+* Accepts a categoryName and returns a list of RecipeModels created by the authenticated user.
+* If the given user has not created any recipes, an empty list will be returned
 
 ## Get Recipe Endpoint
-* Accepts GET requests to `/recipes/:recipeId`
+* Accepts GET requests to `/recipe/:recipeId`
 * Accepts a recipe ID and returns the corresponding RecipeModel.
   * If the given recipe ID is not found, will throw a RecipeNotFoundException
 
-## Get Category Endpoint
-* Accepts GET requests to `/categories/:categoryId`
-* Accepts a category ID and returns the corresponding CategoryModel.
-  * If the given recipe ID is not found, will throw a CategoryNotFoundException
+## Delete Recipe Endpoint
+* Accepts DELETE requests to `/recipe/:recipeId`
+* Accepts a recipe ID and returns the corresponding RecipeModel.
+  * If the given recipe ID is not found, will throw a RecipeNotFoundException
 
 ## Create Recipe Endpoint
-* Accepts POST requests to `/recipes`
+* Accepts POST requests to `/recipe`
 * Accepts input to create a new recipe:
-``{"recipeName":"name",  "servings":4, "prepTime":20, "cookTime": 20, "totalTime":20, "ingredients": [ { "name": "1 cup chickpeas (dry)" }, { "name": "1 large onion (finely chopped)" }, { "name": "Cilantro for garnish (optional)" } ], "instructions": [ { "name": "do x" }, { "name": "prep y" }, { "name": "another step" } ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : false, "category": "Uncategorized" }``
+``{"recipeName":"New Recipe Name", "servings":4, "prepTime":20, "cookTime": 20, "totalTime":40, "ingredients": [ "1 cup chickpeas (dry)" , "1 large onion (finely chopped)", "Cilantro for garnish (optional)"  ], "instructions": [  "do x" , "prep y" , "another step"  ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : "true", "categoryName": "Uncategorized" }``
 * Optional: list of tags (default: no tags), isFavorite (default: false), category (default: Uncategorized). Returns the new recipe with the lastAccessed timestamp set to time of POST, including a unique recipe ID assigned by the Recipeo service.
 
   * For security concerns, we will validate the provided recipe name does not contain any invalid characters: " ' \`
   * If the recipe name contains any of the invalid characters, will throw an InvalidAttributeValueException.
 
+## Get Categories for User Endpoint
+* Accepts GET requests to `/category/user`
+* Returns a List of Category created by the authenticated user.
+* If the given user has not created any categories, will throw a CategoryNotFoundException
+
+## Get Category Endpoint
+* Accepts GET requests to `/category/:categoryName`
+* Accepts a categoryName and returns the corresponding Category.
+  * If the given categoryName is not found, will throw a CategoryNotFoundException
+
 ## Create Category Endpoint
-* Accepts POST requests to `/categories`
-* Accepts input to create a new category: `{"categoryName" : "name"}`. Returns the new category, including a unique category ID assigned by the Recipeo service.
-  * For security concerns, we will validate the provided recipe name does not contain any invalid characters: " ' \`
+* Accepts POST requests to `/category`
+* Accepts input to create a new category: `{"categoryName" : "name"}`. Returns the new category.
+  * For security concerns, we will validate the provided recipe name does not contain any invalid characters: "\`
   * If the recipe name contains any of the invalid characters, will throw an InvalidAttributeValueException.
 
 ## Update Recipe Endpoint
 * Accepts PUT requests to `/recipes/:recipeId`
-* Accepts input to update a recipe `{"recipeName":"name",  "servings":4, "prepTime":20, "cookTime": 20, "totalTime":20, "ingredients": [ { "name": "1 cup chickpeas (dry)" }, { "name": "1 large onion (finely chopped)" }, { "name": "Cilantro for garnish (optional)" } ], "instructions": [ { "name": "do x" }, { "name": "prep y" }, { "name": "another step" } ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : false, "category": "Uncategorized" }`. Returns the updated recipe.
+* Accepts a recipeId and input to update a recipe ``{"recipeName":"New Recipe Name", "servings":4, "prepTime":20, "cookTime": 20, "totalTime":40, "ingredients": [ "1 cup chickpeas (dry)" , "1 large onion (finely chopped)", "Cilantro for garnish (optional)"  ], "instructions": [  "do x" , "prep y" , "another step"  ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : "true", "categoryName": "Uncategorized" }``. Returns the updated recipe.
   * If the recipe ID is not found, will throw a RecipeNotFoundException
-  * For security concerns, we will validate the provided recipe name does not contain invalid characters: " ' \`
+  * For security concerns, we will validate the provided recipe name does not contain invalid characters: "\`
   * If the recipe name contains invalid characters, will throw an InvalidAttributeValueException
 
 ## Update Category Endpoint
-* Accepts PUT requests to `/categories/:categoryId`
-* Accepts input to update a category `{"categoryName" : "name"}`.  Returns the updated CategoryModel.
-  * If the category ID is not found, will throw a CategoryNotFoundException
-  * For security concerns, we will validate the provided recipe name does not contain invalid characters: " ' \`
-  * If the recipe name contains invalid characters, will throw an InvalidAttributeValueException
+* Accepts PUT requests to `/category/:categoryName`
+* Accepts a categoryName and input to update a category `{"categoryName" : "name"}`.  Returns the updated Category.
+  * If the categoryname is not found, will throw a CategoryNotFoundException
+  * For security concerns, we will validate the provided recipe name does not contain invalid characters: "\`
+  * If the category name contains invalid characters, will throw an InvalidAttributeValueException
 
 ## Search Recipes Endpoint
-* Accepts GET requests to `/recipes/search`
+* Accepts GET requests to `/recipe/search`
 * Accepts parameters `recipeName` or `tags` to search for recipes  using recipe names or tags. Returns a list of RecipeModel.
   * If the recipe ID is not found, will throw a RecipeNotFoundException
-  * For security concerns, we will validate the provided recipe name does not contain invalid characters: " ' \`
+  * For security concerns, we will validate the provided recipe name does not contain invalid characters: "\`
   * If the recipe name contains invalid characters, will throw an InvalidAttributeValueException
 
 

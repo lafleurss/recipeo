@@ -10,8 +10,8 @@ CategoryDao o--- GetCategoryActivity
 CategoryDao o-- UpdateCategoryActivity
 CategoryDao o--- CreateCategoryActivity
 
-Recipe o-- User
-Category o-- Recipe
+
+Category -- Recipe
 
 
 class CreateRecipeActivity{
@@ -67,11 +67,6 @@ class CategoryDao{
 + saveCategory()
 }
 
-class User {
-- userId:String
-- emailId:String
-}
-
 
 class Recipe {
 - userId:String
@@ -91,7 +86,6 @@ class Recipe {
 
 class Category {
 - userId:String
-- categoryId:String
 - categoryName:String
 }
 
