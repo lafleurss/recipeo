@@ -44,7 +44,7 @@ class UpdateRecipeDetail extends BindingClass {
         const recipe = await this.client.getRecipe(recipeId);
         this.dataStore.set('recipe', recipe);
 
-        this.displayRecipeOnPage();
+
     }
 
     toggleHeart() {
@@ -75,12 +75,14 @@ class UpdateRecipeDetail extends BindingClass {
 
         if (categoriesList) {
            for (let key of categoriesList) {
-            let option = document.createElement("option");
-            let optionText = document.createTextNode(key.categoryName);
-            option.appendChild(optionText);
-            categoryDropDown.appendChild(option);
+                let option = document.createElement("option");
+                let optionText = document.createTextNode(key.categoryName);
+                option.appendChild(optionText);
+                categoryDropDown.appendChild(option);
             }
         }
+
+        this.displayRecipeOnPage();
     }
 
     checkNumberFieldLength(){
@@ -140,7 +142,7 @@ class UpdateRecipeDetail extends BindingClass {
         if (recipe.categoryName){
             var select = document.getElementById('category');
             for ( var i = 0; i < select.options.length; i++ ) {
-                if ( select.options[i].text == recipe.categoryName ) {
+                if ( select.options[i].innerText == recipe.categoryName ) {
                     select.options[i].selected = true;
                     break;
                 }
