@@ -81,7 +81,7 @@ Resources:
       CallbackURLs:
         - !If
           - DeployCloudFront
-          - !Sub "https://${CloudfrontDistribution.DomainName}"
+          - !Sub "https://${CloudfrontDistribution.DomainName}/viewRecipes.html?filterType=ALL"
           - http://localhost:8000/viewRecipes.html?filterType=ALL
       LogoutURLs:
         - !If
