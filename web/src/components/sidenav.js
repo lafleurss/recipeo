@@ -56,8 +56,6 @@ export default class SideNav extends BindingClass {
             } else if (categoryName){
                 recipes = await this.viewCategory(categoryName);
             }
-
-//            this.dataStore.set('recipes', recipes);
     }
 
     async loadCategories(){
@@ -73,7 +71,6 @@ export default class SideNav extends BindingClass {
                 a.appendChild(link);
                 // Set the title.
                 a.title = element.categoryName ;
-                //a.setAttribute("contenteditable", true);
                 // Append the anchor element to the body.
                 divElement.append(a);
 

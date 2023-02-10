@@ -43,6 +43,7 @@ class UpdateRecipeDetail extends BindingClass {
         //Get the recipe metadata for the recipeId selected
         const recipe = await this.client.getRecipe(recipeId);
         this.dataStore.set('recipe', recipe);
+
         this.displayRecipeOnPage();
     }
 
@@ -56,6 +57,16 @@ class UpdateRecipeDetail extends BindingClass {
 
     async loadCategoryDropDown(){
         const categoriesList = await this.client.getCategoriesForUser();
+        if (!categoriesList || !categoriesList.includes("Uncategorized")){
+            categoriesList.push(
+                    {
+                       "userId": "userId",
+                       "categoryName": "Uncategorized",
+                       "categoryDescription": "Uncategorized"
+                    }
+               );
+        }
+
         var categoryDropDown = document.getElementById('category');
         if (categoriesList) {
            for (let key of categoriesList) {
@@ -123,10 +134,12 @@ class UpdateRecipeDetail extends BindingClass {
 
         if (recipe.categoryName){
             var select = document.getElementById('category');
-            var opt = document.createElement('option');
-            opt.value = recipe.categoryName;
-            opt.innerHTML = recipe.categoryName;
-            select.appendChild(opt);
+            for ( var i = 0; i < select.options.length; i++ ) {
+                if ( select.options[i].text == recipe.categoryName ) {
+                    select.options[i].selected = true;
+                    break;
+                }
+            }
         }
 
         if (recipe.ingredients){
@@ -146,14 +159,20 @@ class UpdateRecipeDetail extends BindingClass {
               list.appendChild(elem);
             }
         }
+
     }
 
 /**
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
-        const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
-        const recipeName = document.getElementById('recipename').value;
+       const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
+       const recipeName = document.getElementById('recipename').value;
+       if (nameRegex.test(recipeName)) {
+            alert("The recipe name you entered has invalid characters");
+            return;
+        }
+
         const servings =  document.getElementById('servings').value;
         const prepTime =  document.getElementById('preptime').value;
         const cookTime =  document.getElementById('cooktime').value;
@@ -161,6 +180,7 @@ class UpdateRecipeDetail extends BindingClass {
         const categoryElement = document.getElementById('category');
         const categoryName = categoryElement.options[categoryElement.selectedIndex].innerHTML;
         const favoriteClassName = document.getElementById('favorite').className;
+
         var isFavorite;
         if (favoriteClassName == "fa fa-heart-o") {
             isFavorite = "false";
@@ -169,10 +189,26 @@ class UpdateRecipeDetail extends BindingClass {
         }
 
         const instructions = document.getElementById('instructions').innerText;
-        const instructionsArray = instructions.split("\n");
+        document.getElementById('instructions').value = instructions;
+        const instructionsArray = document.getElementById('instructions').value.split("\n");
+
+        for (let i in instructionsArray){
+            if ((!instructionsArray[i]) || instructionsArray[i] && instructionsArray[i].length === 0) {
+                    alert("Please enter valid instructions");
+                    return;
+            }
+        }
 
         const ingredients = document.getElementById('ingredients').innerText;
-        const ingredientsArray = ingredients.split("\n");
+        document.getElementById('ingredients').value = ingredients;
+        const ingredientsArray = document.getElementById('ingredients').value.split("\n");
+
+        for (let i in ingredientsArray){
+            if ((!ingredientsArray[i]) || ingredientsArray[i] && ingredientsArray[i].length === 0) {
+                    alert("Please enter valid ingredients");
+                    return;
+            }
+        }
 
         const tagsText = document.getElementById('tags').value;
 
@@ -184,7 +220,7 @@ class UpdateRecipeDetail extends BindingClass {
         }
 
 
-        if (!recipeName || !servings || !preptime || !cooktime || !totaltime || !ingredients || !instructions) {
+        if (!recipeName || !servings || !preptime || !cooktime || !totaltime || ingredientsArray.length == 0 || ingredients == "\n" || instructionsArray.length == 0 || instructions == "\n") {
             alert("Please fill in all required fields");
             return;
         }

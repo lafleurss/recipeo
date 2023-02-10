@@ -256,9 +256,10 @@ td {
 }
 
 th {
+    border-top: 5px solid var(--primary-color);
     padding: 20px;
     text-align: left;
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 5px solid var(--primary-color);
     color: #818181;
 }
 

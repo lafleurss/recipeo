@@ -46,14 +46,33 @@ class AddRecipeDetail extends BindingClass {
     async loadCategoryDropDown(){
         const categoriesList = await this.client.getCategoriesForUser();
         var categoryDropDown = document.getElementById('category');
+
+        if (!categoriesList || !categoriesList.includes("Uncategorized")){
+            categoriesList.push(
+                    {
+                       "userId": "userId",
+                       "categoryName": "Uncategorized",
+                       "categoryDescription": "Uncategorized"
+                    }
+               );
+               categoryDropDown.selectedIndex = "0";
+        }
+
         if (categoriesList) {
+           let i=0;
            for (let key of categoriesList) {
-            let option = document.createElement("option");
-            let optionText = document.createTextNode(key.categoryName);
-            option.appendChild(optionText);
-            categoryDropDown.appendChild(option);
+                let option = document.createElement("option");
+                let optionText = document.createTextNode(key.categoryName);
+                option.appendChild(optionText);
+                categoryDropDown.appendChild(option);
+                if ( key.categoryName == "Uncategorized" ) {
+                    categoryDropDown.options[i].selected = true;
+                }
+                i++;
             }
         }
+
+
     }
 
     checkNumberFieldLength(){
