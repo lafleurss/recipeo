@@ -112,6 +112,8 @@ class AddRecipeDetail extends BindingClass {
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
+        document.getElementById('spinner-recipe').style.display = "inline";
+
         const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
 
         const recipeName = document.getElementById('recipename').value;
@@ -160,10 +162,13 @@ class AddRecipeDetail extends BindingClass {
         totalTime : totalTime, ingredients : ingredientsArray, instructions : instructionsArray,
         tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
+
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').innerHTML = 'Saving Recipe...';
         document.getElementById('save_recipe').style.background='grey';
         const recipe = await this.client.addRecipe(payload);
+
+        document.getElementById('spinner-recipe').style.display = "none";
 
         if (recipe) {
             window.location.href = `/viewRecipes.html?filterType=ALL`;

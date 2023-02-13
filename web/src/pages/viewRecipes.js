@@ -35,7 +35,6 @@ class ViewRecipes extends BindingClass {
      */
     async clientLoaded() {
         await this.sidenav.sideNavRedirects();
-
     }
 
 /**
@@ -44,6 +43,10 @@ class ViewRecipes extends BindingClass {
      * @param evt The "event" object representing the user-initiated event that triggered this method.
      */
     async search(evt) {
+        document.getElementById('search_button').value = "Searching...";
+        document.getElementById('search_button').disabled = true;
+        document.getElementById('search_button').style.background='grey';
+
         const searchCriteria = document.getElementById('search_criteria').value;
         const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
 
@@ -57,11 +60,14 @@ class ViewRecipes extends BindingClass {
 
             if (!results || results.length === 0) {
                 this.dataStore.set('recipes', undefined);
-                document.getElementById('recipes').innerText = "(No recipes found...)";
+                document.getElementById('recipes').innerText = "No recipes found...";
             } else {
                 this.dataStore.set('recipes', results);
             }
         }
+        document.getElementById('search_button').value = "Search";
+        document.getElementById('search_button').disabled = false;
+        document.getElementById('search_button').style.background='#f0bab9';
 
     }
 
@@ -70,6 +76,7 @@ class ViewRecipes extends BindingClass {
      * When the recipes are updated in the datastore, update the list of recipes on the page.
      */
     displayRecipesOnPage() {
+        document.getElementById('spinner-recipe').style.display = "inline";
         const recipes = this.dataStore.get('recipes');
 
         //Flush the table first
@@ -81,13 +88,13 @@ class ViewRecipes extends BindingClass {
         }
 
         if (!recipes || recipes.length === 0) {
-            document.getElementById('recipes').innerText = "(No recipes found...)";
+            document.getElementById('recipes').innerText = "No recipes found...";
         } else {
             //Generate table data with the new set of recipes
             this.generateTable(table, recipes);
             document.getElementById('recipes').innerText = "";
         }
-        document.getElementById('spinner').style.display = "none";
+        document.getElementById('spinner-recipe').style.display = "none";
  }
 
      generateTable(table, data) {

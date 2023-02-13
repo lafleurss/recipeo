@@ -82,7 +82,6 @@ class UpdateRecipeDetail extends BindingClass {
             }
         }
 
-//        this.displayRecipeOnPage();
     }
 
     validateFields(){
@@ -119,6 +118,8 @@ class UpdateRecipeDetail extends BindingClass {
          * When the recipe is  updated in the datastore, update recipe details DOM on the page.
          */
     displayRecipeOnPage() {
+        document.getElementById('spinner-recipe').style.display = "inline";
+
         const recipe = this.dataStore.get('recipe');
         if (!recipe) {
             return;
@@ -176,6 +177,9 @@ class UpdateRecipeDetail extends BindingClass {
               list.appendChild(elem);
             }
         }
+
+    document.getElementById('spinner-recipe').style.display = "none";
+
 
     }
 

@@ -61,11 +61,14 @@ export default class Header extends BindingClass {
     }
 
     createSiteTitle() {
-        const homeButton = document.createElement('img');
+        const homeButton = document.createElement('a');
         homeButton.classList.add('header_home');
-        homeButton.href = 'index.html';
-        homeButton.innerText = 'RECIPEO';
-        homeButton.src = "/logo.png"
+        homeButton.href = '/index.html';
+
+        const imageLogo = document.createElement('img');
+        imageLogo.classList.add('img');
+        imageLogo.src = "/logo.png";
+        homeButton.appendChild(imageLogo);
 
         const siteTitle = document.createElement('div');
         siteTitle.classList.add('site-title');

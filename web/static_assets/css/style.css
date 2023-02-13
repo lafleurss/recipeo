@@ -50,6 +50,15 @@
     font-family: Cambria,Georgia,serif;
 }
 
+.img {
+    font-size: 36px;
+    line-height: 20px;
+    height: 120px;
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-family: Cambria,Georgia,serif;
+}
+
 .body {
 overflow: hidden;
 }
@@ -96,6 +105,14 @@ overflow: hidden;
   height: 800px;
 }
 
+.spinner-recipe {
+  margin-left: 325px;
+  color: #de5f5c;
+}
+
+.spinner-category {
+  margin-left: 325px;
+}
 
 /* Recipe Title */
 .recipetitle {
@@ -266,4 +283,33 @@ th {
 a {
     color: var(--tertiary-color);
     text-decoration: none;
+}
+
+.norecipes {
+    padding: 20px;
+    text-align: left;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

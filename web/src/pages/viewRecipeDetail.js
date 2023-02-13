@@ -43,7 +43,10 @@ class ViewRecipeDetail extends BindingClass {
      * When the recipe is  updated in the datastore, update recipe details DOM on the page.
      */
     displayRecipeOnPage() {
+        document.getElementById('spinner-recipe').style.display = "inline";
+
         const recipe = this.dataStore.get('recipe');
+
 
         if (!recipe) {
             return;
@@ -101,6 +104,8 @@ class ViewRecipeDetail extends BindingClass {
 
     document.getElementById('update_recipe').disabled = false;
     document.getElementById('update_recipe').style.background='#f0bab9';
+    document.getElementById('spinner-recipe').style.display = "none";
+
 
  }
 
