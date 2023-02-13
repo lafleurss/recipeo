@@ -43,6 +43,8 @@ class AddRecipeDetail extends BindingClass {
     }
 
     async loadCategoryDropDown(){
+        document.getElementById('spinner-recipe').style.display = "none";
+
         let categoriesList = await this.client.getCategoriesForUser();
         var categoryDropDown = document.getElementById('category');
 
@@ -112,7 +114,7 @@ class AddRecipeDetail extends BindingClass {
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
-        document.getElementById('spinner-recipe').style.display = "inline";
+
 
         const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
 
@@ -162,7 +164,7 @@ class AddRecipeDetail extends BindingClass {
         totalTime : totalTime, ingredients : ingredientsArray, instructions : instructionsArray,
         tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
-
+        document.getElementById('spinner-recipe').style.display = "inline";
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').innerHTML = 'Saving Recipe...';
         document.getElementById('save_recipe').style.background='grey';

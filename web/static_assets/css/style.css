@@ -10,7 +10,15 @@
     background-color: #ffffff;
     margin: 0;
     counter-reset: section;
+    width: 80%;
+    height: 80%;
+    align: center;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        z-index: -1;
 }
+
 
 .header {
     /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
@@ -244,19 +252,15 @@ margin: 1px;
 }
 
 
-#background {
+.splash {
     width: 100%;
-    height: 100%;
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    z-index: -1;
-    align: center;
+    height: 90%;
+    background-color: #de5f5c;
 }
 
 .stretch {
     width:100%;
-    height:100%;
+    height:90%;
     margin: auto;
 }
 

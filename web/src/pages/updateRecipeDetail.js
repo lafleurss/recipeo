@@ -56,6 +56,8 @@ class UpdateRecipeDetail extends BindingClass {
     }
 
     async loadCategoryDropDown(){
+        document.getElementById('spinner-recipe').style.display = "none";
+
         var categoriesList = await this.client.getCategoriesForUser();
         var categoryDropDown = document.getElementById('category');
 
@@ -118,7 +120,7 @@ class UpdateRecipeDetail extends BindingClass {
          * When the recipe is  updated in the datastore, update recipe details DOM on the page.
          */
     displayRecipeOnPage() {
-        document.getElementById('spinner-recipe').style.display = "inline";
+
 
         const recipe = this.dataStore.get('recipe');
         if (!recipe) {
@@ -178,7 +180,7 @@ class UpdateRecipeDetail extends BindingClass {
             }
         }
 
-    document.getElementById('spinner-recipe').style.display = "none";
+
 
 
     }
@@ -262,12 +264,15 @@ class UpdateRecipeDetail extends BindingClass {
         totalTime : totalTime, ingredients : ingredientsArray, instructions : instructionsArray,
         tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
+        document.getElementById('spinner-recipe').style.display = "inline";
+
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').value = 'Saving Recipe...';
         document.getElementById('save_recipe').style.background='grey';
 
         let recipeData = this.dataStore.get('recipe');
         const recipe = await this.client.updateRecipe(recipeData.recipeId, payload);
+        document.getElementById('spinner-recipe').style.display = "none";
 
         if (recipe) {
             window.location.href = `/viewRecipes.html?filterType=ALL`;
