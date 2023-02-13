@@ -35,6 +35,7 @@ class ViewRecipes extends BindingClass {
      */
     async clientLoaded() {
         await this.sidenav.sideNavRedirects();
+
     }
 
 /**
@@ -86,7 +87,7 @@ class ViewRecipes extends BindingClass {
             this.generateTable(table, recipes);
             document.getElementById('recipes').innerText = "";
         }
-
+        document.getElementById('spinner').style.display = "none";
  }
 
      generateTable(table, data) {
@@ -124,6 +125,7 @@ class ViewRecipes extends BindingClass {
 
            }
        }
+
      }
 
 

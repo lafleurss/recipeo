@@ -76,11 +76,7 @@ class ViewRecipeDetail extends BindingClass {
         }
 
         if (recipe.categoryName){
-            var select = document.getElementById('category');
-            var opt = document.createElement('option');
-            opt.value = recipe.categoryName;
-            opt.innerHTML = recipe.categoryName;
-            select.appendChild(opt);
+             document.getElementById('category').innerHTML = recipe.categoryName;
         }
 
         if (recipe.ingredients){
@@ -105,6 +101,7 @@ class ViewRecipeDetail extends BindingClass {
 
     document.getElementById('update_recipe').disabled = false;
     document.getElementById('update_recipe').style.background='#f0bab9';
+
  }
 
 

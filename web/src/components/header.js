@@ -12,6 +12,7 @@ export default class Header extends BindingClass {
         const methodsToBind = [
             'addHeaderToPage', 'createSiteTitle', 'createUserInfoForHeader',
             'createLoginButton', 'createLoginButton', 'createLogoutButton'
+            ,'createFaviconLink'
         ];
         this.bindClassMethods(methodsToBind, this);
         this.client = new RecipeoClient();
@@ -29,10 +30,14 @@ export default class Header extends BindingClass {
 
         const siteTitle = this.createSiteTitle();
         const userInfo = this.createUserInfoForHeader(currentUser);
+        const faviconLink = this.createFaviconLink();
 
         const header = document.getElementById('header');
         header.appendChild(siteTitle);
         header.appendChild(userInfo);
+
+        const head = document.getElementById('head');
+        head.appendChild(faviconLink);
 
         const token = await this.client.getTokenOrThrow("Please log in!");
 
@@ -43,6 +48,16 @@ export default class Header extends BindingClass {
         }
 
 
+    }
+
+    createFaviconLink() {
+        const faviconLink = document.createElement('link');
+
+        faviconLink.setAttribute("href", "/favicon.png");
+        faviconLink.setAttribute("rel", "icon");
+        faviconLink.setAttribute("type", "image/x-icon");
+
+        return faviconLink;
     }
 
     createSiteTitle() {
