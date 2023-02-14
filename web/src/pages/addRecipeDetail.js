@@ -164,7 +164,7 @@ class AddRecipeDetail extends BindingClass {
         totalTime : totalTime, ingredients : ingredientsArray, instructions : instructionsArray,
         tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
-        document.getElementById('spinner-recipe').style.display = "inline";
+        document.getElementById('spinner-recipe').style.display = "inline-block";
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').innerHTML = 'Saving Recipe...';
         document.getElementById('save_recipe').style.background='grey';

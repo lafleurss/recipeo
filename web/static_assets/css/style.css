@@ -13,10 +13,10 @@
     width: 80%;
     height: 80%;
     align: center;
-        position: fixed;
-        left: 0px;
-        top: 0px;
-        z-index: -1;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
 }
 
 
@@ -95,7 +95,7 @@ overflow: hidden;
 .sidenav a {
   padding: 6px 6px 6px 32px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 14px;
   color: #818181;
   display: block;
 }

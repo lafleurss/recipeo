@@ -56,8 +56,6 @@ class UpdateRecipeDetail extends BindingClass {
     }
 
     async loadCategoryDropDown(){
-        document.getElementById('spinner-recipe').style.display = "none";
-
         var categoriesList = await this.client.getCategoriesForUser();
         var categoryDropDown = document.getElementById('category');
 
@@ -121,6 +119,7 @@ class UpdateRecipeDetail extends BindingClass {
          */
     displayRecipeOnPage() {
 
+        document.getElementById('spinner-recipe').style.display = "inline-block";
 
         const recipe = this.dataStore.get('recipe');
         if (!recipe) {
@@ -179,9 +178,7 @@ class UpdateRecipeDetail extends BindingClass {
               list.appendChild(elem);
             }
         }
-
-
-
+    document.getElementById('spinner-recipe').style.display = "none";
 
     }
 
@@ -264,7 +261,7 @@ class UpdateRecipeDetail extends BindingClass {
         totalTime : totalTime, ingredients : ingredientsArray, instructions : instructionsArray,
         tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
-        document.getElementById('spinner-recipe').style.display = "inline";
+        document.getElementById('spinner-recipe').style.display = "inline-block";
 
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').value = 'Saving Recipe...';

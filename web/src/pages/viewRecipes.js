@@ -46,6 +46,8 @@ class ViewRecipes extends BindingClass {
         document.getElementById('search_button').value = "Searching...";
         document.getElementById('search_button').disabled = true;
         document.getElementById('search_button').style.background='grey';
+        document.getElementById('spinner-recipe').style.display = "inline-block";
+        document.getElementById('recipes').innerText = "";
 
         const searchCriteria = document.getElementById('search_criteria').value;
         const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
@@ -54,6 +56,8 @@ class ViewRecipes extends BindingClass {
         if (previousSearchCriteria === searchCriteria) {
             return;
         }
+
+        this.flushTable();
 
         if (searchCriteria) {
             const results = await this.client.search(searchCriteria);
@@ -68,17 +72,11 @@ class ViewRecipes extends BindingClass {
         document.getElementById('search_button').value = "Search";
         document.getElementById('search_button').disabled = false;
         document.getElementById('search_button').style.background='#f0bab9';
+        document.getElementById('spinner-recipe').style.display = "none";
 
     }
 
-
-/**
-     * When the recipes are updated in the datastore, update the list of recipes on the page.
-     */
-    displayRecipesOnPage() {
-        document.getElementById('spinner-recipe').style.display = "inline";
-        const recipes = this.dataStore.get('recipes');
-
+    flushTable(){
         //Flush the table first
         let table = document.querySelector("table");
         var tableHeaderRowCount = 1;
@@ -86,6 +84,17 @@ class ViewRecipes extends BindingClass {
         for (var i = tableHeaderRowCount; i < rowCount; i++) {
             table.deleteRow(tableHeaderRowCount);
         }
+    }
+
+/**
+     * When the recipes are updated in the datastore, update the list of recipes on the page.
+     */
+    displayRecipesOnPage() {
+        document.getElementById('spinner-recipe').style.display = "inline-block";
+        const recipes = this.dataStore.get('recipes');
+
+        this.flushTable();
+
 
         if (!recipes || recipes.length === 0) {
             document.getElementById('recipes').innerText = "No recipes found...";
