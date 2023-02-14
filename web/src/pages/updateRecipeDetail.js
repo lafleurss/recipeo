@@ -12,10 +12,10 @@ class UpdateRecipeDetail extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown', 'checkNumberFieldLength',
-        'deleteRecipe'], this);
+        'deleteRecipe', 'displayRecipeOnPage'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
-//        this.dataStore.addChangeListener(this.displayRecipeOnPage);
+        this.dataStore.addChangeListener(this.displayRecipeOnPage);
 
         document.getElementById('favorite').addEventListener('click', this.toggleHeart);
 
@@ -35,7 +35,7 @@ class UpdateRecipeDetail extends BindingClass {
      * Once the client is loaded, display the recipe details.
      */
     async clientLoaded() {
-        this.loadCategoryDropDown();
+        await this.loadCategoryDropDown();
 
         const urlParams = new URLSearchParams(window.location.search);
         const recipeId = urlParams.get('id');
@@ -43,7 +43,6 @@ class UpdateRecipeDetail extends BindingClass {
         //Get the recipe metadata for the recipeId selected
         const recipe = await this.client.getRecipe(recipeId);
         this.dataStore.set('recipe', recipe);
-
 
     }
 
@@ -82,7 +81,7 @@ class UpdateRecipeDetail extends BindingClass {
             }
         }
 
-        this.displayRecipeOnPage();
+//        this.displayRecipeOnPage();
     }
 
     checkNumberFieldLength(){
