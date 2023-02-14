@@ -10,6 +10,8 @@ import recipeo.dynamodb.models.Recipe;
 import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.models.RecipeModel;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,7 +47,7 @@ public class GetRecipesForUserInCategoryActivity {
                                                                    getRecipesForUserInCategoryRequest) {
         log.info("Received GetRecipesForUserInCategoryRequest {}", getRecipesForUserInCategoryRequest);
         String userId = getRecipesForUserInCategoryRequest.getUserId();
-        String category = getRecipesForUserInCategoryRequest.getCategory();
+        String category = URLDecoder.decode(getRecipesForUserInCategoryRequest.getCategory(), StandardCharsets.UTF_8);
         List<Recipe> recipeList = recipeDao.getRecipesForUserInCategory(userId, category);
 
         if (recipeList == null || recipeList.isEmpty()) {
