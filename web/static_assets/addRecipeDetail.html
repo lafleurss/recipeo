@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head id="head">
     <meta charset="UTF-8">
     <title>Recipeo</title>
     <script type="text/javascript" src="assets/addRecipeDetail.js"></script>
@@ -17,7 +17,7 @@
     <div class="sidenav">
         <div id="sidenav_default_categories">
             <a href="/viewRecipes.html?filterType=ALL">All Recipes</a>
-            <a href="/viewRecipes.html?filterType=RECENTLY_USED" id="recent_recipes">Recently Used</a>
+            <a href="/viewRecipes.html?filterType=RECENTLY_USED" id="recent_recipes">Recent</a>
             <a href="/viewRecipes.html?filterType=FAVORITES" id="favorite_recipes">Favorites</a>
             <a href="/viewRecipes.html?filterType=UNCATEGORIZED" id="uncategorized_recipes">Uncategorized</a>
         </div>
@@ -26,11 +26,15 @@
         <div id="sidenav_categories_action">
             <a href="#"> <input type="text" id="new_category" name="new_category" maxlength="50" size="25"> </a>
             <a href="#"><button class="button" id="add_category" name="add"> Add Category</button></a>
+            <div class="spinner-category"> <i id="spinner-category" class="fa fa-spinner fa-spin" style="font-size:24px"></i> </div>
+
         </div>
     </div>
 
     <div align="left">
         <input class="button" type="button" id="save_recipe" value ="Save"  >
+        <div class="spinner-recipe"> <i id="spinner-recipe" class="fa fa-spinner fa-spin" style="font-size:24px"></i> </div>
+
     </div>
     <div class="row">
         <div class="column">
@@ -41,11 +45,10 @@
             <br><br>
 
             <div class ="div-1">  Servings:  </div>
-            <input type="number" class ="div-2" id="servings" ></input>
+            <input type="number" min="1" class ="div-2" id="servings" ></input>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="div-1">  Category:  </div>
             <select class="div-2" id="category">
-<!--                <option>Uncategorized</option>-->
             </select>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -54,19 +57,18 @@
             <br><br>
             <div class = "times">
                 <div class = "div-1"> Prep Time (min):  </div>
-                <input type="number" class = "div-2" id="preptime"  ></input>
+                <input type="number"  class = "div-2" id="preptime" ></input>
 
                 <div class="div-1"> Cook Time (min):  </div>
-                <input type="number" class = "div-2" id="cooktime" ></input>
+                <input type="number" class = "div-2" id="cooktime" onkeyup="if(this.value<0){this.value = this.value * -1}" ></input>
 
                 <div class="div-1"> Total Time (min):  </div>
-                <input type="number" class = "div-2" id="totaltime" ></input>
+                <input readonly type="number" class = "div-2" id="totaltime" ></input>
                 <br>
             </div>
             <br><br>
             <div class="div-1"> Tags: </div>
-            <input type="text"  class = "div-2" id="tags" placeholder="tag1,tag2" data-tip="Must be a comma separated list of tags"></input>
-
+                <input type="text"  class = "div-2" id="tags"   placeholder="exampleTag1, exampleTag2" title="Must be a comma separated list of tags"></input>
         </div>
     </div>
 

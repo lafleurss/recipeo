@@ -43,7 +43,10 @@ class ViewRecipeDetail extends BindingClass {
      * When the recipe is  updated in the datastore, update recipe details DOM on the page.
      */
     displayRecipeOnPage() {
+        document.getElementById('spinner-recipe').style.display = "inline-block";
+
         const recipe = this.dataStore.get('recipe');
+
 
         if (!recipe) {
             return;
@@ -76,11 +79,7 @@ class ViewRecipeDetail extends BindingClass {
         }
 
         if (recipe.categoryName){
-            var select = document.getElementById('category');
-            var opt = document.createElement('option');
-            opt.value = recipe.categoryName;
-            opt.innerHTML = recipe.categoryName;
-            select.appendChild(opt);
+             document.getElementById('category').innerHTML = recipe.categoryName;
         }
 
         if (recipe.ingredients){
@@ -105,6 +104,9 @@ class ViewRecipeDetail extends BindingClass {
 
     document.getElementById('update_recipe').disabled = false;
     document.getElementById('update_recipe').style.background='#f0bab9';
+    document.getElementById('spinner-recipe').style.display = "none";
+
+
  }
 
 

@@ -81,7 +81,7 @@ Resources:
       CallbackURLs:
         - !If
           - DeployCloudFront
-          - !Sub "https://${CloudfrontDistribution.DomainName}"
+          - !Sub "https://${CloudfrontDistribution.DomainName}/viewRecipes.html?filterType=ALL"
           - http://localhost:8000/viewRecipes.html?filterType=ALL
       LogoutURLs:
         - !If
@@ -214,6 +214,14 @@ Resources:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/category"
+
+        - PolicyName: 'AccessLastAccessedRecipesGSI'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/recipe/index/*"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration
@@ -518,5 +526,3 @@ Outputs:
     Description: "The URL of the deployed front-end application (COGNITO_REDIRECT_SIGNOUT)."
     Value: !Sub "https://${CloudfrontDistribution.DomainName}"
     Condition: DeployCloudFront
-
-
