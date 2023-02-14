@@ -35,7 +35,7 @@ class UpdateRecipeDetail extends BindingClass {
      * Once the client is loaded, display the recipe details.
      */
     async clientLoaded() {
-        this.loadCategoryDropDown();
+        await this.loadCategoryDropDown();
 
         const urlParams = new URLSearchParams(window.location.search);
         const recipeId = urlParams.get('id');
@@ -43,7 +43,6 @@ class UpdateRecipeDetail extends BindingClass {
         //Get the recipe metadata for the recipeId selected
         const recipe = await this.client.getRecipe(recipeId);
         this.dataStore.set('recipe', recipe);
-
 
     }
 
