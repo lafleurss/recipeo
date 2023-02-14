@@ -37,23 +37,25 @@ export default class SideNav extends BindingClass {
     //Logic for handling sidenav bar links
             const urlParams = new URLSearchParams(window.location.search);
             const filterType = urlParams.get('filterType');
-            const categoryName = urlParams.get('categoryName');
+            const categoryName = decodeURI(urlParams.get('categoryName'));
             let recipes;
+            if (filterType){
+                //Get all recipes for user API
+                if (filterType == "ALL"){
+                    recipes = await this.viewAll("ALL");
+                }
+                else if (filterType == "RECENTLY_USED"){
+                    recipes = await this.viewRecent();
+                }
+                else if (filterType == "FAVORITES"){
+                    recipes = await this.viewFavorites();
+                }
+                else if (filterType == "UNCATEGORIZED"){
+                    recipes = await this.viewUncategorized();
 
-            //Get all recipes for user API
-            if (filterType == "ALL"){
-                recipes = await this.viewAll("ALL");
+                }
             }
-            else if (filterType == "RECENTLY_USED"){
-                recipes = await this.viewRecent();
-            }
-            else if (filterType == "FAVORITES"){
-                recipes = await this.viewFavorites();
-            }
-            else if (filterType == "UNCATEGORIZED"){
-                recipes = await this.viewUncategorized();
-
-            } else if (categoryName){
+            else if (categoryName){
                 recipes = await this.viewCategory(categoryName);
             }
     }

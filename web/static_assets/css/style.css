@@ -256,14 +256,13 @@ margin: 1px;
 
 .splash {
     width: 100%;
-    height: 90%;
+    height: 100%;
     background-color: #de5f5c;
 }
 
 .stretch {
     width:100%;
-    height:90%;
-    margin: auto;
+    height:100%;
 }
 
 
