@@ -11,21 +11,21 @@ import DataStore from "../util/DataStore";
 class UpdateRecipeDetail extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown', 'checkNumberFieldLength',
-        'deleteRecipe'], this);
+        this.bindClassMethods(['mount', 'saveRecipe', 'loadCategoryDropDown', 'validateFields',
+        'deleteRecipe', 'cancel', 'displayRecipeOnPage'], this);
         // Create a enw datastore with an initial "empty" state.
         this.dataStore = new DataStore();
-//        this.dataStore.addChangeListener(this.displayRecipeOnPage);
+        this.dataStore.addChangeListener(this.displayRecipeOnPage);
 
         document.getElementById('favorite').addEventListener('click', this.toggleHeart);
 
         document.getElementById('save_recipe').addEventListener('click', this.saveRecipe);
         document.getElementById('delete_recipe').addEventListener('click', this.deleteRecipe);
+        document.getElementById('cancel').addEventListener('click', this.cancel);
 
-        document.getElementById('preptime').addEventListener('input', this.checkNumberFieldLength);
-        document.getElementById('cooktime').addEventListener('input', this.checkNumberFieldLength);
-        document.getElementById('totaltime').addEventListener('input', this.checkNumberFieldLength);
-        document.getElementById('servings').addEventListener('input', this.checkNumberFieldLength);
+        document.getElementById('preptime').addEventListener('input', this.validateFields);
+        document.getElementById('cooktime').addEventListener('input', this.validateFields);
+        document.getElementById('servings').addEventListener('input', this.validateFields);
 
         this.header = new Header();
         this.sidenav = new SideNav(this.dataStore);
@@ -82,14 +82,23 @@ class UpdateRecipeDetail extends BindingClass {
             }
         }
 
-        this.displayRecipeOnPage();
     }
 
-    checkNumberFieldLength(){
+    validateFields(){
         const prepTime =  document.getElementById('preptime');
         const cookTime =  document.getElementById('cooktime');
-        const totalTime =  document.getElementById('totaltime');
         const servings =  document.getElementById('servings');
+
+        if (servings.value < 0) {
+            servings.value = servings.value * -1;
+        }
+
+        if (prepTime.value < 0) {
+            prepTime.value = prepTime.value * -1;
+        }
+        if (cookTime.value < 0) {
+            cookTime.value = cookTime.value * -1;
+        }
 
         if (prepTime.value.length > 3) {
             prepTime.value = prepTime.value.slice(0,3);
@@ -97,19 +106,22 @@ class UpdateRecipeDetail extends BindingClass {
         if (cookTime.value.length > 3) {
             cookTime.value = cookTime.value.slice(0,3);
         }
-        if (totalTime.value.length > 3) {
-            totalTime.value = totalTime.value.slice(0,3);
-        }
+
         if (servings.value.length > 2) {
             servings.value = servings.value.slice(0,2);
         }
+
+        document.getElementById('totaltime').value = Number(prepTime.value) + Number(cookTime.value);
     }
 
     /**
          * When the recipe is  updated in the datastore, update recipe details DOM on the page.
          */
-    async displayRecipeOnPage() {
-        let recipe = this.dataStore.get('recipe');
+    displayRecipeOnPage() {
+
+        document.getElementById('spinner-recipe').style.display = "inline-block";
+
+        const recipe = this.dataStore.get('recipe');
         if (!recipe) {
             return;
         }
@@ -166,8 +178,16 @@ class UpdateRecipeDetail extends BindingClass {
               list.appendChild(elem);
             }
         }
+    document.getElementById('spinner-recipe').style.display = "none";
 
     }
+
+    cancel(){
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipeId = urlParams.get('id');
+        window.location.href = `/viewRecipeDetail.html?id=${recipeId}`;
+    }
+
 
 /**
      * Read recipe meta data on page and call sa to database.
@@ -183,7 +203,7 @@ class UpdateRecipeDetail extends BindingClass {
         const servings =  document.getElementById('servings').value;
         const prepTime =  document.getElementById('preptime').value;
         const cookTime =  document.getElementById('cooktime').value;
-        const totalTime =  document.getElementById('totaltime').value;
+        const totalTime =  Number(prepTime) + Number(cookTime);
         const categoryElement = document.getElementById('category');
         const categoryName = categoryElement.options[categoryElement.selectedIndex].innerHTML;
         const favoriteClassName = document.getElementById('favorite').className;
@@ -241,12 +261,15 @@ class UpdateRecipeDetail extends BindingClass {
         totalTime : totalTime, ingredients : ingredientsArray, instructions : instructionsArray,
         tags : tags, isFavorite : isFavorite, categoryName : categoryName};
 
+        document.getElementById('spinner-recipe').style.display = "inline-block";
+
         document.getElementById('save_recipe').disabled = true;
         document.getElementById('save_recipe').value = 'Saving Recipe...';
         document.getElementById('save_recipe').style.background='grey';
 
         let recipeData = this.dataStore.get('recipe');
         const recipe = await this.client.updateRecipe(recipeData.recipeId, payload);
+        document.getElementById('spinner-recipe').style.display = "none";
 
         if (recipe) {
             window.location.href = `/viewRecipes.html?filterType=ALL`;
@@ -255,16 +278,19 @@ class UpdateRecipeDetail extends BindingClass {
  }
 
      async deleteRecipe() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const recipeId = urlParams.get('id');
 
-        document.getElementById('delete_recipe').disabled = true;
-        document.getElementById('delete_recipe').value = 'Deleting Recipe...';
-        document.getElementById('delete_recipe').style.background='grey';
+        if (confirm("Are you sure you want to delete recipe?") == true) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const recipeId = urlParams.get('id');
 
-        const recipe = await this.client.deleteRecipe(recipeId);
-        if (recipe) {
-            window.location.href = `/viewRecipes.html?filterType=ALL`;
+            document.getElementById('delete_recipe').disabled = true;
+            document.getElementById('delete_recipe').value = 'Deleting Recipe...';
+            document.getElementById('delete_recipe').style.background='grey';
+
+            const recipe = await this.client.deleteRecipe(recipeId);
+            if (recipe) {
+                window.location.href = `/viewRecipes.html?filterType=ALL`;
+            }
         }
      }
 

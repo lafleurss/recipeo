@@ -59,6 +59,8 @@ export default class SideNav extends BindingClass {
     }
 
     async loadCategories(){
+        document.getElementById('spinner-category').style.display = "inline-block";
+
         const categoriesList = await this.client.getCategoriesForUser();
         var divElement = document.getElementById('sidenav_custom_categories');
         if (categoriesList) {
@@ -81,9 +83,12 @@ export default class SideNav extends BindingClass {
                 a.href="/viewRecipes.html?categoryName="+element.categoryName;
             }
         }
+        document.getElementById('spinner-category').style.display = "none";
     }
 
     async addCategory(){
+        document.getElementById('spinner-category').style.display = "inline-block";
+
         const nameRegex = new RegExp('[^a-zA-Z\\s-\'.]');
         const categoryName = document.getElementById('new_category').value;
         const categoryDescription = categoryName;
@@ -100,6 +105,9 @@ export default class SideNav extends BindingClass {
         document.getElementById('sidenav_custom_categories').innerHTML = '';
         this.loadCategories();
         document.getElementById('new_category').value = "";
+        document.getElementById('spinner-category').style.display = "none";
+
+
     }
 
     async updateCategory(categoryElement){
