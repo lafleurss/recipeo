@@ -119,7 +119,9 @@ overflow: hidden;
 }
 
 .spinner-category {
-  margin-left: 325px;
+  margin-left: 50px;
+  color: #de5f5c;
+
 }
 
 /* Recipe Title */

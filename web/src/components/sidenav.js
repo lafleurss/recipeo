@@ -59,6 +59,8 @@ export default class SideNav extends BindingClass {
     }
 
     async loadCategories(){
+        document.getElementById('spinner-category').style.display = "inline-block";
+
         const categoriesList = await this.client.getCategoriesForUser();
         var divElement = document.getElementById('sidenav_custom_categories');
         if (categoriesList) {
@@ -81,6 +83,7 @@ export default class SideNav extends BindingClass {
                 a.href="/viewRecipes.html?categoryName="+element.categoryName;
             }
         }
+        document.getElementById('spinner-category').style.display = "none";
     }
 
     async addCategory(){
