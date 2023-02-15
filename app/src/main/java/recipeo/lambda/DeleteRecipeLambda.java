@@ -18,7 +18,7 @@ public class DeleteRecipeLambda extends LambdaActivityRunner<DeleteRecipeRequest
      */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<DeleteRecipeRequest> input, Context context) {
-        log.info("handleRequest");
+        log.info("Received DeleteRecipeLambda {}" , input);
 
         DeleteRecipeRequest unauthenticatedRequest = input.fromPath(i ->
                 DeleteRecipeRequest.builder()

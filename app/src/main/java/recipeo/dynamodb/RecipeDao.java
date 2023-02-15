@@ -136,7 +136,7 @@ public class RecipeDao {
         valueMap.put(":userId", new AttributeValue().withS(userId));
         valueMap.put(":categoryName", new AttributeValue().withS(category));
 
-        List<Recipe> recipeList = new ArrayList<>();
+        //ist<Recipe> recipeList = new ArrayList<>();
 
         //Query from base table
         DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
@@ -146,7 +146,7 @@ public class RecipeDao {
                 .withFilterExpression("categoryName = :categoryName")
                 .withLimit(PAGE_SIZE);
 
-        recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
+        List<Recipe> recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
 
 
         return recipeList;

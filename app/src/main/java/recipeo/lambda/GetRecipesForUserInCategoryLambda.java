@@ -20,7 +20,7 @@ public class GetRecipesForUserInCategoryLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetRecipesForUserInCategoryRequest> input,
                                         Context context) {
-        log.info("handleRequest");
+        log.info("Received GetRecipesForUserInCategoryLambda {}" , input);
 
         GetRecipesForUserInCategoryRequest unauthenticatedRequest = input.fromPath(i ->
                 GetRecipesForUserInCategoryRequest.builder()

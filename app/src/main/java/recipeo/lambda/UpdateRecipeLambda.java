@@ -18,7 +18,7 @@ public class UpdateRecipeLambda extends LambdaActivityRunner<UpdateRecipeRequest
      */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<UpdateRecipeRequest> input, Context context) {
-        log.info("handleRequest");
+        log.info("Received UpdateRecipeLambda {}" , input);
 
         UpdateRecipeRequest unauthenticatedRequest = input.fromBody(UpdateRecipeRequest.class);
 

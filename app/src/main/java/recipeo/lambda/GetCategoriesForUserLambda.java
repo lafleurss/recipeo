@@ -20,7 +20,7 @@ public class GetCategoriesForUserLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetCategoriesForUserRequest> input,
                                         Context context) {
-        log.info("handleRequest");
+        log.info("Received GetCategoriesForUserLambda {}" , input);
 
         return super.runActivity(() -> input.fromUserClaims(claims  ->
                         GetCategoriesForUserRequest.builder()

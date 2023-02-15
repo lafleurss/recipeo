@@ -18,7 +18,7 @@ public class UpdateCategoryLambda extends LambdaActivityRunner<UpdateCategoryReq
      */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<UpdateCategoryRequest> input, Context context) {
-        log.info("handleRequest");
+        log.info("Received UpdateCategoryLambda {}" , input);
 
         UpdateCategoryRequest unauthenticatedRequest = input.fromBody(UpdateCategoryRequest.class);
 
