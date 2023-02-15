@@ -42,7 +42,7 @@ public class GetRecipesForUserActivity {
      * @return GetRecipesForUserResult object containing the API defined {@link List} of {@link RecipeModel}
      */
     public GetRecipesForUserResult handleRequest(GetRecipesForUserRequest getRecipesForUserRequest) {
-        log.info("Received GetRecipesForUserResult {}", getRecipesForUserRequest);
+        log.info("Received GetRecipesForUserRequest {}", getRecipesForUserRequest);
         String userId = getRecipesForUserRequest.getUserId();
         RecipeFilter filterType = getRecipesForUserRequest.getFilterType();
         List<Recipe> recipeList = recipeDao.getRecipesForUser(userId, filterType);
