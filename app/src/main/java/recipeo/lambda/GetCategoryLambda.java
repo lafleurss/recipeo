@@ -18,7 +18,7 @@ public class GetCategoryLambda extends LambdaActivityRunner<GetCategoryRequest, 
      */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetCategoryRequest> input, Context context) {
-        log.info("handleRequest");
+        log.info("Received GetCategoryLambda {}" , input);
 
         GetCategoryRequest unauthenticatedRequest = input.fromPath(i ->
                 GetCategoryRequest.builder()

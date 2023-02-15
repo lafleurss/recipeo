@@ -16,7 +16,8 @@ public class SearchRecipesLambda
 
     @Override
     public LambdaResponse handleRequest(LambdaRequest<SearchRecipesRequest> input, Context context) {
-        log.info("handleRequest");
+        log.info("Received SearchRecipesLambda {}" , input);
+
         return super.runActivity(() -> input.fromQuery(query ->
                         SearchRecipesRequest.builder()
                                 .withCriteria(query.get("q"))

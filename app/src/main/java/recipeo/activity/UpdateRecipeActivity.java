@@ -10,6 +10,7 @@ import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Category;
 import recipeo.dynamodb.models.Recipe;
 import recipeo.exceptions.CategoryNotFoundException;
+import recipeo.exceptions.InvalidAttributeChangeException;
 import recipeo.exceptions.InvalidAttributeValueException;
 import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.models.RecipeModel;
@@ -56,7 +57,7 @@ public class UpdateRecipeActivity {
      * @return CreateRecipeResult object containing the API defined {@link RecipeModel}
      */
     public UpdateRecipeResult handleRequest(UpdateRecipeRequest updateRecipeRequest) {
-        log.info("Received CreateRecipeRequest {}", updateRecipeRequest);
+        log.info("Received UpdateRecipeRequest {}", updateRecipeRequest);
 
         String requestedCategoryName = updateRecipeRequest.getCategoryName();
         String userId = updateRecipeRequest.getUserId();
@@ -100,7 +101,7 @@ public class UpdateRecipeActivity {
 
         //Check UserID change
         if (!Objects.equals(updateRecipeRequest.getUserId(), recipeToBeSaved.getUserId())) {
-            throw new InvalidAttributeValueException("You must own the Recipe to update it!");
+            throw new InvalidAttributeChangeException("You must own the Recipe to update it!");
         }
 
         String isFavourite = updateRecipeRequest.getIsFavorite();
@@ -108,7 +109,7 @@ public class UpdateRecipeActivity {
             if (isFavourite.equals("true") || isFavourite.equals("false")) {
                 recipeToBeSaved.setIsFavorite(updateRecipeRequest.getIsFavorite());
             } else {
-                throw new InvalidAttributeValueException("Valid values for isFavorite are 'true' or 'false' only");
+                throw new InvalidAttributeChangeException("Valid values for isFavorite are 'true' or 'false' only");
             }
         }
         //If Category change was requested

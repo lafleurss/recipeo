@@ -19,7 +19,7 @@ public class GetRecipesForUserLambda extends LambdaActivityRunner<GetRecipesForU
      */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetRecipesForUserRequest> input, Context context) {
-        log.info("handleRequest");
+        log.info("Received GetRecipesForUserLambda {}" , input);
 
         GetRecipesForUserRequest unauthenticatedRequest = input.fromQuery(i ->
                 GetRecipesForUserRequest.builder()

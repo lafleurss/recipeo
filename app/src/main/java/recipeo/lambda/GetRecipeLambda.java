@@ -18,7 +18,7 @@ public class GetRecipeLambda extends LambdaActivityRunner<GetRecipeRequest, GetR
      */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetRecipeRequest> input, Context context) {
-        log.info("handleRequest");
+        log.info("Received GetRecipeLambda {}" , input);
 
         GetRecipeRequest unauthenticatedRequest = input.fromPath(i ->
                 GetRecipeRequest.builder()
