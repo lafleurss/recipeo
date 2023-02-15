@@ -5,18 +5,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import recipeo.activity.requests.GetRecipeRequest;
+import recipeo.activity.requests.GetRecipesForUserInCategoryRequest;
 import recipeo.activity.requests.GetRecipesForUserRequest;
 import recipeo.activity.results.GetRecipeResult;
 import recipeo.activity.results.GetRecipesForUserResult;
 import recipeo.converters.ModelConverter;
 import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Recipe;
+import recipeo.exceptions.RecipeNotFoundException;
 import recipeo.models.RecipeFilter;
 import recipeo.models.RecipeModel;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -90,6 +93,22 @@ public class GetRecipesForUserActivityTest {
         assertEquals(List.of(r1, r2), result.getRecipes());
     }
 
+    @Test
+    public void handleRequest_noSavedRecipesFound_throwsRecipeNotFoundException() {
+        // GIVEN
+        String expectedUserId = "expectedUserId";
+
+        when(recipeDao.getRecipesForUser(expectedUserId, RecipeFilter.ALL)).thenReturn(null);
+
+        //WHEN
+        GetRecipesForUserRequest request = GetRecipesForUserRequest.builder()
+                .withUserId(expectedUserId)
+                .withFilterType(RecipeFilter.ALL)
+                .build();
+
+        assertThrows(RecipeNotFoundException.class,() -> getRecipesForUserActivity.handleRequest(request));
+
+    }
 
 
 }
