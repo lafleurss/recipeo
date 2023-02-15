@@ -6,13 +6,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import recipeo.activity.requests.GetRecipeRequest;
+import recipeo.activity.requests.GetRecipesForUserRequest;
 import recipeo.activity.results.GetRecipeResult;
 import recipeo.dynamodb.RecipeDao;
 import recipeo.dynamodb.models.Recipe;
+import recipeo.exceptions.RecipeNotFoundException;
+import recipeo.models.RecipeFilter;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -71,4 +75,24 @@ public class GetRecipeActivityTest {
         assertEquals(expectedServings, result.getRecipe().getServings());
         assertEquals(expectedTags, result.getRecipe().getTags());
     }
+
+    @Test
+    public void handleRequest_noSavedRecipesFound_throwsRecipeNotFoundException() {
+        // GIVEN
+        String userId = "expectedUserId";
+        String recipeId = "expectedUserId";
+
+        when(recipeDao.getRecipe(userId, recipeId)).thenReturn(null);
+
+        //WHEN
+        GetRecipeRequest request = GetRecipeRequest.builder()
+                .withUserId(userId)
+                .withRecipeId(recipeId)
+                .build();
+
+        assertThrows(RecipeNotFoundException.class,() -> getRecipeActivity.handleRequest(request));
+
+    }
+
+
 }
