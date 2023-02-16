@@ -10,7 +10,7 @@ You can also organize your recipes by categories like Recently Used, Favorites, 
 2. As a user I want to create a recipe so that I can save it
 3. As a user I want to optionally assign a category to a Recipe when Creating a Recipe
 4. As a user I want to edit a recipe so that I can note my recipe adjustments
-5. As a user I want to be able to see top 25 recipes in my Recent category (recently created/updated)  
+5. As a user I want to be able to see top 10 recipes in my Recent category (recently created/updated)  
 6. As a user I want to be able to see all recipes in my Favorites Category
 7. As a user I want to be able to see ALL my recipes
 8. As a user I want to be able to create my custom Categories 

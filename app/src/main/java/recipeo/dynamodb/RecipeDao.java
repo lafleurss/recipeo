@@ -23,8 +23,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class RecipeDao {
-    private static final int PAGE_SIZE = 250;
-    private static final int RECENT_PAGE_SIZE = 25;
+    private static final int PAGE_SIZE = 500;
+    private static final int RECENT_PAGE_SIZE = 10;
 
     private final DynamoDBMapper dynamoDbMapper;
     private final MetricsPublisher metricsPublisher;
@@ -71,55 +71,46 @@ public class RecipeDao {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":userId", new AttributeValue().withS(userId));
         List<Recipe> recipeList = new ArrayList<>();
-
+        DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>();
         //Query from base table ALL Recipes
         if (filterType == RecipeFilter.ALL) {
-            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+            queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withKeyConditionExpression("userId = :userId")
                     .withExpressionAttributeValues(valueMap)
                     .withLimit(PAGE_SIZE);
-
-            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
 
             //*************************
             //Query from base table FAVORITE Recipes
         } else if (filterType == RecipeFilter.FAVORITES) {
             valueMap.put(":isFavorite", new AttributeValue().withS("true"));
-            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+            queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withConsistentRead(false)
                     .withKeyConditionExpression("userId = :userId")
                     .withExpressionAttributeValues(valueMap)
                     .withFilterExpression("isFavorite = :isFavorite")
                     .withLimit(PAGE_SIZE);
-
-            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
-
         //*************************
         //Query from base table UNCATEGORIZED only
         } else if (filterType == RecipeFilter.UNCATEGORIZED) {
             valueMap.put(":categoryName", new AttributeValue().withS("Uncategorized"));
-            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+            queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withConsistentRead(false)
                     .withKeyConditionExpression("userId = :userId")
                     .withExpressionAttributeValues(valueMap)
                     .withFilterExpression("categoryName = :categoryName")
                     .withLimit(PAGE_SIZE);
-
-            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
-
             //Query from GSI LastAccessed sorted by descending order of lastAccessed
             //*************************
         } else if (filterType == RecipeFilter.RECENTLY_USED) {
-            DynamoDBQueryExpression<Recipe> queryExpression = new DynamoDBQueryExpression<Recipe>()
+            queryExpression = new DynamoDBQueryExpression<Recipe>()
                     .withIndexName(Recipe.RECENTLY_ACCESSED_RECIPES)
                     .withConsistentRead(false)
                     .withKeyConditionExpression("userId = :userId")
                     .withExpressionAttributeValues(valueMap)
                     .withScanIndexForward(false)
                     .withLimit(RECENT_PAGE_SIZE);
-
-            recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
         }
+        recipeList = dynamoDbMapper.queryPage(Recipe.class, queryExpression).getResults();
         return recipeList;
     }
 
