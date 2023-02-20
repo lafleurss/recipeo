@@ -192,7 +192,7 @@ class UpdateRecipeDetail extends BindingClass {
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
-       const nameRegex = new RegExp('[\"\\\\`]');
+       const nameRegex = new RegExp('[\"\\\\\\`]');
        const recipeName = document.getElementById('recipename').value;
        if (nameRegex.test(recipeName)) {
             alert("The recipe name you entered has invalid characters");
