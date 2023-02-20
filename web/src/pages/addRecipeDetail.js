@@ -155,7 +155,7 @@ class AddRecipeDetail extends BindingClass {
             return;
         }
 
-        if (!nameRegex.test(recipeName)) {
+        if (nameRegex.test(recipeName)) {
             alert("The recipe name you entered has invalid characters");
             return;
         }
