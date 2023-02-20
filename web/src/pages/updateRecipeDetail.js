@@ -192,7 +192,7 @@ class UpdateRecipeDetail extends BindingClass {
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
-       const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
+       const nameRegex = new RegExp('[\"\\\\`]');
        const recipeName = document.getElementById('recipename').value;
        if (nameRegex.test(recipeName)) {
             alert("The recipe name you entered has invalid characters");
@@ -216,7 +216,8 @@ class UpdateRecipeDetail extends BindingClass {
 
         const instructions = document.getElementById('instructions').innerText;
         document.getElementById('instructions').value = instructions;
-        const instructionsArray = document.getElementById('instructions').value.split("\n");
+        const instructionsTrimmed = document.getElementById('instructions').value.replace(/\n{2,}/g, '\n');
+        const instructionsArray = instructionsTrimmed.split("\n");
 
         for (let i in instructionsArray){
             if ((!instructionsArray[i]) || instructionsArray[i] && instructionsArray[i].length === 0) {
@@ -227,7 +228,8 @@ class UpdateRecipeDetail extends BindingClass {
 
         const ingredients = document.getElementById('ingredients').innerText;
         document.getElementById('ingredients').value = ingredients;
-        const ingredientsArray = document.getElementById('ingredients').value.split("\n");
+        const ingredientsTrimmed = document.getElementById('ingredients').value.replace(/\n{2,}/g, '\n');
+        const ingredientsArray = ingredientsTrimmed.split("\n");
 
         for (let i in ingredientsArray){
             if ((!ingredientsArray[i]) || ingredientsArray[i] && ingredientsArray[i].length === 0) {
@@ -246,13 +248,8 @@ class UpdateRecipeDetail extends BindingClass {
         }
 
 
-        if (!recipeName || !servings || !preptime || !cooktime || !totaltime ) {
+        if (!recipeName || !servings || !prepTime || !cookTime || !totalTime || !ingredients || !instructions) {
             alert("Please fill in all required fields");
-            return;
-        }
-
-        if (nameRegex.test(recipeName)) {
-            alert("The recipe name you entered has invalid characters");
             return;
         }
 

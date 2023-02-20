@@ -90,8 +90,7 @@ export default class SideNav extends BindingClass {
 
     async addCategory(){
         document.getElementById('spinner-category').style.display = "inline-block";
-
-        const nameRegex = new RegExp('[^a-zA-Z\\s-\'.]');
+        const nameRegex = new RegExp('[\"\\\\`]');
         const categoryName = document.getElementById('new_category').value;
         const categoryDescription = categoryName;
 
@@ -99,6 +98,12 @@ export default class SideNav extends BindingClass {
             alert("Please fill a valid Category Name");
             return;
         }
+
+        if (nameRegex.test(categoryName)) {
+            alert("The category name you entered has invalid characters");
+            return;
+        }
+
         let payload = {categoryName: categoryName, categoryDescription: categoryDescription}
         payload.categoryName = categoryName;
         payload.categoryDescription = categoryDescription;

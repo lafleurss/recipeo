@@ -114,9 +114,7 @@ class AddRecipeDetail extends BindingClass {
      * Read recipe meta data on page and call sa to database.
      */
     async saveRecipe() {
-
-
-        const nameRegex = new RegExp('/^[ A-Z0-9a-z()[]+-*/%]*$/');
+        const nameRegex = new RegExp('[\"\\\\`]');
 
         const recipeName = document.getElementById('recipename').value;
         const servings =  document.getElementById('servings').value;
@@ -135,10 +133,12 @@ class AddRecipeDetail extends BindingClass {
         }
 
         const instructions = document.getElementById('instructions').innerText;
-        const instructionsArray = instructions.split("\n");
+        const instructionsTrimmed = instructions.replace(/\n{2,}/g, '\n');
+        const instructionsArray = instructionsTrimmed.split("\n");
 
         const ingredients = document.getElementById('ingredients').innerText;
-        const ingredientsArray = ingredients.split("\n");
+        const ingredientsTrimmed = instructions.replace(/\n{2,}/g, '\n');
+        const ingredientsArray = ingredientsTrimmed.split("\n");
 
         const tagsText = document.getElementById('tags').value;
 
@@ -150,12 +150,12 @@ class AddRecipeDetail extends BindingClass {
         }
 
 
-        if (!recipeName || !servings || !preptime || !cooktime || !totaltime || !ingredients || !instructions) {
+        if (!recipeName || !servings || !prepTime || !cookTime || !totalTime || !ingredients || !instructions) {
             alert("Please fill in all required fields");
             return;
         }
 
-        if (nameRegex.test(recipeName)) {
+        if (!nameRegex.test(recipeName)) {
             alert("The recipe name you entered has invalid characters");
             return;
         }

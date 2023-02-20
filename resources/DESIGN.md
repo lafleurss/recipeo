@@ -15,7 +15,7 @@ You can also organize your recipes by categories like Recently Used, Favorites, 
 7. As a user I want to be able to see ALL my recipes
 8. As a user I want to be able to create my custom Categories 
 9. As a user I want to be able to view all my custom Categories
-10. As a user I want to Delete a Recipe when I no longer have use for it **
+10. As a user I want to Delete a Recipe when I no longer have use for it
 11. As a user I want to Search for recipes via tags
 
 
@@ -89,7 +89,7 @@ List of Tables and global secondary indexes:
 ``{"recipeName":"New Recipe Name", "servings":4, "prepTime":20, "cookTime": 20, "totalTime":40, "ingredients": [ "1 cup chickpeas (dry)" , "1 large onion (finely chopped)", "Cilantro for garnish (optional)"  ], "instructions": [  "do x" , "prep y" , "another step"  ], "tags": [ "tag1", "tag2", "tag3" ], "isFavorite" : "true", "categoryName": "Uncategorized" }``
 * Optional: list of tags (default: no tags), isFavorite (default: false), category (default: Uncategorized). Returns the new recipe with the lastAccessed timestamp set to time of POST, including a unique recipe ID assigned by the Recipeo service.
 
-  * For security concerns, we will validate the provided recipe name does not contain any invalid characters: " ' \`
+  * For security concerns, we will validate the provided recipe name does not contain any invalid characters: "\`
   * If the recipe name contains any of the invalid characters, will throw an InvalidAttributeValueException.
 
 ## Get Categories for User Endpoint
