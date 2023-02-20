@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public final class RecipeoServiceUtils {
 
     private static final int RECIPE_ID_LENGTH = 5;
-    private static final Pattern INVALID_CHARACTER_PATTERN = Pattern.compile("[\"\\\\]");
+    private static final Pattern INVALID_CHARACTER_PATTERN = Pattern.compile("[\"\\\\`]");
 
 
     private RecipeoServiceUtils() {
