@@ -135,10 +135,9 @@ To stop either the local backend (the `sam local...` command) or local frontend 
 <!-- CONTACT -->
 ## Contact
 
-Shilpa Nair - shilpa.sathya@gmail.com
-LinkedIn - https://www.linkedin.com/in/shilpasnair/
-
-Project Link: [https://github.com/lafleurss/recipeo](https://github.com/lafleurss/recipeo)
+* Shilpa Nair - shilpa.sathya@gmail.com
+* LinkedIn - https://www.linkedin.com/in/shilpasnair/
+* Project Link: [https://github.com/lafleurss/recipeo](https://github.com/lafleurss/recipeo)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
