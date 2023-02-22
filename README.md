@@ -23,8 +23,6 @@ Introducing the ultimate personal recipe curation app - Recipeo!
   </p>  
 
 <p>
-    <a href="https://d2hu23w1s1udj7.cloudfront.net/">View Demo</a>
-    ·
     <a href="https://github.com/lafleurss/recipeo/issues">Report Bug</a>
     ·
     <a href="https://github.com/lafleurss/recipeo/issues">Request Feature</a>
@@ -52,11 +50,10 @@ You can also organize your recipes by categories like Recently Used, Favorites, 
 * Users can delete a recipe when it is no longer needed
 * Users can search for recipes via tags or recipe names
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Design
-Here's the document that details the technical design and architecture decisions [Design](./resources/DESIGN.md)
+Here's the [design](./resources/DESIGN.md) document that details the technical design and architecture decisions.
 
 ### Built With
 [![Architecture][architecture diagram]]()
@@ -70,10 +67,10 @@ The following instructions will guide you on setting up and running the project 
 ### Prerequisites and Installation
 
 1. Create or use an existing Amazon AWS account
-2. Install the latest version of AWS CLI [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-3. Install the latest version of AWS SAM CLI [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
-4. Install Docker [Docker](https://docs.docker.com/get-docker/)
-5. Install NodeJS [NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) to be able to run `npm` commands
+2. Install the latest version of [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+3. Install the latest version of [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
+4. Install [Docker](https://docs.docker.com/get-docker/)
+5. Install [NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) to be able to run `npm` commands
 
 ### Run Locally
 1. **BACKEND**: Run the Lambda service
