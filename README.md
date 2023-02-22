@@ -55,6 +55,9 @@ You can also organize your recipes by categories like Recently Used, Favorites, 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Design
+Here's the document that details the technical design and architecture decisions [Design](./resources/DESIGN.md)
+
 ### Built With
 [![Architecture][architecture diagram]]()
 
@@ -70,7 +73,7 @@ The following instructions will guide you on setting up and running the project 
 2. Install the latest version of AWS CLI [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 3. Install the latest version of AWS SAM CLI [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
 4. Install Docker [Docker](https://docs.docker.com/get-docker/)
-5. Install NodeJS [NodeJS] (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) to be able to run `npm` commands
+5. Install NodeJS [NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) to be able to run `npm` commands
 
 ### Run Locally
 1. **BACKEND**: Run the Lambda service
