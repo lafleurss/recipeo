@@ -23,7 +23,7 @@ Introducing the ultimate personal recipe curation app - Recipeo!
   </p>  
 
 <p>
-    <a href="https://github.com/lafleurss/recipeo">View Demo</a>
+    <a href="https://d2hu23w1s1udj7.cloudfront.net/">View Demo</a>
     ·
     <a href="https://github.com/lafleurss/recipeo/issues">Report Bug</a>
     ·
@@ -70,34 +70,24 @@ The following instructions will guide you on setting up and running the project 
 2. Install the latest version of AWS CLI [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 3. Install the latest version of AWS SAM CLI [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
 4. Install Docker [Docker](https://docs.docker.com/get-docker/)
-5. Install NodeJS to be able to run `npm` commands
-
-- On Windows / WSL:
-```shell
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
-sudo apt-get install -y nodejs
-```
-- On macOS:
-```shell
-brew install node
-```
+5. Install NodeJS [NodeJS] (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) to be able to run `npm` commands
 
 ### Run Locally
-1. **DATA**
-   Create some sample data (if needed):
-   * `aws dynamodb batch-write-item --request-items file://data/recipedata.json`
-   * `aws dynamodb batch-write-item --request-items file://data/categorydata.json`
-
-2. **BACKEND**: Run the Lambda service
+1. **BACKEND**: Run the Lambda service
     - Build the Java code: `sam build`
     - Create an S3 bucket: `aws s3 mb s3://YOUR_BUCKET`
     - Deploy the SAM template: `sam deploy --s3-bucket BUCKET_FROM_ABOVE --parameter-overrides S3Bucket=BUCKET_FROM_ABOVE FrontendDeployment=local`
     - Run the local API: `sam local start-api --warm-containers LAZY`
 
-3. **FRONTEND**: Run a local web server (aka the frontend):
+2. **FRONTEND**: Run a local web server (aka the frontend):
     - CD into the web directory: `cd web`
     - Install dependencies : `npm install`
     - Run the local server: `npm run run-local`
+
+3. **DATA**
+   Create some sample data (if needed):
+   * `aws dynamodb batch-write-item --request-items file://data/recipedata.json`
+   * `aws dynamodb batch-write-item --request-items file://data/categorydata.json`
 
 
 After doing all of this, you will have a server running on port `8000` - you can access it by going to [http://localhost:8000](http://localhost:8000) in your browser.
